@@ -7,7 +7,7 @@
   <title>JSP - Hello World</title>
 </head>
 <body>
-<h1><%= "Hello World!" %></h1>
+<h1><%= "Hello World. Erste Änderung!" %></h1>
 <br/>
 <form action="results.jsp" method="get">
   <input type="number" name="value" />
