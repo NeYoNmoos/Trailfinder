@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Global.css">
   <title>JSP - Hello World</title>
 </head>
 <body>
