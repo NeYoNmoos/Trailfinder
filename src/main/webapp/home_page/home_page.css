@@ -1,0 +1,85 @@
+/* Reset default margin and padding for body */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styles */
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.header-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #005a9c;
+
+}
+
+/* Search bar styles */
+.search-bar {
+    text-align: center;
+    margin: 20px 0;
+}
+
+input[type="text"] {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007acc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005a9c;
+}
+
+/* Route box styles */
+.route-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.route-box {
+    width: 300px;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.route-box img {
+    max-width: 100%;
+    height: auto;
+}
+
+.route-info h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.route-info p {
+    margin: 10px 0;
+}
+
+/* Add any additional CSS styles as needed */
