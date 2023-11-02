@@ -5,7 +5,8 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Global.css">
-  <title>JSP - Hello World</title>
+  <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
+  <title>Trailfinder</title>
 </head>
 <body>
 <h1><%= "Hello World. Erste Änderung!" %></h1>
