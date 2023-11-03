@@ -24,6 +24,8 @@
     }
 %>
 <body>
+<jsp:include page="/components/navigation/nav_bar.jsp"/>
+
 Number: <%= number %>
 <br>
 Percentage: <%= percentage %>

@@ -14,6 +14,8 @@
     <title>Create New Route</title>
 </head>
 <body>
+<jsp:include page="/components/navigation/nav_bar.jsp"/>
+
 
 </body>
 </html>

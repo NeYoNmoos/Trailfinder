@@ -9,6 +9,8 @@
   <title>Trailfinder</title>
 </head>
 <body>
+<jsp:include page="/components/navigation/nav_bar.jsp"/>
+
 <h1><%= "Hello World. Erste Änderung!" %></h1>
 <br/>
 <form action="results.jsp" method="get">

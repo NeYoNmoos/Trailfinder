@@ -23,6 +23,7 @@
     <title><%= route.getName() %></title>
 </head>
 <body>
+<jsp:include page="/components/navigation/nav_bar.jsp"/>
 <div>
     <div class="card">
         <h1><%= route.getName() %></h1>

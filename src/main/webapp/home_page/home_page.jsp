@@ -13,6 +13,8 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/home_page/home_page.css">
 </head>
 <body>
+<jsp:include page="/components/navigation/nav_bar.jsp"/>
+
 <header>
     <div class="header-content">
         <h1>Trailfinder</h1>
