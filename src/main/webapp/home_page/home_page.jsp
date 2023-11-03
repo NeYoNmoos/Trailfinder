@@ -42,6 +42,37 @@
         </div>
     </div>
 
+    <div class="route-box">
+        <img src="download.jpg" alt="Route Image 2">
+        <div class="route-info">
+            <h2>Route 2</h2>
+            <p>Short description of Route 2.</p>
+        </div>
+    </div>
+    <div class="route-box">
+        <img src="download.jpg" alt="Route Image 1">
+        <div class="route-info">
+            <h2>Route 1</h2>
+            <p>Short description of Route 1.</p>
+        </div>
+    </div>
+
+    <div class="route-box">
+        <img src="download.jpg" alt="Route Image 2">
+        <div class="route-info">
+            <h2>Route 2</h2>
+            <p>Short description of Route 2.</p>
+        </div>
+    </div>
+
+    <div class="route-box">
+        <img src="download.jpg" alt="Route Image 2">
+        <div class="route-info">
+            <h2>Route 2</h2>
+            <p>Short description of Route 2.</p>
+        </div>
+    </div>
+
     <!-- Add more route boxes as needed -->
 </div>
 </body>

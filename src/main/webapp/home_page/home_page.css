@@ -53,15 +53,15 @@ button:hover {
 }
 
 /* Route box styles */
+/* Route box styles */
 .route-boxes {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    text-align: center; /* Center-align the route boxes */
 }
 
+/* Route box styles */
 .route-box {
     width: 300px;
-    margin: 20px;
+    margin: 20px auto; /* Center-align the route boxes */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
