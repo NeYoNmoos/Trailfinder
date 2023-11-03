@@ -7,6 +7,7 @@ import org.hibernate.cfg.Configuration;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.Assert.assertNotNull;
@@ -40,6 +41,14 @@ public class RouteBrokerTest {
         System.out.println(route.getRouteId() + route.getAuthor() + route.getName());
 
         facade.save(route);
+    }
+
+    @Test
+    public void testGetAllRoutes(){
+        List<RouteEntity> allRoutes = facade.getAllRoutes();
+        for(int i = 0; i < allRoutes.size(); i++){
+            System.out.println(allRoutes.get(i).getRouteId() + " " + allRoutes.get(i).getName());
+        }
     }
 
 }
