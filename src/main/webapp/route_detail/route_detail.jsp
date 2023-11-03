@@ -1,4 +1,6 @@
-<%@ page import="data.Route" %><%--
+<%@ page import="data.Route" %>
+<%@ page import="at.fhv.hibernate.facade.TrailfinderDatabaseFacade" %>
+<%@ page import="at.fhv.data.RouteEntity" %><%--
   Created by IntelliJ IDEA.
   User: matth
   Date: 01/11/2023
@@ -8,13 +10,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    /**
-     * TODO: Getting Routedata with hibernate
-      */
     String routeId = request.getParameter("routeId");
 
-    // mockdata for Route
-    Route route = new Route("as33a-34rasdf-asdf", "aefeae-34ae3ra-afsdf", "Karrenrundtour", 5.343, 434, "Dornbirn", "Ein feiner Rundgang zum Karren und zurück in die Dornbirner Innenstadt", 3.4);
+    RouteEntity route = new TrailfinderDatabaseFacade().getRouteById(routeId);
 %>
 
 <html>

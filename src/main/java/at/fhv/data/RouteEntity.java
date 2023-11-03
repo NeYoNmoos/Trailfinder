@@ -96,6 +96,19 @@ public class RouteEntity {
     public void setDuration(Double duration) {
         this.duration = duration;
     }
+    public RouteEntity(){
+
+    }
+    public RouteEntity(String routeId, String author, String name, Double length, Double altitude, String location, String description, Double duration) {
+        this.routeId = routeId;
+        this.author = author;
+        this.name = name;
+        this.length = length;
+        this.altitude = altitude;
+        this.location = location;
+        this.description = description;
+        this.duration = duration;
+    }
 
     @Override
     public boolean equals(Object o) {
