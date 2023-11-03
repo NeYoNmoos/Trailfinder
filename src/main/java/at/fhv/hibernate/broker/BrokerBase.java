@@ -19,7 +19,7 @@ public abstract class BrokerBase<T> {
     public void insert(T value) {
         try (Session session = sessionFactory.openSession()) {
             Transaction tx = session.beginTransaction();
-            session.save(value);
+            session.merge(value);
             tx.commit();
         }
     }
@@ -27,7 +27,7 @@ public abstract class BrokerBase<T> {
     public void update(T value) {
         try (Session session = sessionFactory.openSession()) {
             Transaction tx = session.beginTransaction();
-            session.update(value);
+            session.merge(value);
             tx.commit();
         }
     }

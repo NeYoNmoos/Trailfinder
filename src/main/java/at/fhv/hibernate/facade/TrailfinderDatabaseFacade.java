@@ -18,7 +18,7 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
 
     @Override
     public void save(Object value) {
-        if (value instanceof Route) {
+        if (value instanceof RouteEntity) {
             routeBroker.insert((RouteEntity) value);
         }
         // other insert statements go here for other entities
@@ -26,7 +26,7 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
 
     @Override
     public void delete(Object value) {
-        if (value instanceof Route) {
+        if (value instanceof RouteEntity) {
             routeBroker.delete((RouteEntity) value);
         }
         // other delete statements go here for other entities
