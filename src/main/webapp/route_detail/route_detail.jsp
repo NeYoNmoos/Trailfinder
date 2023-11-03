@@ -27,11 +27,12 @@
 <div>
     <div class="card">
         <h1><%= route.getName() %></h1>
-        <p>ID: <%= route.getId() %></p>
-        <p>Author: <%= route.getAuthor() %></p>
-        <p>Length: <%= route.getLength() %> km</p>
-        <p>Altitude: <%= route.getAltitude() %> m</p>
-        <p>Location: <%= route.getLocation() %></p>
+        <div class="card">
+            <p>Length: <%= route.getLength() %> km</p>
+            <p>Altitude: <%= route.getAltitude() %> m</p>
+            <p>Location: <%= route.getLocation() %></p>
+        </div>
+
         <p>Description: <%= route.getDescription() %></p>
         <p>Duration: <%= route.getDuration() %> hours</p>
     </div>
