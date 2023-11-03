@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name="connection.url">jdbc:postgresql://ep-misty-cake-26378207.eu-central-1.aws.neon.tech/Trailfinder</property>
+
+        <property name="connection.driver_class">org.postgresql.Driver</property> <!-- DB Driver -->
+        <property name="connection.username">MarkPleschberger</property> <!-- DB User -->
+        <property name="connection.password">dA1jpSrWCq4O</property> <!-- DB Password -->
+
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> <!-- DB Dialect -->
+        <property name="hbm2ddl.auto">update</property> <!-- create / create-drop / update -->
+
+        <property name="show_sql">true</property> <!-- Show SQL in console -->
+        <property name="format_sql">true</property>
+        <mapping class="at.fhv.data.AttributeEntity"/>
+        <mapping class="at.fhv.data.CommentEntity"/>
+        <mapping class="at.fhv.data.CoordinateEntity"/>
+        <mapping class="at.fhv.data.GalleryEntity"/>
+        <mapping class="at.fhv.data.LodgeEntity"/>
+        <mapping class="at.fhv.data.RouteEntity"/>
+        <mapping class="at.fhv.data.TimeOfYearEntity"/>
+        <mapping class="at.fhv.data.UserEntity"/> <!-- Show SQL formatted -->
+
+    </session-factory>
+</hibernate-configuration>
+
+
+

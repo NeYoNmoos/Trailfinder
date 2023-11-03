@@ -19,10 +19,10 @@ public class RouteEntity {
     private String name;
     @Basic
     @Column(name = "length")
-    private BigInteger length;
+    private Double length;
     @Basic
     @Column(name = "altitude")
-    private BigInteger altitude;
+    private Double altitude;
     @Basic
     @Column(name = "location")
     private String location;
@@ -31,7 +31,7 @@ public class RouteEntity {
     private String description;
     @Basic
     @Column(name = "duration")
-    private BigInteger duration;
+    private Double duration;
 
     public String getRouteId() {
         return routeId;
@@ -57,19 +57,19 @@ public class RouteEntity {
         this.name = name;
     }
 
-    public BigInteger getLength() {
+    public Double getLength() {
         return length;
     }
 
-    public void setLength(BigInteger length) {
+    public void setLength(Double length) {
         this.length = length;
     }
 
-    public BigInteger getAltitude() {
+    public Double getAltitude() {
         return altitude;
     }
 
-    public void setAltitude(BigInteger altitude) {
+    public void setAltitude(Double altitude) {
         this.altitude = altitude;
     }
 
@@ -89,11 +89,11 @@ public class RouteEntity {
         this.description = description;
     }
 
-    public BigInteger getDuration() {
+    public Double getDuration() {
         return duration;
     }
 
-    public void setDuration(BigInteger duration) {
+    public void setDuration(Double duration) {
         this.duration = duration;
     }
 
