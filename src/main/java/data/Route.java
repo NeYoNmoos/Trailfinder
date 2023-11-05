@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class Route {
-    private String _id;
+    private String _route_id;
     private String _author;
     private String _name;
     private double _length;
@@ -19,7 +19,7 @@ public class Route {
     private double _duration;
 
     public Route(String id, String author, String name, double length, double altitude, String location, String description, double duration) {
-        _id = id;
+        _route_id = id;
         _author = author;
         _name = name;
         _length = length;
@@ -30,11 +30,11 @@ public class Route {
     }
 
     public String getId() {
-        return _id;
+        return _route_id;
     }
 
     public void setId(String id) {
-        _id = id;
+        _route_id = id;
     }
 
     public String getAuthor() {
