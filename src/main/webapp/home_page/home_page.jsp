@@ -1,4 +1,7 @@
-<%--
+<%@ page import="at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade" %>
+<%@ page import="at.fhv.hike.controllers.RouteController" %>
+<%@ page import="at.fhv.hike.data.RouteEntity" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Korisnik
   Date: 11/2/2023
@@ -6,6 +9,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    RouteController routeController = new RouteController();
+    List<RouteEntity> allRoutes = routeController.getAllRoutes();
+%>
 <html>
 <head>
     <title>Title</title>
@@ -35,47 +42,19 @@
             <p>Short description of Route 1.</p>
         </div>
     </div>
-
-    <div class="route-box">
-        <img src="download.jpg" alt="Route Image 2">
-        <div class="route-info">
-            <h2>Route 2</h2>
-            <p>Short description of Route 2.</p>
-        </div>
-    </div>
-
-    <div class="route-box">
-        <img src="download.jpg" alt="Route Image 2">
-        <div class="route-info">
-            <h2>Route 2</h2>
-            <p>Short description of Route 2.</p>
-        </div>
-    </div>
-    <div class="route-box">
-        <img src="download.jpg" alt="Route Image 1">
-        <div class="route-info">
-            <h2>Route 1</h2>
-            <p>Short description of Route 1.</p>
-        </div>
-    </div>
-
-    <div class="route-box">
-        <img src="download.jpg" alt="Route Image 2">
-        <div class="route-info">
-            <h2>Route 2</h2>
-            <p>Short description of Route 2.</p>
-        </div>
-    </div>
-
-    <div class="route-box">
-        <img src="download.jpg" alt="Route Image 2">
-        <div class="route-info">
-            <h2>Route 2</h2>
-            <p>Short description of Route 2.</p>
-        </div>
-    </div>
-
-    <!-- Add more route boxes as needed -->
+    <%
+        for (int i = 0; i < allRoutes.size(); i++) {
+            RouteEntity currentRoute = allRoutes.get(i); %>
+            <tr>
+                <td><%=currentRoute.getName()%></td>
+                <td><%=currentRoute.getDescription()%></td>
+                <td><%=currentRoute.getLength()%></td>
+                <td><%=currentRoute.getAltitude()%></td>
+                <td><%=currentRoute.getLocation()%></td>
+                <td><%=currentRoute.getDuration()%></td>
+            </tr>
+        <% }
+    %>
 </div>
 </body>
 </html>
