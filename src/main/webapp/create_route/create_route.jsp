@@ -1,6 +1,9 @@
 <%@ page import="at.fhv.hike.data.RouteEntity" %>
 <%@ page import="at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade" %>
-<%@ page import="java.util.UUID" %><%--
+<%@ page import="java.util.UUID" %>
+<%@ page import="at.fhv.hike.data.TimeOfYearEntity" %>
+<%@ page import="at.fhv.hike.data.AttributeEntity" %>
+<%@ page import="at.fhv.hike.controllers.RouteController" %><%--
   Created by IntelliJ IDEA.
   User: matth
   Date: 03/11/2023
@@ -19,6 +22,75 @@
         double duration = Double.parseDouble(request.getParameter("duration"));
         String description = request.getParameter("description");
 
+        String[] months = request.getParameterValues("months");
+        Integer power = Integer.parseInt(request.getParameter("power"));
+        Integer scenery = Integer.parseInt(request.getParameter("scenery"));
+        Integer experience = Integer.parseInt(request.getParameter("experience"));
+        Integer condition = Integer.parseInt(request.getParameter("condition"));
+
+        TimeOfYearEntity newMonths = new TimeOfYearEntity();
+        newMonths.setMonthId(UUID.randomUUID().toString());
+        newMonths.setJanuary(false);
+        newMonths.setFebruary(false);
+        newMonths.setMarch(false);
+        newMonths.setApril(false);
+        newMonths.setMay(false);
+        newMonths.setJune(false);
+        newMonths.setJuly(false);
+        newMonths.setAugust(false);
+        newMonths.setSeptember(false);
+        newMonths.setOctober(false);
+        newMonths.setNovember(false);
+        newMonths.setDecember(false);
+        for (int i = 0; i < months.length; i++) {
+            System.out.println("FOR LOOP");
+            switch (months[i]) {
+                case "january":
+                    newMonths.setJanuary(true);
+                    break;
+                case "february":
+                    newMonths.setFebruary(true);
+                    break;
+                case "march":
+                    newMonths.setMarch(true);
+                    break;
+                case "april":
+                    newMonths.setApril(true);
+                    break;
+                case "may":
+                    newMonths.setMay(true);
+                    break;
+                case "june":
+                    newMonths.setJune(true);
+                    break;
+                case "july":
+                    newMonths.setJuly(true);
+                    break;
+                case "august":
+                    newMonths.setAugust(true);
+                    break;
+                case "september":
+                    newMonths.setSeptember(true);
+                    break;
+                case "october":
+                    newMonths.setOctober(true);
+                    break;
+                case "november":
+                    newMonths.setNovember(true);
+                    break;
+                case "december":
+                    newMonths.setDecember(true);
+                    break;
+            }
+        }
+
+        AttributeEntity newAttributes = new AttributeEntity();
+        newAttributes.setAttributeId(UUID.randomUUID().toString());
+        newAttributes.setStrength(power);
+        newAttributes.setScenery(scenery);
+        newAttributes.setExperience(experience);
+        newAttributes.setCondition(condition);
+
         RouteEntity newRoute = new RouteEntity();
         newRoute.setRouteId(UUID.randomUUID().toString());
         newRoute.setName(name);
@@ -27,9 +99,13 @@
         newRoute.setLocation(location);
         newRoute.setDuration(duration);
         newRoute.setDescription(description);
+        newRoute.setAttributeId(newAttributes.getAttributeId());
+        newRoute.setMonthId(newMonths.getMonthId());
 
         TrailfinderDatabaseFacade facade = new TrailfinderDatabaseFacade();
-        facade.save(newRoute);
+
+        RouteController controller = new RouteController();
+        controller.createRoute(newRoute, newMonths, newAttributes);
 
         System.out.println("Created new Route!");
 
@@ -71,6 +147,57 @@
 
             <label for="description">Description:</label>
             <textarea id="description" name="description" rows="4" required></textarea>
+
+            <label for="months">Choose months</label>
+            <select name="months" id="months" multiple>
+                <option value="january">January</option>
+                <option value="february">February</option>
+                <option value="march">March</option>
+                <option value="may">May</option>
+                <option value="june">June</option>
+                <option value="july">July</option>
+                <option value="august">August</option>
+                <option value="september">September</option>
+                <option value="october">October</option>
+                <option value="november">November</option>
+                <option value="december">December</option>
+            </select>
+
+            <label for="power">Choose power level</label>
+            <select name="power" id="power">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+
+            <label for="scenery">Choose scenery level</label>
+            <select name="scenery" id="scenery">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+
+            <label for="experience">Choose experience level</label>
+            <select name="experience" id="experience">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+
+            <label for="condition">Choose condition level</label>
+            <select name="condition" id="condition">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
 
             <input type="submit" value="Create Route">
         </form>
