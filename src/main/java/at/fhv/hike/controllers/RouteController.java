@@ -19,6 +19,11 @@ public class RouteController {
         return allRoutes;
     }
 
+    public List<RouteEntity> getALlRoutesWithCoordinates() {
+        List<RouteEntity> allRoutes = _facade.getAllRoutes();
+        return allRoutes;
+    }
+
     public void createRoute(RouteEntity route, TimeOfYearEntity months, AttributeEntity attributes) {
         _facade.save(months);
         _facade.save(attributes);

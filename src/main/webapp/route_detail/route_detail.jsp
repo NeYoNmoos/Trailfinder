@@ -1,5 +1,6 @@
 <%@ page import="at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade" %>
-<%@ page import="at.fhv.hike.data.RouteEntity" %><%--
+<%@ page import="at.fhv.hike.data.RouteEntity" %>
+<%@ page import="at.fhv.hike.data.CoordinateEntity" %><%--
   Created by IntelliJ IDEA.
   User: matth
   Date: 01/11/2023
@@ -11,6 +12,19 @@
 <%
     String routeId = request.getParameter("routeId");
     RouteEntity route = new TrailfinderDatabaseFacade().getRouteById(routeId);
+    System.out.println(route.getRouteId());
+    System.out.println(route.getAttributeEntity().getAttributeId());
+    System.out.println(route.getAttributeEntity().getCondition());
+    System.out.println(route.getAttributeEntity().getScenery());
+    System.out.println(route.getAttributeEntity().getCondition());
+    System.out.println(route.getAttributeEntity().getExperience());
+
+    System.out.println(route.getTimeOfYearEntity().getMonthId());
+    System.out.println(route.getTimeOfYearEntity().getApril());
+
+    for(CoordinateEntity coordinate: route.getCoordinates()){
+        System.out.println(coordinate.getCoordinateId());
+    }
 %>
 
 <html>

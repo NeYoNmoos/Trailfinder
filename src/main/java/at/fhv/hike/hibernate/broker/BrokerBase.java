@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class BrokerBase<T> {
 
-    private SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
     private Class<T> entityClass;
 
     public BrokerBase(SessionFactory sessionFactory, Class<T> entityClass) {

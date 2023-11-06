@@ -3,6 +3,8 @@ package at.fhv.hike.data;
 import jakarta.persistence.*;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "route", schema = "trailfinder_dev", catalog = "Trailfinder")
@@ -32,12 +34,34 @@ public class RouteEntity {
     @Basic
     @Column(name = "duration")
     private Double duration;
-    @Basic
-    @Column(name = "attribute_id")
-    private String attributeId;
-    @Basic
-    @Column(name = "month_id")
-    private String monthId;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "attribute_id", referencedColumnName = "attribute_id")
+    private AttributeEntity attributeEntity;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "month_id", referencedColumnName = "month_id")
+    private TimeOfYearEntity timeOfYearEntity;
+
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CoordinateEntity> coordinates = new ArrayList<>();
+
+    public List<CoordinateEntity> getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(List<CoordinateEntity> coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void addCoordinate(CoordinateEntity coordinate) {
+        coordinates.add(coordinate);
+        coordinate.setRoute(this);
+    }
+
+    public void removeCoordinate(CoordinateEntity coordinate) {
+        coordinates.remove(coordinate);
+        coordinate.setRoute(null);
+    }
 
     public RouteEntity(){
 
@@ -151,19 +175,19 @@ public class RouteEntity {
         return result;
     }
 
-    public String getAttributeId() {
-        return attributeId;
+    public AttributeEntity getAttributeEntity() {
+        return attributeEntity;
     }
 
-    public void setAttributeId(String attributeId) {
-        this.attributeId = attributeId;
+    public void setAttributeEntity(AttributeEntity attributeEntity) {
+        this.attributeEntity = attributeEntity;
     }
 
-    public String getMonthId() {
-        return monthId;
+    public TimeOfYearEntity getTimeOfYearEntity() {
+        return timeOfYearEntity;
     }
 
-    public void setMonthId(String monthId) {
-        this.monthId = monthId;
+    public void setTimeOfYearEntity(TimeOfYearEntity timeOfYearEntity) {
+        this.timeOfYearEntity = timeOfYearEntity;
     }
 }

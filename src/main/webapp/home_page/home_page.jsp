@@ -10,8 +10,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    RouteController routeController = new RouteController();
-    List<RouteEntity> allRoutes = routeController.getAllRoutes();
+    TrailfinderDatabaseFacade facade = new TrailfinderDatabaseFacade();
+    List<RouteEntity> allRoutes = facade.getAllRoutes();
 %>
 <html>
 <head>

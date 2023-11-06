@@ -51,10 +51,10 @@ public class RouteBrokerTest {
         AttributeEntity attribute = new AttributeEntity();
         attribute.setAttributeId(UUID.randomUUID().toString());
         attribute.setStrength(3);
-        attribute.setCondition(4);
-        attribute.setScenery(5);
-        attribute.setExperience(3);
-        facade.save(attribute);
+        attribute.setCondition(1);
+        attribute.setScenery(1);
+        attribute.setExperience(1);
+        //facade.save(attribute);
 
         // Create the TimeOfYearEntity
         TimeOfYearEntity timeOfYear = new TimeOfYearEntity();
@@ -72,7 +72,7 @@ public class RouteBrokerTest {
         timeOfYear.setNovember(Math.random() > 0.5);
         timeOfYear.setDecember(Math.random() > 0.5);
         // Save the time of year
-        facade.save(timeOfYear);
+        //facade.save(timeOfYear);
 
         // Create the RouteEntity
         RouteEntity route = new RouteEntity();
@@ -84,15 +84,18 @@ public class RouteBrokerTest {
         route.setLocation("Test Location");
         route.setDescription("Test Description");
         route.setDuration(2.5);
-        route.setAttributeId(attribute.getAttributeId());
-        route.setMonthId(timeOfYear.getMonthId());
+        //route.setAttributeId(attribute.getAttributeId());
+        //route.setMonthId(timeOfYear.getMonthId());
+        route.setAttributeEntity(attribute);
+        route.setTimeOfYearEntity(timeOfYear);
+
         // Save the route
         facade.save(route);
 
         // Create the CoordinateEntities
         CoordinateEntity coordinate1 = new CoordinateEntity();
         coordinate1.setCoordinateId(UUID.randomUUID().toString());
-        coordinate1.setRouteId(route.getRouteId());
+        coordinate1.setRoute(route);
         coordinate1.setSequence(0);
         coordinate1.setLongitude(-123.3656);
         coordinate1.setLatitude(48.4284);
@@ -100,7 +103,7 @@ public class RouteBrokerTest {
 
         CoordinateEntity coordinate2 = new CoordinateEntity();
         coordinate2.setCoordinateId(UUID.randomUUID().toString());
-        coordinate2.setRouteId(route.getRouteId());
+        coordinate2.setRoute(route);
         coordinate2.setSequence(1);
         coordinate2.setLongitude(-123.3656);
         coordinate2.setLatitude(48.4285);
@@ -121,6 +124,7 @@ public class RouteBrokerTest {
         List<RouteEntity> allRoutes = facade.getAllRoutes();
         for(int i = 0; i < allRoutes.size(); i++){
             System.out.println(allRoutes.get(i).getRouteId() + " " + allRoutes.get(i).getName());
+            System.out.println(allRoutes.get(i).getCoordinates());
         }
     }
 

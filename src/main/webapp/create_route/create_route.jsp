@@ -99,8 +99,10 @@
         newRoute.setLocation(location);
         newRoute.setDuration(duration);
         newRoute.setDescription(description);
-        newRoute.setAttributeId(newAttributes.getAttributeId());
-        newRoute.setMonthId(newMonths.getMonthId());
+        //newRoute.setAttributeId(newAttributes.getAttributeId());
+        //newRoute.setMonthId(newMonths.getMonthId());
+        newRoute.setAttributeEntity(newAttributes);
+        newRoute.setTimeOfYearEntity(newMonths);
 
         TrailfinderDatabaseFacade facade = new TrailfinderDatabaseFacade();
 

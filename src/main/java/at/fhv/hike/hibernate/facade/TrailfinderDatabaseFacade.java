@@ -1,9 +1,11 @@
 package at.fhv.hike.hibernate.facade;
 
 import at.fhv.hike.data.AttributeEntity;
+import at.fhv.hike.data.CoordinateEntity;
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.data.TimeOfYearEntity;
 import at.fhv.hike.hibernate.broker.AttributeBroker;
+import at.fhv.hike.hibernate.broker.CoordinateBroker;
 import at.fhv.hike.hibernate.broker.RouteBroker;
 import at.fhv.hike.hibernate.broker.TimeOfYearBroker;
 import org.hibernate.SessionFactory;
@@ -15,12 +17,14 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
     private RouteBroker _routeBroker;
     private AttributeBroker _attributeBroker;
     private TimeOfYearBroker _timeOfYearBroker;
+    private CoordinateBroker _coordinateBroker;
 
     public TrailfinderDatabaseFacade() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         this._routeBroker = new RouteBroker(sessionFactory);
         this._attributeBroker = new AttributeBroker(sessionFactory);
         this._timeOfYearBroker = new TimeOfYearBroker(sessionFactory);
+        this._coordinateBroker = new CoordinateBroker(sessionFactory);
     }
 
     @Override
@@ -33,6 +37,9 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         }
         else if (value instanceof TimeOfYearEntity) {
             _timeOfYearBroker.insert((TimeOfYearEntity) value);
+        }
+        else if (value instanceof CoordinateEntity) {
+            _coordinateBroker.insert((CoordinateEntity) value);
         }
         // other insert statements go here for other entities
     }
@@ -48,6 +55,9 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         else if (value instanceof TimeOfYearEntity) {
             _timeOfYearBroker.delete((TimeOfYearEntity) value);
         }
+        else if (value instanceof CoordinateEntity) {
+            _coordinateBroker.delete((CoordinateEntity) value);
+        }
         // other delete statements go here for other entities
     }
 
@@ -55,6 +65,7 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
     public List<RouteEntity> getAllRoutes() {
         return _routeBroker.getAll();
     }
+
 
     @Override
     public RouteEntity getRouteById(String id) {
