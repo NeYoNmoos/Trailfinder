@@ -5,13 +5,10 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "time_of_year", schema = "trailfinder_dev", catalog = "Trailfinder")
 public class TimeOfYearEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "month_id")
     private String monthId;
-    @Basic
-    @Column(name = "route_id")
-    private String routeId;
     @Basic
     @Column(name = "january")
     private Boolean january;
@@ -55,14 +52,6 @@ public class TimeOfYearEntity {
 
     public void setMonthId(String monthId) {
         this.monthId = monthId;
-    }
-
-    public String getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
     }
 
     public Boolean getJanuary() {
@@ -169,7 +158,6 @@ public class TimeOfYearEntity {
         TimeOfYearEntity that = (TimeOfYearEntity) o;
 
         if (monthId != null ? !monthId.equals(that.monthId) : that.monthId != null) return false;
-        if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) return false;
         if (january != null ? !january.equals(that.january) : that.january != null) return false;
         if (february != null ? !february.equals(that.february) : that.february != null) return false;
         if (march != null ? !march.equals(that.march) : that.march != null) return false;
@@ -189,7 +177,6 @@ public class TimeOfYearEntity {
     @Override
     public int hashCode() {
         int result = monthId != null ? monthId.hashCode() : 0;
-        result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
         result = 31 * result + (january != null ? january.hashCode() : 0);
         result = 31 * result + (february != null ? february.hashCode() : 0);
         result = 31 * result + (march != null ? march.hashCode() : 0);

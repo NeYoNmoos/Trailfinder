@@ -2,28 +2,27 @@ package at.fhv.hike.data;
 
 import jakarta.persistence.*;
 
+import java.lang.Integer;
+
 @Entity
 @Table(name = "attribute", schema = "trailfinder_dev", catalog = "Trailfinder")
 public class AttributeEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "attribute_id")
     private String attributeId;
     @Basic
-    @Column(name = "route_id")
-    private String routeId;
-    @Basic
     @Column(name = "strength")
-    private Object strength;
+    private Integer strength;
     @Basic
     @Column(name = "condition")
-    private Object condition;
+    private Integer condition;
     @Basic
     @Column(name = "scenery")
-    private Object scenery;
+    private Integer scenery;
     @Basic
     @Column(name = "experience")
-    private Object experience;
+    private Integer experience;
 
     public String getAttributeId() {
         return attributeId;
@@ -33,19 +32,11 @@ public class AttributeEntity {
         this.attributeId = attributeId;
     }
 
-    public String getRouteId() {
-        return routeId;
-    }
-
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
-    }
-
     public Object getStrength() {
         return strength;
     }
 
-    public void setStrength(Object strength) {
+    public void setStrength(Integer strength) {
         this.strength = strength;
     }
 
@@ -53,7 +44,7 @@ public class AttributeEntity {
         return condition;
     }
 
-    public void setCondition(Object condition) {
+    public void setCondition(Integer condition) {
         this.condition = condition;
     }
 
@@ -61,7 +52,7 @@ public class AttributeEntity {
         return scenery;
     }
 
-    public void setScenery(Object scenery) {
+    public void setScenery(Integer scenery) {
         this.scenery = scenery;
     }
 
@@ -69,7 +60,7 @@ public class AttributeEntity {
         return experience;
     }
 
-    public void setExperience(Object experience) {
+    public void setExperience(Integer experience) {
         this.experience = experience;
     }
 
@@ -81,7 +72,6 @@ public class AttributeEntity {
         AttributeEntity that = (AttributeEntity) o;
 
         if (attributeId != null ? !attributeId.equals(that.attributeId) : that.attributeId != null) return false;
-        if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) return false;
         if (strength != null ? !strength.equals(that.strength) : that.strength != null) return false;
         if (condition != null ? !condition.equals(that.condition) : that.condition != null) return false;
         if (scenery != null ? !scenery.equals(that.scenery) : that.scenery != null) return false;
@@ -93,7 +83,6 @@ public class AttributeEntity {
     @Override
     public int hashCode() {
         int result = attributeId != null ? attributeId.hashCode() : 0;
-        result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
         result = 31 * result + (strength != null ? strength.hashCode() : 0);
         result = 31 * result + (condition != null ? condition.hashCode() : 0);
         result = 31 * result + (scenery != null ? scenery.hashCode() : 0);

@@ -1,4 +1,3 @@
-<%@ page import="data.Route" %>
 <%@ page import="at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade" %>
 <%@ page import="at.fhv.hike.data.RouteEntity" %><%--
   Created by IntelliJ IDEA.
@@ -11,7 +10,6 @@
 
 <%
     String routeId = request.getParameter("routeId");
-
     RouteEntity route = new TrailfinderDatabaseFacade().getRouteById(routeId);
 %>
 

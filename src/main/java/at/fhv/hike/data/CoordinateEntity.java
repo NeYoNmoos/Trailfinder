@@ -2,7 +2,6 @@ package at.fhv.hike.data;
 
 import jakarta.persistence.*;
 
-import java.math.BigInteger;
 
 @Entity
 @Table(name = "coordinate", schema = "trailfinder_dev", catalog = "Trailfinder")
@@ -16,13 +15,13 @@ public class CoordinateEntity {
     private String routeId;
     @Basic
     @Column(name = "sequence")
-    private BigInteger sequence;
+    private Integer sequence;
     @Basic
     @Column(name = "longitude")
-    private BigInteger longitude;
+    private Double longitude;
     @Basic
     @Column(name = "latitude")
-    private BigInteger latitude;
+    private Double latitude;
 
     public String getCoordinateId() {
         return coordinateId;
@@ -40,27 +39,27 @@ public class CoordinateEntity {
         this.routeId = routeId;
     }
 
-    public BigInteger getSequence() {
+    public Integer getSequence() {
         return sequence;
     }
 
-    public void setSequence(BigInteger sequence) {
+    public void setSequence(Integer sequence) {
         this.sequence = sequence;
     }
 
-    public BigInteger getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(BigInteger longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public BigInteger getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(BigInteger latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 

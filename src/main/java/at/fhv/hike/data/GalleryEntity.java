@@ -7,7 +7,7 @@ import java.util.Arrays;
 @Entity
 @Table(name = "gallery", schema = "trailfinder_dev", catalog = "Trailfinder")
 public class GalleryEntity {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "picture_id")
     private String pictureId;

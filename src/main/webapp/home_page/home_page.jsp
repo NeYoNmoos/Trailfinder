@@ -35,24 +35,26 @@
 </div>
 
 <div class="route-boxes">
-    <div class="route-box">
-        <img src="download.jpg" alt="Route Image 1">
-        <div class="route-info">
-            <h2>Route 1</h2>
-            <p>Short description of Route 1.</p>
-        </div>
-    </div>
     <%
         for (int i = 0; i < allRoutes.size(); i++) {
-            RouteEntity currentRoute = allRoutes.get(i); %>
-            <tr>
-                <td><%=currentRoute.getName()%></td>
-                <td><%=currentRoute.getDescription()%></td>
-                <td><%=currentRoute.getLength()%></td>
-                <td><%=currentRoute.getAltitude()%></td>
-                <td><%=currentRoute.getLocation()%></td>
-                <td><%=currentRoute.getDuration()%></td>
-            </tr>
+            RouteEntity currentRoute = allRoutes.get(i);
+            String detailPageUrl = "route_detail/route_detail.jsp?routeId=" + currentRoute.getRouteId(); %>
+            <a href="<%= detailPageUrl %>" class="route-box-link">
+                <div class="route-box">
+                    <div class="route-info">
+                        <h2><%=currentRoute.getName()%></h2>
+                        <p>
+                            <%=currentRoute.getDescription()%>
+                        </p>
+                    </div>
+                    <tr class="route-data">
+                        <td>Lenght: <%=currentRoute.getLength()%>km, </td>
+                        <td>Altitude: <%=currentRoute.getAltitude()%>m, </td>
+                        <td>Duration: <%=currentRoute.getDuration()%>h, </td>
+                        <td>Location: <%=currentRoute.getLocation()%></td>
+                    </tr>
+                </div>
+            </a>
         <% }
     %>
 </div>

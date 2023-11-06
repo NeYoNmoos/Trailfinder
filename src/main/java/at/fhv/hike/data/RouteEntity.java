@@ -2,6 +2,8 @@ package at.fhv.hike.data;
 
 import jakarta.persistence.*;
 
+import java.math.BigInteger;
+
 @Entity
 @Table(name = "route", schema = "trailfinder_dev", catalog = "Trailfinder")
 public class RouteEntity {
@@ -30,6 +32,27 @@ public class RouteEntity {
     @Basic
     @Column(name = "duration")
     private Double duration;
+    @Basic
+    @Column(name = "attribute_id")
+    private String attributeId;
+    @Basic
+    @Column(name = "month_id")
+    private String monthId;
+
+    public RouteEntity(){
+
+    }
+
+    public RouteEntity(String routeId, String author, String name, Double length, Double altitude, String location, String description, Double duration) {
+        this.routeId = routeId;
+        this.author = author;
+        this.name = name;
+        this.length = length;
+        this.altitude = altitude;
+        this.location = location;
+        this.description = description;
+        this.duration = duration;
+    }
 
     public String getRouteId() {
         return routeId;
@@ -91,20 +114,8 @@ public class RouteEntity {
         return duration;
     }
 
-    public void setDuration(Double duration) {
-        this.duration = duration;
-    }
-    public RouteEntity(){
 
-    }
-    public RouteEntity(String routeId, String author, String name, Double length, Double altitude, String location, String description, Double duration) {
-        this.routeId = routeId;
-        this.author = author;
-        this.name = name;
-        this.length = length;
-        this.altitude = altitude;
-        this.location = location;
-        this.description = description;
+    public void setDuration(Double duration) {
         this.duration = duration;
     }
 
@@ -138,5 +149,21 @@ public class RouteEntity {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (duration != null ? duration.hashCode() : 0);
         return result;
+    }
+
+    public String getAttributeId() {
+        return attributeId;
+    }
+
+    public void setAttributeId(String attributeId) {
+        this.attributeId = attributeId;
+    }
+
+    public String getMonthId() {
+        return monthId;
+    }
+
+    public void setMonthId(String monthId) {
+        this.monthId = monthId;
     }
 }
