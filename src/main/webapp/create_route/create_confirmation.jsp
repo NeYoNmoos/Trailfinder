@@ -8,11 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Global.css">
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
+    <title>Confirmation</title>
 </head>
 <body>
-<div>
-    New Route successfully created :)
-</div>
+<jsp:include page="/components/navigation/nav_bar.jsp"/>
+    <div>
+        New Route successfully created :)
+    </div>
 </body>
 </html>

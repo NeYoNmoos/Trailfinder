@@ -9,29 +9,7 @@
   <title>Trailfinder</title>
 </head>
 <body>
-<jsp:include page="/components/navigation/nav_bar.jsp"/>
+<jsp:include page="/home_page/home_page.jsp"/>
 
-<h1><%= "Hello World. Erste Änderung!" %></h1>
-<br/>
-<form action="results.jsp" method="get">
-  <input type="number" name="value" />
-  <br>
-
-  <label>
-    <select name="percentage">
-      <option>10%</option>
-      <option>20%</option>
-    </select>
-  </label>
-
-  <br>
-
-  <input type="submit" value="Submit Form" style="width:100px;height:50px">
-
-
-</form>
-
-
-<a href="hello-servlet">Hello Servlet</a>
 </body>
 </html>
