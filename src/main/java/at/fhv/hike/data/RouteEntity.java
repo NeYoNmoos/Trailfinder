@@ -1,8 +1,6 @@
-package at.fhv.data;
+package at.fhv.hike.data;
 
 import jakarta.persistence.*;
-
-import java.math.BigInteger;
 
 @Entity
 @Table(name = "route", schema = "trailfinder_dev", catalog = "Trailfinder")

@@ -1,9 +1,6 @@
 package tests;
-import at.fhv.data.RouteEntity;
-import at.fhv.hibernate.facade.TrailfinderDatabaseFacade;
-import data.Route;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
+import at.fhv.hike.data.RouteEntity;
+import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import org.junit.Before;
 import org.junit.Test;
 

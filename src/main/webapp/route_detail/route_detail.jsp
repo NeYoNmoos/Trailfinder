@@ -1,6 +1,6 @@
 <%@ page import="data.Route" %>
-<%@ page import="at.fhv.hibernate.facade.TrailfinderDatabaseFacade" %>
-<%@ page import="at.fhv.data.RouteEntity" %><%--
+<%@ page import="at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade" %>
+<%@ page import="at.fhv.hike.data.RouteEntity" %><%--
   Created by IntelliJ IDEA.
   User: matth
   Date: 01/11/2023

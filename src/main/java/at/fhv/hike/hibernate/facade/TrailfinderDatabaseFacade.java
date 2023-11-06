@@ -1,8 +1,7 @@
-package at.fhv.hibernate.facade;
+package at.fhv.hike.hibernate.facade;
 
-import at.fhv.data.RouteEntity;
-import at.fhv.hibernate.broker.RouteBroker;
-import data.Route;
+import at.fhv.hike.data.RouteEntity;
+import at.fhv.hike.hibernate.broker.RouteBroker;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 

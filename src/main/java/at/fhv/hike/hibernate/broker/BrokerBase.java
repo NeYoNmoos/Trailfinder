@@ -1,4 +1,4 @@
-package at.fhv.hibernate.broker;
+package at.fhv.hike.hibernate.broker;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

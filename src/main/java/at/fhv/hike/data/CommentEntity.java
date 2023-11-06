@@ -1,4 +1,4 @@
-package at.fhv.data;
+package at.fhv.hike.data;
 
 import jakarta.persistence.*;
 

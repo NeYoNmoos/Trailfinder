@@ -16,14 +16,14 @@
 
         <property name="show_sql">true</property> <!-- Show SQL in console -->
         <property name="format_sql">true</property>
-        <mapping class="at.fhv.data.AttributeEntity"/>
-        <mapping class="at.fhv.data.CommentEntity"/>
-        <mapping class="at.fhv.data.CoordinateEntity"/>
-        <mapping class="at.fhv.data.GalleryEntity"/>
-        <mapping class="at.fhv.data.LodgeEntity"/>
-        <mapping class="at.fhv.data.RouteEntity"/>
-        <mapping class="at.fhv.data.TimeOfYearEntity"/>
-        <mapping class="at.fhv.data.UserEntity"/> <!-- Show SQL formatted -->
+        <mapping class="at.fhv.hike.data.AttributeEntity"/>
+        <mapping class="at.fhv.hike.data.CommentEntity"/>
+        <mapping class="at.fhv.hike.data.CoordinateEntity"/>
+        <mapping class="at.fhv.hike.data.GalleryEntity"/>
+        <mapping class="at.fhv.hike.data.LodgeEntity"/>
+        <mapping class="at.fhv.hike.data.RouteEntity"/>
+        <mapping class="at.fhv.hike.data.TimeOfYearEntity"/>
+        <mapping class="at.fhv.hike.data.UserEntity"/> <!-- Show SQL formatted -->
 
     </session-factory>
 </hibernate-configuration>

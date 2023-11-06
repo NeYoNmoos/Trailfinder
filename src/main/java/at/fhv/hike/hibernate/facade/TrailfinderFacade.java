@@ -1,6 +1,5 @@
-package at.fhv.hibernate.facade;
-import at.fhv.data.RouteEntity;
-import data.Route;
+package at.fhv.hike.hibernate.facade;
+import at.fhv.hike.data.RouteEntity;
 
 import java.util.List;
 
