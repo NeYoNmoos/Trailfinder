@@ -26,5 +26,16 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
         }
     }
 
+    @Override
+    public RouteEntity getById(String id) {
+        try (Session session = sessionFactory.openSession()) {
+            RouteEntity route = session.get(RouteEntity.class, id);
+            if (route != null) {
+                Hibernate.initialize(route.getCoordinates());
+            }
+            return route;
+        }
+    }
+
 }
 
