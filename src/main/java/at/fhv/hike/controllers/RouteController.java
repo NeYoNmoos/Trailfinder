@@ -24,6 +24,10 @@ public class RouteController {
         return allRoutes;
     }
 
+    public RouteEntity getRouteById(String routeId){
+        return _facade.getRouteById(routeId);
+    }
+
     public void createRoute(RouteEntity route) {
         _facade.save(route);
     }

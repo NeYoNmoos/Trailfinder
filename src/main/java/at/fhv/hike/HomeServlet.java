@@ -1,5 +1,6 @@
 package at.fhv.hike;
 
+import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.RequestDispatcher;
@@ -17,8 +18,12 @@ public class HomeServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        TrailfinderDatabaseFacade facade = new TrailfinderDatabaseFacade();
-        List<RouteEntity> allRoutes = facade.getAllRoutes();
+        //TrailfinderDatabaseFacade facade = new TrailfinderDatabaseFacade();
+        //List<RouteEntity> allRoutes = facade.getAllRoutes();
+
+        RouteController rc = new RouteController();
+
+        List<RouteEntity> allRoutes = rc.getAllRoutes();
 
         request.setAttribute("allRoutes", allRoutes);
 

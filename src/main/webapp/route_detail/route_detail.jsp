@@ -14,6 +14,7 @@
 
 <%
     RouteEntity route = (RouteEntity) request.getAttribute("route");
+
     TimeOfYearEntity timeOfYear = route != null ? route.getTimeOfYearEntity() : null;
     AttributeEntity attributes = route != null ? route.getAttributeEntity() : null;
     List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;

@@ -10,8 +10,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    //TrailfinderDatabaseFacade facade = new TrailfinderDatabaseFacade();
-    //List<RouteEntity> allRoutes = facade.getAllRoutes();
     List<RouteEntity> allRoutes = (List<RouteEntity>) request.getAttribute("allRoutes");
 %>
 <html>
@@ -49,7 +47,7 @@
                         </p>
                     </div>
                     <tr class="route-data">
-                        <td>Lenght: <%=currentRoute.getLength()%>km, </td>
+                        <td>Length: <%=currentRoute.getLength()%>km, </td>
                         <td>Altitude: <%=currentRoute.getAltitude()%>m, </td>
                         <td>Duration: <%=currentRoute.getDuration()%>h, </td>
                         <td>Location: <%=currentRoute.getLocation()%></td>
