@@ -24,9 +24,7 @@ public class RouteController {
         return allRoutes;
     }
 
-    public void createRoute(RouteEntity route, TimeOfYearEntity months, AttributeEntity attributes) {
-        _facade.save(months);
-        _facade.save(attributes);
+    public void createRoute(RouteEntity route) {
         _facade.save(route);
     }
 }

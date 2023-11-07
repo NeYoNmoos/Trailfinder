@@ -60,3 +60,18 @@
     0% { transform: translate(-50%, -50%) rotate(0deg); }
     100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
+
+.coordinate-row {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.coordinate-input {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+}
+
+.coordinate-input label {
+    margin-bottom: 5px;
+}
