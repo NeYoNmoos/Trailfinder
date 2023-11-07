@@ -1,4 +1,4 @@
-package at.fhv.hike;
+package at.fhv.hike.servlets;
 
 import java.io.*;
 import jakarta.servlet.http.*;

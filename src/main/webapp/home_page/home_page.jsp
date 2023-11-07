@@ -10,8 +10,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    TrailfinderDatabaseFacade facade = new TrailfinderDatabaseFacade();
-    List<RouteEntity> allRoutes = facade.getAllRoutes();
+    //TrailfinderDatabaseFacade facade = new TrailfinderDatabaseFacade();
+    //List<RouteEntity> allRoutes = facade.getAllRoutes();
+    List<RouteEntity> allRoutes = (List<RouteEntity>) request.getAttribute("allRoutes");
 %>
 <html>
 <head>
