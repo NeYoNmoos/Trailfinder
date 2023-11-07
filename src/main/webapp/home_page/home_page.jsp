@@ -39,7 +39,7 @@
     <%
         for (int i = 0; i < allRoutes.size(); i++) {
             RouteEntity currentRoute = allRoutes.get(i);
-            String detailPageUrl = "route_detail/route_detail.jsp?routeId=" + currentRoute.getRouteId(); %>
+            String detailPageUrl = "route-detail?routeId=" + currentRoute.getRouteId(); %>
             <a href="<%= detailPageUrl %>" class="route-box-link">
                 <div class="route-box">
                     <div class="route-info">

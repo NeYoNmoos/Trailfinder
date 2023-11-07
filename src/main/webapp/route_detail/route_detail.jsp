@@ -10,8 +10,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    String routeId = request.getParameter("routeId");
-    RouteEntity route = new TrailfinderDatabaseFacade().getRouteById(routeId);
+    //String routeId = request.getParameter("routeId");
+    //RouteEntity route = new TrailfinderDatabaseFacade().getRouteById(routeId);
+    RouteEntity route = (RouteEntity) request.getAttribute("route");
 %>
 
 <html>

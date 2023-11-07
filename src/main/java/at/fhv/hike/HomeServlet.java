@@ -1,4 +1,4 @@
-package at.fhv.hike.servlets;
+package at.fhv.hike;
 
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;

@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<%@ page import="at.fhv.hike.servlets.HelloServlet" %>
 <!DOCTYPE html>
 <html>
 <head>

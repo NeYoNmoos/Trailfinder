@@ -14,7 +14,7 @@
 <body>
     <div class="navbar">
         <div class="icon">
-            <a href="${pageContext.request.contextPath}/index.jsp">
+            <a href="${pageContext.request.contextPath}/">
                 <img height="80" width="80" src="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png" alt="Logo">
             </a>
         </div>
