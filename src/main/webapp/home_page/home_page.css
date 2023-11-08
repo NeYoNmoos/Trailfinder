@@ -17,7 +17,6 @@ h1 {
     margin: 0;
     font-size: 24px;
     color: #005a9c;
-
 }
 
 /* Search bar styles */
@@ -26,7 +25,7 @@ h1 {
     margin: 20px 0;
 }
 
-input[type="text"] {
+.name-search {
     width: 300px;
     padding: 10px;
     border: 1px solid #ccc;
@@ -47,15 +46,15 @@ button:hover {
 }
 
 /* Route box styles */
-.route-boxes a{
+.route-boxes a {
+    width: 550px;
     color: inherit;
     text-decoration: none;
 }
 
 /* Route box styles */
 .route-box {
-    width: 800px;
-    margin: 20px auto; /* Center-align the route boxes */
+    margin: 20px auto 10px; /* Center-align the route boxes and add some margin at the bottom */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -81,4 +80,56 @@ button:hover {
 
 .route-info p {
     margin: 10px 0;
+}
+
+/* Container for routes and filter box */
+.route-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Filter box styles */
+.filter-box {
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+    padding: 10px;
+    margin-top: 10px; /* Add margin at the top to move it down */
+}
+
+.filter-header {
+    font-weight: bold;
+    text-align: center;
+    background-color: #ddd;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.filter-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.filter-label {
+    font-weight: bold;
+}
+
+.filter-inputs {
+    display: flex;
+    align-items: center;
+}
+
+.filter-input {
+    flex: 1; /* Distribute available width equally between text boxes */
+    padding: 5px;
+    margin: 5px;
+    width: 45%; /* Adjust the width percentage as needed */
+}
+.route-boxes {
+    width: 600px; /* Adjust this value based on your design */
+    /* Your existing route box styles here */
 }

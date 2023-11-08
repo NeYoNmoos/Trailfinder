@@ -1,7 +1,8 @@
 <%@ page import="at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade" %>
 <%@ page import="at.fhv.hike.controllers.RouteController" %>
 <%@ page import="at.fhv.hike.data.RouteEntity" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="at.fhv.hike.data.AttributeEntity" %><%--
   Created by IntelliJ IDEA.
   User: Korisnik
   Date: 11/2/2023
@@ -42,6 +43,17 @@
                 <div class="route-box">
                     <div class="route-info">
                         <h2><%=currentRoute.getName()%></h2>
+
+                        <tr class="route-data">
+                            <td><%
+                            AttributeEntity attributes = currentRoute != null ? currentRoute.getAttributeEntity() : null;
+                            if (attributes != null) { %>
+                            <td>Power: <%= attributes.getStrength() %>, </td>
+                            <td>Scenery: <%= attributes.getScenery() %>, </td>
+                            <td>Experience: <%= attributes.getExperience() %>, </td>
+                            <td>Condition: <%= attributes.getCondition() %></td>
+                            <% } %>
+                        </tr>
                         <p>
                             <%=currentRoute.getDescription()%>
                         </p>
@@ -52,10 +64,37 @@
                         <td>Duration: <%=currentRoute.getDuration()%>h, </td>
                         <td>Location: <%=currentRoute.getLocation()%></td>
                     </tr>
+
+
                 </div>
             </a>
         <% }
     %>
+    <div class="filter-box">
+        <div class="filter-header"><h1>Filters</h1></div>
+        <div class="filter-content">
+            <div class="filter-label">Length</div>
+            <div class="filter-inputs">
+                <input type="text" id="lengthMin" placeholder="Min" class="filter-input">
+                <span>to</span>
+                <input type="text" id="lengthMax" placeholder="Max" class="filter-input">
+            </div>
+            <div class="filter-label">Altitude</div>
+            <div class="filter-inputs">
+                <input type="text" id="altitudeMin" placeholder="Min" class="filter-input">
+                <span>to</span>
+                <input type="text" id="altitudeMax" placeholder="Max" class="filter-input">
+            </div>
+            <div class="filter-label">Duration</div>
+            <div class="filter-inputs">
+                <input type="text" id="durationMin" placeholder="Min" class="filter-input">
+                <span>to</span>
+                <input type="text" id="durationMax" placeholder="Max" class="filter-input">
+            </div>
+            <button id="applyButton">Apply</button>
+
+        </div>
+    </div>
 </div>
 </body>
 </html>
