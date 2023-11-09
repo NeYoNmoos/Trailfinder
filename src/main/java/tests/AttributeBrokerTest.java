@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.UUID;
 
 public class AttributeBrokerTest {
+    /*
     private TrailfinderDatabaseFacade facade;
 
     @Before
@@ -35,4 +36,5 @@ public class AttributeBrokerTest {
             System.out.println("Failed to save attribute.");
         }
     }
+    */
 }

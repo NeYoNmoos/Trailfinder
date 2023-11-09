@@ -4,14 +4,15 @@ import at.fhv.hike.data.AttributeEntity;
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.data.TimeOfYearEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
+import jakarta.servlet.ServletContext;
 
 import java.util.List;
 
 public class RouteController {
     private TrailfinderDatabaseFacade _facade;
 
-    public RouteController() {
-        _facade = new TrailfinderDatabaseFacade();
+    public RouteController(ServletContext context) {
+        _facade = new TrailfinderDatabaseFacade(context);
     }
 
     public List<RouteEntity> getAllRoutes() {
