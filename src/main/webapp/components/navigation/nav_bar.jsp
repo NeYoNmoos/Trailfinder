@@ -19,7 +19,7 @@
             </a>
         </div>
         <button>
-            <a href="${pageContext.request.contextPath}/create_route/create_route.jsp">Create Route</a>
+            <a href="${pageContext.request.contextPath}/route-create">Create Route</a>
         </button>
     </div>
 </body>
