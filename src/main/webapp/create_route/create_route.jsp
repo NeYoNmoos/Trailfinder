@@ -241,8 +241,6 @@
                     <input type="text" placeholder="Longitude" id="endLongitude" name="endLongitude" pattern="^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$" title="Enter a valid longitude (-180.0 to +180.0)" required>
                 </div>
             </div>
-
-
             <input type="submit" value="Create Route">
         </form>
     </div>

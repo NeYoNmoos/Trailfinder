@@ -11,6 +11,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+
     List<RouteEntity> allRoutes = (List<RouteEntity>) request.getAttribute("allRoutes");
 %>
 <html>
@@ -33,7 +34,7 @@
     <input type="text" placeholder="Search by Name">
     <button>Search</button>
 </div>
-
+<div class="route-content">
 <div class="route-boxes">
     <%
         for (int i = 0; i < allRoutes.size(); i++) {
@@ -64,35 +65,35 @@
                         <td>Duration: <%=currentRoute.getDuration()%>h, </td>
                         <td>Location: <%=currentRoute.getLocation()%></td>
                     </tr>
-
-
                 </div>
             </a>
         <% }
     %>
+    </div>
     <div class="filter-box">
         <div class="filter-header"><h1>Filters</h1></div>
         <div class="filter-content">
+            <form action="${pageContext.request.contextPath}/" method="post">
             <div class="filter-label">Length</div>
             <div class="filter-inputs">
-                <input type="text" id="lengthMin" placeholder="Min" class="filter-input">
+                <input type="text" name="lengthMin" id="lengthMin" placeholder="Min" class="filter-input">
                 <span>to</span>
-                <input type="text" id="lengthMax" placeholder="Max" class="filter-input">
+                <input type="number" name="lengthMax" id="lengthMax" placeholder="Max" class="filter-input">
             </div>
             <div class="filter-label">Altitude</div>
             <div class="filter-inputs">
-                <input type="text" id="altitudeMin" placeholder="Min" class="filter-input">
+                <input type="number" name="altitudeMin" id="altitudeMin" placeholder="Min" class="filter-input">
                 <span>to</span>
-                <input type="text" id="altitudeMax" placeholder="Max" class="filter-input">
+                <input type="number" name="altitudeMax" id="altitudeMax" placeholder="Max" class="filter-input">
             </div>
             <div class="filter-label">Duration</div>
             <div class="filter-inputs">
-                <input type="text" id="durationMin" placeholder="Min" class="filter-input">
+                <input type="number" name="durationMin" id="durationMin" placeholder="Min" class="filter-input">
                 <span>to</span>
-                <input type="text" id="durationMax" placeholder="Max" class="filter-input">
+                <input type="number" name="durationMax" id="durationMax" placeholder="Max" class="filter-input">
             </div>
-            <button id="applyButton">Apply</button>
-
+                <button type="submit" id="applyButton">Apply</button>
+            </form>
         </div>
     </div>
 </div>
