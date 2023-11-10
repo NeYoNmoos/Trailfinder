@@ -4,6 +4,7 @@ import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,7 +23,8 @@ public class RouteDetailServlet extends HttpServlet {
 
         //TrailfinderDatabaseFacade facade = new TrailfinderDatabaseFacade();
         //RouteEntity route = facade.getRouteById(routeId);
-        RouteController rc = new RouteController();
+        ServletContext context = request.getServletContext();
+        RouteController rc = new RouteController(context);
         RouteEntity route = rc.getRouteById(routeId);
 
         request.setAttribute("route", route);

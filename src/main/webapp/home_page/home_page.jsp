@@ -92,6 +92,66 @@
                 <span>to</span>
                 <input type="number" name="durationMax" id="durationMax" placeholder="Max" class="filter-input">
             </div>
+            <div class="filter-label">Months</div>
+                <div class="filter-inputs">
+                <select name="months" id="months" multiple>
+                    <option value="january">January</option>
+                    <option value="february">February</option>
+                    <option value="march">March</option>
+                    <option value="may">May</option>
+                    <option value="june">June</option>
+                    <option value="july">July</option>
+                    <option value="august">August</option>
+                    <option value="september">September</option>
+                    <option value="october">October</option>
+                    <option value="november">November</option>
+                    <option value="december">December</option>
+                </select>
+                </div>
+
+                <div class="filter-label">Power level</div>
+                <div class="filter-inputs">
+                <select name="power" id="power">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                </div>
+                <div class="filter-label">Scenery level</div>
+                <div class="filter-inputs">
+                <select name="scenery" id="scenery">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                </div>
+
+                <div class="filter-label">Experience level</div>
+                <div class="filter-inputs">
+                <select name="experience" id="experience">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                </div>
+
+                <div class="filter-label">Condition level</div>
+                <div class="filter-inputs">
+                <select name="condition" id="condition">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+                </div>
+
                 <button type="submit" id="applyButton">Apply</button>
             </form>
         </div>

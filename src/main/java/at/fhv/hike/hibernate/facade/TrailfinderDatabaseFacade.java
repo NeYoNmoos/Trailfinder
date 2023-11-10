@@ -8,6 +8,7 @@ import at.fhv.hike.hibernate.broker.AttributeBroker;
 import at.fhv.hike.hibernate.broker.CoordinateBroker;
 import at.fhv.hike.hibernate.broker.RouteBroker;
 import at.fhv.hike.hibernate.broker.TimeOfYearBroker;
+import jakarta.servlet.ServletContext;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -19,8 +20,8 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
     private TimeOfYearBroker _timeOfYearBroker;
     private CoordinateBroker _coordinateBroker;
 
-    public TrailfinderDatabaseFacade() {
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    public TrailfinderDatabaseFacade(ServletContext context) {
+        SessionFactory sessionFactory = (SessionFactory) context.getAttribute("SessionFactory");
         this._routeBroker = new RouteBroker(sessionFactory);
         this._attributeBroker = new AttributeBroker(sessionFactory);
         this._timeOfYearBroker = new TimeOfYearBroker(sessionFactory);
@@ -66,9 +67,9 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         return _routeBroker.getAll();
     }
 
-    public List<RouteEntity>getFilteredRoutes(Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin)
+    public List<RouteEntity>getFilteredRoutes(Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery, Integer experience, Integer condition)
     {
-        return _routeBroker.getFiltered(lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin);
+        return _routeBroker.getFiltered(lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition);
     }
 
 

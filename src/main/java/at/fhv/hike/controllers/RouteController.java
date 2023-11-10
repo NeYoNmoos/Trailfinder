@@ -4,22 +4,23 @@ import at.fhv.hike.data.AttributeEntity;
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.data.TimeOfYearEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
+import jakarta.servlet.ServletContext;
 
 import java.util.List;
 
 public class RouteController {
     private TrailfinderDatabaseFacade _facade;
 
-    public RouteController() {
-        _facade = new TrailfinderDatabaseFacade();
+    public RouteController(ServletContext context) {
+        _facade = new TrailfinderDatabaseFacade(context);
     }
 
     public List<RouteEntity> getAllRoutes() {
         List<RouteEntity> allRoutes = _facade.getAllRoutes();
         return allRoutes;
     }
-    public List<RouteEntity> getFilteredRoutes(Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin) {
-        List<RouteEntity> filteredRoutes = _facade.getFilteredRoutes(lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin);
+    public List<RouteEntity> getFilteredRoutes(Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery,Integer experience, Integer condition) {
+        List<RouteEntity> filteredRoutes = _facade.getFilteredRoutes(lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition);
         return filteredRoutes;
     }
 

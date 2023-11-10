@@ -21,64 +21,119 @@
 %>
 
 <html>
-<head>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Global.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/route_detail/route_detail.css">
-    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
-    <title><%= route.getName() %></title>
-</head>
-<body>
+    <head>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title><%= route.getName() %></title>
+    </head>
+<body class="bg-gray-100">
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
-<div>
-    <div class="card">
-        <h1><%= route.getName() %></h1>
-        <div class="card row">
-            <p>Length: <%= route.getLength() %> km</p>
-            <p>Altitude: <%= route.getAltitude() %> m</p>
-            <p>Location: <%= route.getLocation() %></p>
+
+<main class="py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Route Title -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
         </div>
 
+        <!-- Route Details -->
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+            <div class="px-4 py-5 sm:p-6">
+                <h2 class="text-xl font-bold text-gray-900">Route Details</h2>
+                <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Length</dt>
+                        <dd class="mt-1 text-sm text-gray-900"><%= route.getLength() %> km</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Altitude</dt>
+                        <dd class="mt-1 text-sm text-gray-900"><%= route.getAltitude() %> m</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Location</dt>
+                        <dd class="mt-1 text-sm text-gray-900"><%= route.getLocation() %></dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Duration</dt>
+                        <dd class="mt-1 text-sm text-gray-900"><%= route.getDuration() %> hours</dd>
+                    </div>
+                </dl>
+            </div>
+        </div>
+
+        <!-- Attributes -->
         <% if (attributes != null) { %>
-        <div class="card row">
-            <p>Power: <%= attributes.getStrength() %>, </p>
-            <p>Scenery: <%= attributes.getScenery() %>, </p>
-            <p>Experience: <%= attributes.getExperience() %>, </p>
-            <p>Condition: <%= attributes.getCondition() %></p>
-        </div>
-        <% } %>
-
-        <% if (timeOfYear != null) { %>
-        <div class="card">
-            <h3>Best time to visit:</h3>
-            <div class="row">
-                <%= timeOfYear.getJanuary() ? "January " : "" %>
-                <%= timeOfYear.getFebruary() ? "February " : "" %>
-                <%= timeOfYear.getMarch() ? "March " : "" %>
-                <%= timeOfYear.getApril() ? "April " : "" %>
-                <%= timeOfYear.getMay() ? "May " : "" %>
-                <%= timeOfYear.getJune() ? "June " : "" %>
-                <%= timeOfYear.getJuly() ? "July " : "" %>
-                <%= timeOfYear.getAugust() ? "August " : "" %>
-                <%= timeOfYear.getSeptember() ? "September " : "" %>
-                <%= timeOfYear.getOctober() ? "October " : "" %>
-                <%= timeOfYear.getNovember() ? "November " : "" %>
-                <%= timeOfYear.getDecember() ? "December " : "" %>
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+            <div class="px-4 py-5 sm:p-6">
+                <h2 class="text-xl font-bold text-gray-900">Attributes</h2>
+                <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Power</dt>
+                        <dd class="mt-1 text-sm text-gray-900"><%= attributes.getStrength() %></dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Scenery</dt>
+                        <dd class="mt-1 text-sm text-gray-900"><%= attributes.getScenery() %></dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Experience</dt>
+                        <dd class="mt-1 text-sm text-gray-900"><%= attributes.getExperience() %></dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Condition</dt>
+                        <dd class="mt-1 text-sm text-gray-900"><%= attributes.getCondition() %></dd>
+                    </div>
+                </dl>
             </div>
         </div>
         <% } %>
 
-        <p>Duration: <%= route.getDuration() %> hours</p>
-        <p>Description: <%= route.getDescription() %></p>
+        <!-- Best Time to Visit -->
+        <% if (timeOfYear != null) { %>
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+            <div class="px-4 py-5 sm:p-6">
+                <h2 class="text-xl font-bold text-gray-900">Best Time to Visit</h2>
+                <p class="mt-1 text-sm text-gray-900">
+                    <%= timeOfYear.getJanuary() ? "January " : "" %>
+                    <%= timeOfYear.getFebruary() ? "February " : "" %>
+                    <%= timeOfYear.getMarch() ? "March " : "" %>
+                    <%= timeOfYear.getApril() ? "April " : "" %>
+                    <%= timeOfYear.getMay() ? "May " : "" %>
+                    <%= timeOfYear.getJune() ? "June " : "" %>
+                    <%= timeOfYear.getJuly() ? "July " : "" %>
+                    <%= timeOfYear.getAugust() ? "August " : "" %>
+                    <%= timeOfYear.getSeptember() ? "September " : "" %>
+                    <%= timeOfYear.getOctober() ? "October " : "" %>
+                    <%= timeOfYear.getNovember() ? "November " : "" %>
+                    <%= timeOfYear.getDecember() ? "December " : "" %>
+                </p>
+            </div>
+        </div>
+        <% } %>
 
+        <!-- Coordinates -->
         <% if (coordinates != null && !coordinates.isEmpty()) { %>
-        <div>
-            <h3>Coordinates:</h3>
-            <% for(CoordinateEntity coord : coordinates) { %>
-            <p>Latitude: <%= coord.getLatitude() %>, Longitude: <%= coord.getLongitude() %></p>
-            <% } %>
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+            <div class="px-4 py-5 sm:p-6">
+                <h2 class="text-xl font-bold text-gray-900">Coordinates</h2>
+                <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <% for(CoordinateEntity coord : coordinates) { %>
+                    <li class="col-span-1 bg-white rounded-lg shadow">
+                        <div class="w-full flex items-center justify-between p-6 space-x-6">
+                            <div class="flex-1 truncate">
+                                <div class="flex items-center space-x-3">
+                                    <h3 class="text-gray-900 text-sm leading-5 font-medium truncate">Point</h3>
+                                </div>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Latitude: <%= coord.getLatitude() %></p>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Longitude: <%= coord.getLongitude() %></p>
+                            </div>
+                        </div>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
         </div>
         <% } %>
     </div>
-</div>
+</main>
 </body>
 </html>

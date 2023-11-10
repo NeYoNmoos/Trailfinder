@@ -27,19 +27,7 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
         }
     }
 
-    public List<RouteEntity> getFiltered(Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin) {
-        if(lengthMin==null)
-            lengthMin=0;
-        if(altitudeMin==null)
-            lengthMin=0;
-        if(durationMin==null)
-            lengthMin=0;
-        if(lengthMax==null)
-            lengthMax=100000;
-        if(durationMax==null)
-            lengthMax=100000;
-        if(altitudeMax==null)
-            lengthMax=100000;
+    public List<RouteEntity> getFiltered(Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery, Integer experience, Integer condition) {
 
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM RouteEntity AS r " +
@@ -48,7 +36,14 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
                     "AND (r.duration >= :durationMin) " +
                     "AND (r.duration <= :durationMax) " +
                     "AND (r.altitude >= :altitudeMin) " +
-                    "AND (r.altitude <= :altitudeMax)";
+                    "AND (r.altitude <= :altitudeMax) " +
+                    "AND r.attributeEntity IN (" +
+                    "SELECT a.attributeId FROM AttributeEntity AS a " +
+                    "WHERE (a.strength >= :power) " +
+                    "AND (a.scenery >= :scenery) " +
+                    "AND (a.experience >= :experience) " +
+                    "AND (a.condition >= :condition))";
+
 
             Query<RouteEntity> query = session.createQuery(hql, RouteEntity.class)
                     .setParameter("lengthMin", lengthMin)
@@ -56,7 +51,11 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
                     .setParameter("durationMin", durationMin)
                     .setParameter("durationMax", durationMax)
                     .setParameter("altitudeMin", altitudeMin)
-                    .setParameter("altitudeMax", altitudeMax);
+                    .setParameter("altitudeMax", altitudeMax)
+                    .setParameter("power",power)
+                    .setParameter("scenery",scenery)
+                    .setParameter("experience",experience)
+                    .setParameter("condition",condition);
 
             List<RouteEntity> routes = query.getResultList();
 

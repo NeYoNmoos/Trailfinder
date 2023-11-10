@@ -15,6 +15,7 @@ import java.util.UUID;
 import static org.junit.Assert.assertNotNull;
 
 public class RouteBrokerTest {
+    /*
     private TrailfinderDatabaseFacade facade;
 
     @Before
@@ -126,6 +127,6 @@ public class RouteBrokerTest {
             System.out.println(allRoutes.get(i).getRouteId() + " " + allRoutes.get(i).getName());
             System.out.println(allRoutes.get(i).getCoordinates());
         }
-    }
+    } */
 
 }

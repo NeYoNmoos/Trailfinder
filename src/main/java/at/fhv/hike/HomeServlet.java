@@ -4,6 +4,7 @@ import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -28,13 +29,21 @@ public class HomeServlet extends HttpServlet {
         String durationMinStr = request.getParameter("durationMin");
 
 // Initialize integer variables
-        Integer lengthMax = null;
-        Integer lengthMin = null;
-        Integer altitudeMax = null;
-        Integer altitudeMin = null;
-        Integer durationMax = null;
-        Integer durationMin = null;
+        Integer lengthMax = 10000;
+        Integer lengthMin = -1;
+        Integer altitudeMax = 10000;
+        Integer altitudeMin = -1;
+        Integer durationMax = 10000;
+        Integer durationMin = -1;
 
+        Integer power = Integer.parseInt(request.getParameter("power"));
+        Integer scenery = Integer.parseInt(request.getParameter("scenery"));
+        Integer experience = Integer.parseInt(request.getParameter("experience"));
+        Integer condition = Integer.parseInt(request.getParameter("condition"));
+        System.out.println("power: " + power);
+        System.out.println("scenery: " + scenery);
+        System.out.println("experience: " + experience);
+        System.out.println("condition: " + condition);
 // Parse string parameters into integers
         if (lengthMaxStr != null && !lengthMaxStr.isEmpty()) {
             lengthMax = Integer.parseInt(lengthMaxStr);
@@ -55,15 +64,16 @@ public class HomeServlet extends HttpServlet {
             durationMin = Integer.parseInt(durationMinStr);
         }
 
-        RouteController rc = new RouteController();
+        ServletContext context = request.getServletContext();
+        RouteController rc = new RouteController(context);
         List<RouteEntity> allRoutes;
 
-        if(lengthMin!=null || lengthMax!=null || altitudeMax!=null||altitudeMin!=null||durationMax!=null||durationMin!=null)
-        {
-            allRoutes=rc.getFilteredRoutes(lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin);
-        }
-        else
-            allRoutes = rc.getAllRoutes();
+        //if(lengthMin!=null || lengthMax!=null || altitudeMax!=null||altitudeMin!=null||durationMax!=null||durationMin!=null)
+        //{
+            allRoutes=rc.getFilteredRoutes(lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition);
+       // }
+        //else
+           // allRoutes = rc.getAllRoutes();
 
         request.setAttribute("allRoutes", allRoutes);
 
@@ -74,50 +84,10 @@ public class HomeServlet extends HttpServlet {
 
         //TrailfinderDatabaseFacade facade = new TrailfinderDatabaseFacade();
         //List<RouteEntity> allRoutes = facade.getAllRoutes();
-        String lengthMaxStr = request.getParameter("lengthMax");
-        String lengthMinStr = request.getParameter("lengthMin");
-        String altitudeMaxStr = request.getParameter("altitudeMax");
-        String altitudeMinStr = request.getParameter("altitudeMin");
-        String durationMaxStr = request.getParameter("durationMax");
-        String durationMinStr = request.getParameter("durationMin");
+        ServletContext context = request.getServletContext();
+        RouteController rc = new RouteController(context);
 
-// Initialize integer variables
-        Integer lengthMax = null;
-        Integer lengthMin = null;
-        Integer altitudeMax = null;
-        Integer altitudeMin = null;
-        Integer durationMax = null;
-        Integer durationMin = null;
-
-// Parse string parameters into integers
-        if (lengthMaxStr != null && !lengthMaxStr.isEmpty()) {
-            lengthMax = Integer.parseInt(lengthMaxStr);
-        }
-        if (lengthMinStr != null && !lengthMinStr.isEmpty()) {
-            lengthMin = Integer.parseInt(lengthMinStr);
-        }
-        if (altitudeMaxStr != null && !altitudeMaxStr.isEmpty()) {
-            altitudeMax = Integer.parseInt(altitudeMaxStr);
-        }
-        if (altitudeMinStr != null && !altitudeMinStr.isEmpty()) {
-            altitudeMin = Integer.parseInt(altitudeMinStr);
-        }
-        if (durationMaxStr != null && !durationMaxStr.isEmpty()) {
-            durationMax = Integer.parseInt(durationMaxStr);
-        }
-        if (durationMinStr != null && !durationMinStr.isEmpty()) {
-            durationMin = Integer.parseInt(durationMinStr);
-        }
-
-        RouteController rc = new RouteController();
-        List<RouteEntity> allRoutes;
-
-        if(lengthMin!=null || lengthMin!=null || altitudeMax!=null||altitudeMin!=null||durationMax!=null||durationMin!=null)
-        {
-            allRoutes=rc.getFilteredRoutes(lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin);
-        }
-        else
-            allRoutes = rc.getAllRoutes();
+        List<RouteEntity> allRoutes = rc.getAllRoutes();
 
         request.setAttribute("allRoutes", allRoutes);
 
