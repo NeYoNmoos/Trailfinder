@@ -23,12 +23,12 @@
 <body>
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
 
-<header>
+<!--<header>
     <div class="header-content">
         <h1>Trailfinder</h1>
         <img src="${pageContext.request.contextPath}/assets/home_page_img/header-image.jpg" alt="Header Image">
     </div>
-</header>
+</header>-->
 
 <div class="search-bar">
     <input type="text" placeholder="Search by Name">
