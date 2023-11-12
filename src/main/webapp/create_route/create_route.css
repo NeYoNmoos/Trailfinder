@@ -21,6 +21,9 @@
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    resize:none;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px
 }
 
 .route-form-container input[type="submit"] {
@@ -30,6 +33,10 @@
     cursor: pointer;
     border: none;
     border-radius: 5px;
+}
+
+.route-form-container select {
+    width: 50%;
 }
 
 .loading-overlay {
@@ -74,4 +81,29 @@
 
 .coordinate-input label {
     margin-bottom: 5px;
+}
+
+.create-confirmation h1 {
+    margin-top: 30%;
+    font-size: 30px;
+    color: #45a049;
+}
+
+.create-confirmation a {
+    text-decoration: none;
+    color: white;
+}
+
+.create-confirmation button {
+    padding: 10px 20px;
+    margin-top: 40px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
