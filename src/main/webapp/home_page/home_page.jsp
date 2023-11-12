@@ -97,12 +97,13 @@
                 <span>to</span>
                 <input type="number" name="durationMax" id="durationMax" placeholder="Max" class="filter-input">
             </div>
-            <div class="filter-label">Months</div>
+            <!--<div class="filter-label">Months</div>
                 <div class="filter-inputs">
                 <select name="months" id="months" multiple>
                     <option value="january">January</option>
                     <option value="february">February</option>
                     <option value="march">March</option>
+                    <option value="march">April</option>
                     <option value="may">May</option>
                     <option value="june">June</option>
                     <option value="july">July</option>
@@ -112,7 +113,7 @@
                     <option value="november">November</option>
                     <option value="december">December</option>
                 </select>
-                </div>
+                </div>-->
 
                 <div class="filter-label">Power level</div>
                 <div class="filter-inputs">
