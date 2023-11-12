@@ -30,10 +30,10 @@
     </div>
 </header>-->
 
-<div class="search-bar">
+<!--<div class="search-bar">
     <input type="text" placeholder="Search by Name">
     <button>Search</button>
-</div>
+</div>-->
 <div class="route-content">
 <div class="route-boxes">
     <%
