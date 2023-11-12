@@ -62,7 +62,12 @@
                     <tr class="route-data">
                         <td>Length: <%=currentRoute.getLength()%>km, </td>
                         <td>Altitude: <%=currentRoute.getAltitude()%>m, </td>
-                        <td>Duration: <%=currentRoute.getDuration()%>h, </td>
+                        <%
+                            double totalHours = currentRoute.getDuration();
+                            int wholeHours = (int) totalHours;
+                            int wholeMinutes = (int) Math.round((totalHours - wholeHours) * 60);
+                        %>
+                        <td>Duration: <%= wholeHours %>h <%= wholeMinutes %>m</td>
                         <td>Location: <%=currentRoute.getLocation()%></td>
                     </tr>
                 </div>
