@@ -29,26 +29,27 @@
             <div class="loader"></div>
         </div>
         <form action="${pageContext.request.contextPath}/route-create" method="post">
+            <h1>General Information:</h1>
             <label for="name">Route Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" placeholder="Name of your route..." id="name" name="name" required>
 
             <label for="length">Length (in km):</label>
-            <input type="number" id="length" name="length" step="0.1" required>
+            <input type="number" placeholder="Lenght of your route..." id="length" name="length" step="0.1" required>
 
             <label for="altitude">Altitude (in m):</label>
-            <input type="number" id="altitude" name="altitude" step="0.1" required>
+            <input type="number" placeholder="Altitude of your route..." id="altitude" name="altitude" step="0.1" required>
 
             <label for="location">Location:</label>
-            <input type="text" id="location" name="location" required>
+            <input type="text" placeholder="Location of your route..." id="location" name="location" required>
 
             <label for="duration">Duration (in hours):</label>
-            <input type="number" id="duration" name="duration" step="0.1" required>
+            <input type="number" placeholder="Duration of your route..." id="duration" name="duration" step="0.1" required>
 
             <label for="description">Description:</label>
-            <textarea id="description" name="description" rows="4" required></textarea>
+            <textarea id="description" placeholder="Describe your route..." name="description" rows="4" required></textarea>
 
-            <label for="months">Choose months</label>
-            <select name="months" id="months" multiple>
+            <label for="months">Choose months (hold 'Strg' while clicking to select multiple)</label>
+            <select name="months" id="months" multiple size="11">
                 <option value="january">January</option>
                 <option value="february">February</option>
                 <option value="march">March</option>
@@ -98,6 +99,7 @@
                 <option value="5">5</option>
             </select>
 
+            <h1>Define Route:</h1>
             <label>Startpoint</label>
             <div class="coordinate-row">
                 <div class="coordinate-input">
