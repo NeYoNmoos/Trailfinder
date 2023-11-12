@@ -49,7 +49,7 @@
             <textarea id="description" placeholder="Describe your route..." name="description" rows="4" required></textarea>
 
             <label for="months">Choose months (hold 'Strg' while clicking to select multiple)</label>
-            <select name="months" id="months" multiple size="11">
+            <select name="months" id="months" multiple size="12">
                 <option value="january">January</option>
                 <option value="february">February</option>
                 <option value="march">March</option>
