@@ -23,6 +23,8 @@
 <html>
     <head>
         <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
         <title><%= route.getName() %></title>
     </head>
 <body class="bg-gray-100">
@@ -110,9 +112,41 @@
         </div>
         <% } %>
 
-        <!-- Coordinates -->
+        <!-- Coordinates on map -->
         <% if (coordinates != null && !coordinates.isEmpty()) { %>
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+
+            <% if (coordinates != null && !coordinates.isEmpty()) { %>
+            <div id="map" class="w-full h-[400px]"></div>
+            <script>
+                var firstLat = <%= coordinates.get(0).getLatitude() %>;
+                var firstLon = <%= coordinates.get(0).getLongitude() %>;
+                var map = L.map('map').setView([firstLat, firstLon], 13);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+
+                var polylinePoints = [];
+
+                <% for (CoordinateEntity coord : coordinates) { %>
+                var lat = <%= coord.getLatitude() %>;
+                var lon = <%= coord.getLongitude() %>;
+                polylinePoints.push([lat, lon]);
+                L.marker([lat, lon]).addTo(map)
+                    .bindPopup("<b><%= route.getName() %></b><br/><%= route.getDescription() %>");
+                <% } %>
+
+                var polyline = L.polyline(polylinePoints, {color: 'red'}).addTo(map);
+                map.fitBounds(polyline.getBounds());
+                setTimeout(function() {
+                    map.invalidateSize();
+                }, 100);
+            </script>
+            <% } %>
+
+
             <div class="px-4 py-5 sm:p-6">
                 <h2 class="text-xl font-bold text-gray-900">Coordinates</h2>
                 <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -136,4 +170,7 @@
     </div>
 </main>
 </body>
+
+
+
 </html>
