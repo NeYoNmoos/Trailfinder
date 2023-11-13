@@ -1,10 +1,21 @@
+:root {
+    --text: #180202;
+    --background: #fafafa;
+    --primary: #00ff26;
+    --primary-dark: #00cc25;
+    --secondary: #0e670e;
+    --accent: #000000;
+    --scroll-background: #daded8;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f0f0f0;
+    background-color: var(--background);
+    color: var(--text);
     width: 100vw;
     overflow-x: hidden;
 }
@@ -18,12 +29,90 @@ body {
     margin: 20px;
 }
 
+.btn-primary {
+    background-color: var(--primary) !important;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark) !important;
+}
+
+
 h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 p {
-    margin: 5px 0;
+    font-size: 1rem;
+    margin: 1rem 0;
     line-height: 1.6;
+}
+
+a {
+    color: #0066cc;
+    text-decoration: none !important;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 0.5rem; /* 8px */
+}
+
+
+/* custom scrollbar styles */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scroll-background);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
+    border-radius: 10px;
+    border: 2px solid var(--scroll-background);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* Works on Firefox */
+* {
+    scrollbar-width: thin; /
+    scrollbar-color: var(--primary-dark) var(--scroll-background);
+}
+
+/* Works on IE and Edge legacy */
+* {
+    -ms-overflow-style: -ms-autohiding-scrollbar;
 }

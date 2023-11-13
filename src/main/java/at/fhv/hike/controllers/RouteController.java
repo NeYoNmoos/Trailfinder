@@ -19,6 +19,10 @@ public class RouteController {
         List<RouteEntity> allRoutes = _facade.getAllRoutes();
         return allRoutes;
     }
+    public List<RouteEntity> getFilteredRoutes(Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery,Integer experience, Integer condition) {
+        List<RouteEntity> filteredRoutes = _facade.getFilteredRoutes(lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition);
+        return filteredRoutes;
+    }
 
     public List<RouteEntity> getALlRoutesWithCoordinates() {
         List<RouteEntity> allRoutes = _facade.getAllRoutes();

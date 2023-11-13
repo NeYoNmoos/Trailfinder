@@ -67,6 +67,11 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         return _routeBroker.getAll();
     }
 
+    public List<RouteEntity>getFilteredRoutes(Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery, Integer experience, Integer condition)
+    {
+        return _routeBroker.getFiltered(lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition);
+    }
+
 
     @Override
     public RouteEntity getRouteById(String id) {

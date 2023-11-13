@@ -133,7 +133,7 @@ public class RouteCreateServlet extends HttpServlet {
         RouteController rc = new RouteController(context);
         rc.createRoute(newRoute);
 
-        response.sendRedirect("/create_route/create_confirmation.jsp");
+        request.getRequestDispatcher("/create_route/create_confirmation.jsp").forward(request, response);
     }
 
 }
