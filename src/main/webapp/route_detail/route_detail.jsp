@@ -22,6 +22,7 @@
 
 <html>
     <head>
+        <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
@@ -33,7 +34,7 @@
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
 
 <main class="py-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl lg:w-[75vw] mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Route Title -->
         <div class="mb-8">
             <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
@@ -123,26 +124,38 @@
         <% if (coordinates != null && !coordinates.isEmpty()) { %>
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
 
-            <% if (coordinates != null && !coordinates.isEmpty()) { %>
             <div id="map" class="w-full h-[400px]"></div>
             <script>
                 var firstLat = <%= coordinates.get(0).getLatitude() %>;
                 var firstLon = <%= coordinates.get(0).getLongitude() %>;
                 var map = L.map('map').setView([firstLat, firstLon], 13);
 
+                /* // default map style
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     maxZoom: 19,
                     attribution: '© OpenStreetMap contributors'
-                }).addTo(map);
+                }).addTo(map); */
+
+                // thunderforest map style
+                L.tileLayer(
+                    'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=35adf7fcff8d4453ab157783a4c0f0be',
+                    { attribution: 'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>' }
+                ).addTo(map);
 
                 var waypoints = [];
                 <% for (CoordinateEntity coord : coordinates) { %>
                 waypoints.push(L.latLng(<%= coord.getLatitude() %>, <%= coord.getLongitude() %>));
                 <% } %>
-                console.log(waypoints);
+
+                var primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
 
                 L.Routing.control({
-                    waypoints: waypoints
+                    waypoints: waypoints,
+                    lineOptions : {
+                        color: primaryColor,
+                        addWaypoints: false,
+                        styles: [{ color: primaryColor, opacity: 0.75, weight: 3 }]
+                    }
                 }).addTo(map);
 
                 // used to load the map (without it shows unloaded spots)
@@ -150,8 +163,6 @@
                     map.invalidateSize();
                 }, 100);
             </script>
-            <% } %>
-
 
             <div class="px-4 py-5 sm:p-6">
                 <h2 class="text-xl font-bold text-gray-900">Coordinates</h2>
