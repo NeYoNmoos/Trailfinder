@@ -33,66 +33,67 @@
     <input type="text" placeholder="Search by Name">
     <button>Search</button>
 </div>
+<div class="route-content">
+    <div class="route-boxes">
+        <%
+            for (int i = 0; i < allRoutes.size(); i++) {
+                RouteEntity currentRoute = allRoutes.get(i);
+                String detailPageUrl = "route-detail?routeId=" + currentRoute.getRouteId(); %>
+                <a href="<%= detailPageUrl %>" class="route-box-link">
+                    <div class="route-box">
+                        <div class="route-info">
+                            <h2><%=currentRoute.getName()%></h2>
 
-<div class="route-boxes">
-    <%
-        for (int i = 0; i < allRoutes.size(); i++) {
-            RouteEntity currentRoute = allRoutes.get(i);
-            String detailPageUrl = "route-detail?routeId=" + currentRoute.getRouteId(); %>
-            <a href="<%= detailPageUrl %>" class="route-box-link">
-                <div class="route-box">
-                    <div class="route-info">
-                        <h2><%=currentRoute.getName()%></h2>
-
+                            <tr class="route-data">
+                                <td><%
+                                AttributeEntity attributes = currentRoute != null ? currentRoute.getAttributeEntity() : null;
+                                if (attributes != null) { %>
+                                <td>Power: <%= attributes.getStrength() %>, </td>
+                                <td>Scenery: <%= attributes.getScenery() %>, </td>
+                                <td>Experience: <%= attributes.getExperience() %>, </td>
+                                <td>Condition: <%= attributes.getCondition() %></td>
+                                <% } %>
+                            </tr>
+                            <p>
+                                <%=currentRoute.getDescription()%>
+                            </p>
+                        </div>
                         <tr class="route-data">
-                            <td><%
-                            AttributeEntity attributes = currentRoute != null ? currentRoute.getAttributeEntity() : null;
-                            if (attributes != null) { %>
-                            <td>Power: <%= attributes.getStrength() %>, </td>
-                            <td>Scenery: <%= attributes.getScenery() %>, </td>
-                            <td>Experience: <%= attributes.getExperience() %>, </td>
-                            <td>Condition: <%= attributes.getCondition() %></td>
-                            <% } %>
+                            <td>Length: <%=currentRoute.getLength()%>km, </td>
+                            <td>Altitude: <%=currentRoute.getAltitude()%>m, </td>
+                            <td>Duration: <%=currentRoute.getDuration()%>h, </td>
+                            <td>Location: <%=currentRoute.getLocation()%></td>
                         </tr>
-                        <p>
-                            <%=currentRoute.getDescription()%>
-                        </p>
+
+
                     </div>
-                    <tr class="route-data">
-                        <td>Length: <%=currentRoute.getLength()%>km, </td>
-                        <td>Altitude: <%=currentRoute.getAltitude()%>m, </td>
-                        <td>Duration: <%=currentRoute.getDuration()%>h, </td>
-                        <td>Location: <%=currentRoute.getLocation()%></td>
-                    </tr>
-
-
+                </a>
+            <% }
+        %>
+        <div class="filter-box">
+            <div class="filter-header"><h1>Filters</h1></div>
+            <div class="filter-content">
+                <div class="filter-label">Length</div>
+                <div class="filter-inputs">
+                    <input type="text" id="lengthMin" placeholder="Min" class="filter-input">
+                    <span>to</span>
+                    <input type="text" id="lengthMax" placeholder="Max" class="filter-input">
                 </div>
-            </a>
-        <% }
-    %>
-    <div class="filter-box">
-        <div class="filter-header"><h1>Filters</h1></div>
-        <div class="filter-content">
-            <div class="filter-label">Length</div>
-            <div class="filter-inputs">
-                <input type="text" id="lengthMin" placeholder="Min" class="filter-input">
-                <span>to</span>
-                <input type="text" id="lengthMax" placeholder="Max" class="filter-input">
-            </div>
-            <div class="filter-label">Altitude</div>
-            <div class="filter-inputs">
-                <input type="text" id="altitudeMin" placeholder="Min" class="filter-input">
-                <span>to</span>
-                <input type="text" id="altitudeMax" placeholder="Max" class="filter-input">
-            </div>
-            <div class="filter-label">Duration</div>
-            <div class="filter-inputs">
-                <input type="text" id="durationMin" placeholder="Min" class="filter-input">
-                <span>to</span>
-                <input type="text" id="durationMax" placeholder="Max" class="filter-input">
-            </div>
-            <button id="applyButton">Apply</button>
+                <div class="filter-label">Altitude</div>
+                <div class="filter-inputs">
+                    <input type="text" id="altitudeMin" placeholder="Min" class="filter-input">
+                    <span>to</span>
+                    <input type="text" id="altitudeMax" placeholder="Max" class="filter-input">
+                </div>
+                <div class="filter-label">Duration</div>
+                <div class="filter-inputs">
+                    <input type="text" id="durationMin" placeholder="Min" class="filter-input">
+                    <span>to</span>
+                    <input type="text" id="durationMax" placeholder="Max" class="filter-input">
+                </div>
+                <button id="applyButton">Apply</button>
 
+            </div>
         </div>
     </div>
 </div>
