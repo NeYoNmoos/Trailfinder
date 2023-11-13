@@ -154,7 +154,7 @@
                     lineOptions : {
                         color: primaryColor,
                         addWaypoints: false,
-                        styles: [{ color: primaryColor, opacity: 0.75, weight: 3 }]
+                        styles: [{ color: primaryColor, opacity: 0.95, weight: 4 }]
                     }
                 }).addTo(map);
 
