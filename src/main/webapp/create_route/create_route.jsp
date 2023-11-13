@@ -14,22 +14,21 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Global.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/create_route/create_route.css">
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Global.css">
     <title>Create New Route</title>
 </head>
 <body>
     <jsp:include page="/components/navigation/nav_bar.jsp"/>
-
-    <h1>Create a new Route</h1>
 
     <div class="route-form-container">
         <div class="loading-overlay" id="loadingOverlay">
             <div class="loader"></div>
         </div>
         <form action="${pageContext.request.contextPath}/route-create" method="post">
-            <h1>General Information:</h1>
+            <h1>Create a new Route</h1>
+            <h2>General Information:</h2>
             <label for="name">Route Name:</label>
             <input type="text" placeholder="Name of your route..." id="name" name="name" required>
 
@@ -100,7 +99,7 @@
                 <option value="5">5</option>
             </select>
 
-            <h1>Define Route:</h1>
+            <h2>Define Route:</h2>
             <label>Startpoint</label>
             <div class="coordinate-row">
                 <div class="coordinate-input">
@@ -121,7 +120,7 @@
                 </div>
             </div>
 
-            <input type="submit" value="Create Route">
+            <input class="btn-primary" type="submit" value="Create Route">
         </form>
     </div>
 </body>
