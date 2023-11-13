@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Global.css">
 </head>
 <body>
-<nav class="w-full sticky top-0 z-1000 bg-white shadow py-2 px-4 flex justify-between items-center">
+<nav class="w-full sticky top-0 z-[1000] bg-white shadow py-2 px-4 flex justify-between items-center">
     <a href="${pageContext.request.contextPath}/" class="flex items-center text-black">
         <img src="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png" alt="Logo" class="h-20 w-auto">
         <h2 class="font-bold">Trailfinder</h2>
