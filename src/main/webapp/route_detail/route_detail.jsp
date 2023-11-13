@@ -25,6 +25,8 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+        <script src="https://unpkg.com/leaflet-routing-machine"></script>
         <title><%= route.getName() %></title>
     </head>
 <body class="bg-gray-100">
@@ -62,7 +64,6 @@
                         %>
                         <dt class="text-sm font-medium text-gray-500">Duration</dt>
                         <dd class="mt-1 text-sm text-gray-900"><%= wholeHours + "h " + wholeMinutes + "min" %></dd>
-
                     </div>
                 </dl>
             </div>
@@ -134,18 +135,17 @@
                     attribution: '© OpenStreetMap contributors'
                 }).addTo(map);
 
-                var polylinePoints = [];
-
+                var waypoints = [];
                 <% for (CoordinateEntity coord : coordinates) { %>
-                var lat = <%= coord.getLatitude() %>;
-                var lon = <%= coord.getLongitude() %>;
-                polylinePoints.push([lat, lon]);
-                L.marker([lat, lon]).addTo(map)
-                    .bindPopup("<b><%= route.getName() %></b><br/><%= route.getDescription() %>");
+                waypoints.push(L.latLng(<%= coord.getLatitude() %>, <%= coord.getLongitude() %>));
                 <% } %>
+                console.log(waypoints);
 
-                var polyline = L.polyline(polylinePoints, {color: 'red'}).addTo(map);
-                map.fitBounds(polyline.getBounds());
+                L.Routing.control({
+                    waypoints: waypoints
+                }).addTo(map);
+
+                // used to load the map (without it shows unloaded spots)
                 setTimeout(function() {
                     map.invalidateSize();
                 }, 100);
