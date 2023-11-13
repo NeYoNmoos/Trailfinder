@@ -44,7 +44,7 @@
                         <div class="mb-2"><strong>Location:</strong> <%= currentRoute.getLocation() %></div>
                         <div class="flex flex-row">
                             <div class="mb-2 mr-2"><strong>Length:</strong> <%= currentRoute.getLength() %> km</div>
-                            <div class="mb-2"><strong>About:</strong> <%= wholeHours %>h <%= wholeMinutes %>m</div>
+                            <div class="mb-2"><strong>About:</strong> <%= wholeHours %>h <%= wholeMinutes %>min</div>
                         </div>
                         <div class="mb-2"><strong>Altitude:</strong> <%= currentRoute.getAltitude() %> m</div>
                         <% if (attributes != null) { %>
