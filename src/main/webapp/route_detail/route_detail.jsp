@@ -55,8 +55,14 @@
                         <dd class="mt-1 text-sm text-gray-900"><%= route.getLocation() %></dd>
                     </div>
                     <div class="sm:col-span-1">
+                        <%
+                            double totalHours = route.getDuration();
+                            int wholeHours = (int) totalHours;
+                            int wholeMinutes = (int) Math.round((totalHours - wholeHours) * 60);
+                        %>
                         <dt class="text-sm font-medium text-gray-500">Duration</dt>
-                        <dd class="mt-1 text-sm text-gray-900"><%= route.getDuration() %> hours</dd>
+                        <dd class="mt-1 text-sm text-gray-900"><%= wholeHours + "h " + wholeMinutes + "min" %></dd>
+
                     </div>
                 </dl>
             </div>
