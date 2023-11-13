@@ -30,7 +30,8 @@
         <!-- Routes Grid -->
         <div class="w-full lg:w-3/4 px-4 mb-4">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <% for (RouteEntity currentRoute : allRoutes) {
+                <%
+                    for (RouteEntity currentRoute : allRoutes) {
                     String detailPageUrl = "route-detail?routeId=" + currentRoute.getRouteId();
                     AttributeEntity attributes = currentRoute.getAttributeEntity();
                     double totalHours = currentRoute.getDuration();
@@ -71,75 +72,88 @@
                 <div class="bg-white rounded-lg shadow p-6">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">Filters</h2>
                     <form action="${pageContext.request.contextPath}/" method="post">
-                        <!-- Length filter -->
-                        <div class="mb-4">
-                            <label for="lengthMin" class="block text-sm font-medium text-gray-700">Length</label>
-                            <div class="flex space-x-2">
-                                <input type="number" name="lengthMin" id="lengthMin" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Min">
-                                <input type="number" name="lengthMax" id="lengthMax" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Max">
-                            </div>
-                        </div>
-                        <!-- Altitude filter -->
-                        <div class="mb-4">
-                            <label for="altitudeMin" class="block text-sm font-medium text-gray-700">Altitude</label>
-                            <div class="flex space-x-2">
-                                <input type="number" name="altitudeMin" id="altitudeMin" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Min">
-                                <input type="number" name="altitudeMax" id="altitudeMax" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Max">
-                            </div>
-                        </div>
                         <!-- Duration filter -->
                         <div class="mb-4">
                             <label for="durationMin" class="block text-sm font-medium text-gray-700">Duration</label>
                             <div class="flex space-x-2">
-                                <input type="number" name="durationMin" id="durationMin" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Min">
-                                <input type="number" name="durationMax" id="durationMax" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Max">
+                                <input type="number" name="durationMin" id="durationMin" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                       placeholder="Min" value="<%= request.getParameter("durationMin") %>">
+                                <input type="number" name="durationMax" id="durationMax" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                       placeholder="Max" value="<%= request.getParameter("durationMax") %>">
                             </div>
                         </div>
+                        <!-- Length filter -->
+                        <div class="mb-4">
+                            <label for="lengthMin" class="block text-sm font-medium text-gray-700">Length</label>
+                            <div class="flex space-x-2">
+                                <input type="number" name="lengthMin" id="lengthMin" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                       placeholder="Min" value="<%= request.getParameter("lengthMin") %>">
+                                <input type="number" name="lengthMax" id="lengthMax" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                       placeholder="Max" value="<%= request.getParameter("lengthMax") %>">
+                            </div>
+                        </div>
+
+                        <!-- Altitude filter -->
+                        <div class="mb-4">
+                            <label for="altitudeMin" class="block text-sm font-medium text-gray-700">Altitude</label>
+                            <div class="flex space-x-2">
+                                <input type="number" name="altitudeMin" id="altitudeMin" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                       placeholder="Min" value="<%= request.getParameter("altitudeMin") %>">
+                                <input type="number" name="altitudeMax" id="altitudeMax" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                       placeholder="Max" value="<%= request.getParameter("altitudeMax") %>">
+                            </div>
+                        </div>
+
                         <!-- Power level filter -->
                         <div class="mb-4">
                             <label for="power" class="block text-sm font-medium text-gray-700">Power level</label>
                             <select name="power" id="power" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                                <option value="1" <%= "1".equals(request.getParameter("power")) ? "selected" : "" %>>1</option>
+                                <option value="2" <%= "2".equals(request.getParameter("power")) ? "selected" : "" %>>2</option>
+                                <option value="3" <%= "3".equals(request.getParameter("power")) ? "selected" : "" %>>3</option>
+                                <option value="4" <%= "4".equals(request.getParameter("power")) ? "selected" : "" %>>4</option>
+                                <option value="5" <%= "5".equals(request.getParameter("power")) ? "selected" : "" %>>5</option>
                             </select>
                         </div>
+
                         <!-- Scenery level filter -->
                         <div class="mb-4">
                             <label for="scenery" class="block text-sm font-medium text-gray-700">Scenery level</label>
                             <select name="scenery" id="scenery" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                                <option value="1" <%= "1".equals(request.getParameter("scenery")) ? "selected" : "" %>>1</option>
+                                <option value="2" <%= "2".equals(request.getParameter("scenery")) ? "selected" : "" %>>2</option>
+                                <option value="3" <%= "3".equals(request.getParameter("scenery")) ? "selected" : "" %>>3</option>
+                                <option value="4" <%= "4".equals(request.getParameter("scenery")) ? "selected" : "" %>>4</option>
+                                <option value="5" <%= "5".equals(request.getParameter("scenery")) ? "selected" : "" %>>5</option>
                             </select>
                         </div>
+
                         <!-- Experience level filter -->
                         <div class="mb-4">
                             <label for="experience" class="block text-sm font-medium text-gray-700">Experience level</label>
                             <select name="experience" id="experience" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                                <option value="1" <%= "1".equals(request.getParameter("experience")) ? "selected" : "" %>>1</option>
+                                <option value="2" <%= "2".equals(request.getParameter("experience")) ? "selected" : "" %>>2</option>
+                                <option value="3" <%= "3".equals(request.getParameter("experience")) ? "selected" : "" %>>3</option>
+                                <option value="4" <%= "4".equals(request.getParameter("experience")) ? "selected" : "" %>>4</option>
+                                <option value="5" <%= "5".equals(request.getParameter("experience")) ? "selected" : "" %>>5</option>
                             </select>
                         </div>
+
                         <!-- Condition level filter -->
                         <div class="mb-4">
                             <label for="condition" class="block text-sm font-medium text-gray-700">Condition level</label>
                             <select name="condition" id="condition" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                                <option value="1" <%= "1".equals(request.getParameter("condition")) ? "selected" : "" %>>1</option>
+                                <option value="2" <%= "2".equals(request.getParameter("condition")) ? "selected" : "" %>>2</option>
+                                <option value="3" <%= "3".equals(request.getParameter("condition")) ? "selected" : "" %>>3</option>
+                                <option value="4" <%= "4".equals(request.getParameter("condition")) ? "selected" : "" %>>4</option>
+                                <option value="5" <%= "5".equals(request.getParameter("condition")) ? "selected" : "" %>>5</option>
                             </select>
                         </div>
-                        <button type="submit" class="w-full btn-primary text-white rounded-md px-4 py-2 mt-4 ">Apply</button>
+
+                        <button type="submit" class="w-full btn-primary text-white rounded-md px-4 py-2 mt-4">Apply</button>
+
                     </form>
                 </div>
             </div>
