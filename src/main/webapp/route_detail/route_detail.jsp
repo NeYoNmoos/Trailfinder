@@ -3,7 +3,9 @@
 <%@ page import="at.fhv.hike.data.CoordinateEntity" %>
 <%@ page import="at.fhv.hike.data.TimeOfYearEntity" %>
 <%@ page import="at.fhv.hike.data.AttributeEntity" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="java.util.Comparator" %><%--
   Created by IntelliJ IDEA.
   User: matth
   Date: 01/11/2023
@@ -18,6 +20,8 @@
     TimeOfYearEntity timeOfYear = route != null ? route.getTimeOfYearEntity() : null;
     AttributeEntity attributes = route != null ? route.getAttributeEntity() : null;
     List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;
+
+    Collections.sort(coordinates, Comparator.comparingInt(CoordinateEntity::getSequence));
 %>
 
 <html>
@@ -126,9 +130,9 @@
 
             <div id="map" class="w-full h-[400px]"></div>
             <script>
-                var firstLat = <%= coordinates.get(0).getLatitude() %>;
-                var firstLon = <%= coordinates.get(0).getLongitude() %>;
-                var map = L.map('map').setView([firstLat, firstLon], 13);
+                let firstLat = <%= coordinates.get(0).getLatitude() %>;
+                let firstLon = <%= coordinates.get(0).getLongitude() %>;
+                let map = L.map('map').setView([firstLat, firstLon], 13);
 
                 /* // default map style
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -142,12 +146,13 @@
                     { attribution: 'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>' }
                 ).addTo(map);
 
-                var waypoints = [];
+                let waypoints = [];
                 <% for (CoordinateEntity coord : coordinates) { %>
                 waypoints.push(L.latLng(<%= coord.getLatitude() %>, <%= coord.getLongitude() %>));
                 <% } %>
 
-                var primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+
+                let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
 
                 L.Routing.control({
                     waypoints: waypoints,
@@ -155,6 +160,9 @@
                         color: primaryColor,
                         addWaypoints: false,
                         styles: [{ color: primaryColor, opacity: 0.95, weight: 4 }]
+                    },
+                    createMarker: function(index, wp) {
+                        return L.marker(wp.latLng).bindPopup(`Waypoint ${index + 1}`);
                     }
                 }).addTo(map);
 
