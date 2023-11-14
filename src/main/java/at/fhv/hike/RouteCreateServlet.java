@@ -20,11 +20,53 @@ import java.util.UUID;
 public class RouteCreateServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
-        dispatcher.forward(request, response);
+        String routeId = request.getParameter("routeId");
+        if(routeId != null) {
+            ServletContext context = request.getServletContext();
+            RouteController rc = new RouteController(context);
+            RouteEntity route = rc.getRouteById(routeId);
+            //String name=route.getName();
+            request.setAttribute("name", route.getName());
+            request.setAttribute("location", route.getLocation());
+            request.setAttribute("altitude", route.getAltitude());
+            request.setAttribute("length", route.getLength());
+            request.setAttribute("duration", route.getDuration());
+            request.setAttribute("description", route.getDescription());
+
+            request.setAttribute("power",route.getAttributeEntity().getStrength());
+            request.setAttribute("scenery",route.getAttributeEntity().getScenery());
+            request.setAttribute("condition",route.getAttributeEntity().getCondition());
+            request.setAttribute("experience",route.getAttributeEntity().getExperience());
+
+            request.setAttribute("january", route.getTimeOfYearEntity().getJanuary());
+            request.setAttribute("february", route.getTimeOfYearEntity().getFebruary());
+            request.setAttribute("march", route.getTimeOfYearEntity().getMarch());
+            request.setAttribute("april", route.getTimeOfYearEntity().getApril());
+            request.setAttribute("may", route.getTimeOfYearEntity().getMay());
+            request.setAttribute("june", route.getTimeOfYearEntity().getJune());
+            request.setAttribute("july", route.getTimeOfYearEntity().getJuly());
+            request.setAttribute("august", route.getTimeOfYearEntity().getAugust());
+            request.setAttribute("september", route.getTimeOfYearEntity().getSeptember());
+            request.setAttribute("october", route.getTimeOfYearEntity().getOctober());
+            request.setAttribute("november", route.getTimeOfYearEntity().getNovember());
+            request.setAttribute("december", route.getTimeOfYearEntity().getDecember());
+
+            request.setAttribute("startLongitude", route.getCoordinates().get(0).getLongitude());
+            request.setAttribute("startLatitude", route.getCoordinates().get(0).getLatitude());
+            request.setAttribute("endLongitude", route.getCoordinates().get(1).getLongitude());
+            request.setAttribute("endLatitude", route.getCoordinates().get(1).getLatitude());
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
+            dispatcher.forward(request, response);
+        }
+        else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         String name = request.getParameter("name");
         double length = Double.parseDouble(request.getParameter("length"));
         double altitude = Double.parseDouble(request.getParameter("altitude"));

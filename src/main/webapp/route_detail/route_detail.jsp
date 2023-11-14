@@ -31,8 +31,12 @@
 <main class="py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Route Title -->
-        <div class="mb-8">
+        <div class="mb-8 d-flex justify-content-between align-items-center ">
             <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
+            <% String editPageUrl = "/route-create?routeId=" + route.getRouteId();%>
+            <a href="${pageContext.request.contextPath}<%= editPageUrl %>" class="block text-black bg-white rounded-lg shadow p-4 hover:shadow-md hover:scale-[1.05] transition duration-300 overflow-hidden">
+                Edit
+            </a>
         </div>
 
         <!-- Route Details -->
