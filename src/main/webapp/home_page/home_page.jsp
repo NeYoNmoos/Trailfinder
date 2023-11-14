@@ -11,7 +11,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-
     List<RouteEntity> allRoutes = (List<RouteEntity>) request.getAttribute("allRoutes");
 %>
 <html>
@@ -24,11 +23,19 @@
 </head>
 <body class="bg-gray-100">
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
-
 <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
     <div class="flex flex-wrap -mx-4">
         <!-- Routes Grid -->
         <div class="w-full lg:w-3/4 px-4 mb-4">
+
+            <%
+                if (allRoutes.size() == 0) {
+            %>
+            <h1>Could not find any routes!</h1>
+            <%
+                }
+            %>
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <%
                     for (RouteEntity currentRoute : allRoutes) {
@@ -72,6 +79,13 @@
                 <div class="bg-white rounded-lg shadow p-6">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">Filters</h2>
                     <form action="${pageContext.request.contextPath}/" method="post">
+
+                        <!-- Search by name -->
+                        <div class="search-bar">
+                                <input type="text" name="routename" id="routename" placeholder="Search by Name" value="<%= request.getParameter("routename") == null?"":request.getParameter("routename") %>">
+                                <button type="submit">Search</button>
+                        </div>
+
                         <!-- Duration filter -->
                         <div class="mb-4">
                             <label for="durationMin" class="block text-sm font-medium text-gray-700">Duration</label>

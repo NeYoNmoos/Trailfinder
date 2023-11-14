@@ -21,6 +21,8 @@ public class HomeServlet extends HttpServlet {
 
         //TrailfinderDatabaseFacade facade = new TrailfinderDatabaseFacade();
         //List<RouteEntity> allRoutes = facade.getAllRoutes()
+        String routename = request.getParameter("routename");
+
         String lengthMaxStr = request.getParameter("lengthMax");
         String lengthMinStr = request.getParameter("lengthMin");
         String altitudeMaxStr = request.getParameter("altitudeMax");
@@ -44,6 +46,7 @@ public class HomeServlet extends HttpServlet {
         System.out.println("scenery: " + scenery);
         System.out.println("experience: " + experience);
         System.out.println("condition: " + condition);
+
 // Parse string parameters into integers
         if (lengthMaxStr != null && !lengthMaxStr.isEmpty()) {
             lengthMax = Integer.parseInt(lengthMaxStr);
@@ -70,7 +73,7 @@ public class HomeServlet extends HttpServlet {
 
         //if(lengthMin!=null || lengthMax!=null || altitudeMax!=null||altitudeMin!=null||durationMax!=null||durationMin!=null)
         //{
-            allRoutes=rc.getFilteredRoutes(lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition);
+            allRoutes=rc.getFilteredRoutes(routename, lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition);
        // }
         //else
            // allRoutes = rc.getAllRoutes();
