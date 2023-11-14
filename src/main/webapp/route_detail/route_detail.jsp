@@ -31,9 +31,16 @@
 <main class="py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Route Title -->
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
-        </div>
+            <div class="mb-8 d-flex justify-content-between align-items-center ">
+                <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
+                <button class="text-right inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                    Delete
+                </button>
+            </div>
+
 
         <!-- Route Details -->
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
