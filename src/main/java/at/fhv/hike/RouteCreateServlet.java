@@ -25,7 +25,7 @@ public class RouteCreateServlet extends HttpServlet {
             ServletContext context = request.getServletContext();
             RouteController rc = new RouteController(context);
             RouteEntity route = rc.getRouteById(routeId);
-            //String name=route.getName();
+            request.setAttribute("routeId",routeId);
             request.setAttribute("name", route.getName());
             request.setAttribute("location", route.getLocation());
             request.setAttribute("altitude", route.getAltitude());
@@ -56,13 +56,13 @@ public class RouteCreateServlet extends HttpServlet {
             request.setAttribute("endLongitude", route.getCoordinates().get(1).getLongitude());
             request.setAttribute("endLatitude", route.getCoordinates().get(1).getLatitude());
 
+           // RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
+           // dispatcher.forward(request, response);
+        }
+       // else {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
             dispatcher.forward(request, response);
-        }
-        else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
-            dispatcher.forward(request, response);
-        }
+        //}
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -146,7 +146,14 @@ public class RouteCreateServlet extends HttpServlet {
         newAttributes.setCondition(condition);
 
         RouteEntity newRoute = new RouteEntity();
-        newRoute.setRouteId(UUID.randomUUID().toString());
+
+        //seting ID
+        String routeId = request.getParameter("routeId");
+        if(routeId == null)
+            newRoute.setRouteId(UUID.randomUUID().toString());
+        else
+            newRoute.setRouteId(routeId);
+
         newRoute.setName(name);
         newRoute.setLength(length);
         newRoute.setAltitude(altitude);

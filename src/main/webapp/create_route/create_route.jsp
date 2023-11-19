@@ -121,6 +121,8 @@
                 </div>
             </div>
 
+            <input type="hidden" name="routeId" value="<%= request.getParameter("routeId") %>">
+
             <input class="btn-primary" type="submit" value="Save">
         </form>
     </div>

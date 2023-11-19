@@ -120,6 +120,10 @@
         </div>
         <% } %>
 
+        <!-- Weather -->
+        <!-- DORNBIRN:   <div id="ww_87c83204446d5" v='1.3' loc='id' a='{"t":"responsive","lang":"en","sl_lpl":1,"ids":["wl1514"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","sl_tof":"3"}'>More forecasts: <a href="https://wetterlang.de/wetter_14_tage/" id="ww_87c83204446d5_u" target="_blank">Wettervorhersage 14 tage</a></div><script async src="https://app2.weatherwidget.org/js/?id=ww_87c83204446d5"></script>  -->
+
+
         <!-- Coordinates -->
         <% if (coordinates != null && !coordinates.isEmpty()) { %>
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
