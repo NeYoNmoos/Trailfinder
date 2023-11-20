@@ -17,7 +17,7 @@
         <img src="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png" alt="Logo" class="h-20 w-auto">
         <h2 class="font-bold">Trailfinder</h2>
     </a>
-    <a href="${pageContext.request.contextPath}/route-create" class="text-white px-4 py-2 rounded-md btn-primary transition-colors">
+    <a href="${pageContext.request.contextPath}/route-create" class="px-4 py-2 rounded-md btn-primary transition-colors">
         Create Route
     </a>
 </nav>
