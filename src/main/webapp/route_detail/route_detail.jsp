@@ -32,6 +32,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
         <script src="https://unpkg.com/leaflet-routing-machine"></script>
+        <script src="${pageContext.request.contextPath}/route_detail/fetch_hiking_route.js"></script>
         <title><%= route.getName() %></title>
     </head>
 <body class="bg-gray-100">
@@ -154,14 +155,47 @@
                     { attribution: 'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>' }
                 ).addTo(map);
 
+                // start and end icons
+                let startIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/home_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 41]
+                });
+
+                let goalIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/goal_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [5, 41]
+                });
+
                 let waypoints = [];
                 <% for (CoordinateEntity coord : coordinates) { %>
                 waypoints.push(L.latLng(<%= coord.getLatitude() %>, <%= coord.getLongitude() %>));
                 <% } %>
 
+                fetchHikingRoute(waypoints).then(geojson => {
+                    L.geoJSON(geojson).addTo(map);
+
+                    // Add Start Marker
+                    if (waypoints.length > 0) {
+                        L.marker(waypoints[0], {icon: startIcon}).addTo(map)
+                            .bindPopup("Start Point");
+                    }
+
+                    // Add Goal Marker
+                    if (waypoints.length > 1) {
+                        L.marker(waypoints[waypoints.length - 1], {icon: goalIcon}).addTo(map)
+                            .bindPopup("Goal Point");
+                    }
+                }).catch(error => {
+                    console.error('Error fetching hiking route:', error);
+                });
+
 
                 let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
 
+                /*
+                // leaflet routing machine
                 L.Routing.control({
                     waypoints: waypoints,
                     lineOptions : {
@@ -173,6 +207,7 @@
                         return L.marker(wp.latLng).bindPopup(`Waypoint ${index + 1}`);
                     }
                 }).addTo(map);
+                */
 
                 // used to load the map (without it shows unloaded spots)
                 setTimeout(function() {
