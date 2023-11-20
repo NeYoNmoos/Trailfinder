@@ -40,14 +40,21 @@
 <main class="py-10">
     <div class="max-w-7xl lg:w-[75vw] mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Route Title -->
-        <div class="mb-8">
+        <div class="mb-8 d-flex justify-content-between align-items-center ">
             <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
+            <% String editPageUrl = "/route-create?routeId=" + route.getRouteId();%>
+            <a href="${pageContext.request.contextPath}<%= editPageUrl %>" class="block text-black bg-white rounded-lg shadow p-4 hover:shadow-md hover:scale-[1.05] transition duration-300 overflow-hidden">
+                Edit
+            </a>
         </div>
 
         <!-- Route Details -->
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
             <div class="px-4 py-5 sm:p-6">
                 <h2 class="text-xl font-bold text-gray-900">Route Details</h2>
+                <div>
+                    <p><%= route.getDescription() %> </p>
+                </div>
                 <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                     <div class="sm:col-span-1">
                         <dt class="text-sm font-medium text-gray-500">Length</dt>
@@ -69,6 +76,7 @@
                         %>
                         <dt class="text-sm font-medium text-gray-500">Duration</dt>
                         <dd class="mt-1 text-sm text-gray-900"><%= wholeHours + "h " + wholeMinutes + "min" %></dd>
+
                     </div>
                 </dl>
             </div>
@@ -195,7 +203,4 @@
     </div>
 </main>
 </body>
-
-
-
 </html>
