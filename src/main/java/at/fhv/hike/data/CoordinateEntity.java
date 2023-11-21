@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "coordinate", schema = "trailfinder_dev", catalog = "Trailfinder")
 public class CoordinateEntity {
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "coordinate_id")
     private Integer coordinateId;

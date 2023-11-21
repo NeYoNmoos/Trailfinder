@@ -22,7 +22,6 @@
         <mapping class="at.fhv.hike.data.GalleryEntity"/>
         <mapping class="at.fhv.hike.data.LodgeEntity"/>
         <mapping class="at.fhv.hike.data.RouteEntity"/>
-        <mapping class="at.fhv.hike.data.TimeOfYearEntity"/>
         <mapping class="at.fhv.hike.data.UserEntity"/> <!-- Show SQL formatted -->
 
     </session-factory>

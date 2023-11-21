@@ -7,7 +7,7 @@ import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.hibernate.broker.AttributeBroker;
 import at.fhv.hike.hibernate.broker.CoordinateBroker;
 import at.fhv.hike.hibernate.broker.RouteBroker;
-import at.fhv.hike.hibernate.broker.TimeOfYearBroker;
+//import at.fhv.hike.hibernate.broker.TimeOfYearBroker;
 import jakarta.servlet.ServletContext;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -17,14 +17,14 @@ import java.util.List;
 public class TrailfinderDatabaseFacade implements TrailfinderFacade{
     private RouteBroker _routeBroker;
     private AttributeBroker _attributeBroker;
-    private TimeOfYearBroker _timeOfYearBroker;
+   // private TimeOfYearBroker _timeOfYearBroker;
     private CoordinateBroker _coordinateBroker;
 
     public TrailfinderDatabaseFacade(ServletContext context) {
         SessionFactory sessionFactory = (SessionFactory) context.getAttribute("SessionFactory");
         this._routeBroker = new RouteBroker(sessionFactory);
         this._attributeBroker = new AttributeBroker(sessionFactory);
-        this._timeOfYearBroker = new TimeOfYearBroker(sessionFactory);
+        //this._timeOfYearBroker = new TimeOfYearBroker(sessionFactory);
         this._coordinateBroker = new CoordinateBroker(sessionFactory);
     }
 

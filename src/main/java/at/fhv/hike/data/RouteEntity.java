@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "route", schema = "trailfinder_dev", catalog = "Trailfinder")
 public class RouteEntity {
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "route_id")
     private Integer routeId;

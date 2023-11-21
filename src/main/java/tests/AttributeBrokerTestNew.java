@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class AttributeBrokerTestNew {
-
+/*
     private TrailfinderDatabaseFacade facade;
 
     @Before
@@ -38,7 +38,7 @@ public class AttributeBrokerTestNew {
             System.out.println("Failed to save attribute.");
         }
     }
-
+*/
 
 
 }

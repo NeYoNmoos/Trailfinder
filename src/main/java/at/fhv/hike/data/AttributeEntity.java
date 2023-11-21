@@ -7,7 +7,7 @@ import java.lang.Integer;
 @Entity
 @Table(name = "attribute", schema = "trailfinder_dev", catalog = "Trailfinder")
 public class AttributeEntity {
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "attribute_id")
     private Integer attributeId;

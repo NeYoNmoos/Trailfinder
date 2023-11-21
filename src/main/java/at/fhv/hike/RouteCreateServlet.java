@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @WebServlet(name = "RouteCreateServlet", urlPatterns = {"/route-create"})
 public class RouteCreateServlet extends HttpServlet {
-
+ /*
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String routeId = request.getParameter("routeId");
         if(routeId != null) {
@@ -98,7 +98,7 @@ public class RouteCreateServlet extends HttpServlet {
         newMonths.setDecember(false);*/
 
  //       Bitmask bm = new Bitmask();
-
+/*
         if(months != null){
             for (int i = 0; i < months.length; i++) {
                 System.out.println("FOR LOOP");
@@ -150,18 +150,13 @@ public class RouteCreateServlet extends HttpServlet {
         newAttributes.setCondition(condition);
 
         RouteEntity newRoute = new RouteEntity();
-<<<<<<< Updated upstream
-
-        //seting ID
         String routeId = request.getParameter("routeId");
         if(routeId == null)
-            newRoute.setRouteId(UUID.randomUUID().toString());
+            //newRoute.setRouteId(UUID.randomUUID().toString());
         else
             newRoute.setRouteId(routeId);
 
-=======
 //        newRoute.setRouteId(UUID.randomUUID().toString());
->>>>>>> Stashed changes
         newRoute.setName(name);
         newRoute.setLength(length);
         newRoute.setAltitude(altitude);
@@ -192,5 +187,6 @@ public class RouteCreateServlet extends HttpServlet {
 
         request.getRequestDispatcher("/create_route/create_confirmation.jsp").forward(request, response);
     }
+    */
 
 }

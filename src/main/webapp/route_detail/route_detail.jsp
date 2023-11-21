@@ -1,7 +1,6 @@
 <%@ page import="at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade" %>
 <%@ page import="at.fhv.hike.data.RouteEntity" %>
 <%@ page import="at.fhv.hike.data.CoordinateEntity" %>
-<%@ page import="at.fhv.hike.data.TimeOfYearEntity" %>
 <%@ page import="at.fhv.hike.data.AttributeEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.net.URI" %>
