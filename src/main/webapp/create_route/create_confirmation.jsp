@@ -16,7 +16,7 @@
 <body>
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
     <div class="create-confirmation">
-        <h1>New Route successfully created :)</h1>
+        <h1>Our list of routes has been successfully updated :)</h1>
         <button>
             <a href="${pageContext.request.contextPath}/">Back to list of routes</a>
         </button>

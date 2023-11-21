@@ -152,7 +152,7 @@
                             </select>
                         </div>
 
-                        <button type="submit" class="w-full btn-primary text-white rounded-md px-4 py-2 mt-4">Apply</button>
+                        <button type="submit" class="w-full btn-primary rounded-md px-4 py-2 mt-4">Apply</button>
 
                     </form>
                 </div>
