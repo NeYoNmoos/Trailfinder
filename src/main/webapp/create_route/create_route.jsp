@@ -117,7 +117,7 @@
                     <input type="text" value="${endLatitude}" placeholder="Latitude" id="endLatitude" name="endLatitude" pattern="(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,15})?))$" title="Enter a valid latitude (-90.0 to +90.0)" required>
                 </div>
                 <div class="coordinate-input">
-                    <input type="text" value="${endLongitude}" placeholder="Longitude" id="endLongitude" name="endLongitude" pattern="^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-15])(?:(?:\.[0-9]{1,12})?))$" title="Enter a valid longitude (-180.0 to +180.0)" required>
+                    <input type="text" value="${endLongitude}" placeholder="Longitude" id="endLongitude" name="endLongitude" pattern="^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,15})?))$" title="Enter a valid longitude (-180.0 to +180.0)" required>
                 </div>
             </div>
 
