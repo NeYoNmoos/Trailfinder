@@ -10,44 +10,44 @@ public class CommentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "comment_id")
-    private String commentId;
+    private Integer commentId;
     @Basic
     @Column(name = "route_id")
-    private String routeId;
+    private Integer routeId;
     @Basic
     @Column(name = "author_id")
-    private String authorId;
+    private Integer authorId;
     @Basic
     @Column(name = "comment")
     private String comment;
     @Basic
     @Column(name = "attribute_id")
-    private String attributeId;
+    private Integer attributeId;
     @Basic
     @Column(name = "date_comment")
     private Date dateComment;
 
-    public String getCommentId() {
+    public Integer getCommentId() {
         return commentId;
     }
 
-    public void setCommentId(String commentId) {
+    public void setCommentId(Integer commentId) {
         this.commentId = commentId;
     }
 
-    public String getRouteId() {
+    public Integer getRouteId() {
         return routeId;
     }
 
-    public void setRouteId(String routeId) {
+    public void setRouteId(Integer routeId) {
         this.routeId = routeId;
     }
 
-    public String getAuthorId() {
+    public Integer getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(String authorId) {
+    public void setAuthorId(Integer authorId) {
         this.authorId = authorId;
     }
 
@@ -59,11 +59,11 @@ public class CommentEntity {
         this.comment = comment;
     }
 
-    public String getAttributeId() {
+    public Integer getAttributeId() {
         return attributeId;
     }
 
-    public void setAttributeId(String attributeId) {
+    public void setAttributeId(Integer attributeId) {
         this.attributeId = attributeId;
     }
 

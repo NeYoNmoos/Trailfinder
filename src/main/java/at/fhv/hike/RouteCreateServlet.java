@@ -2,9 +2,10 @@ package at.fhv.hike;
 
 import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.data.AttributeEntity;
+import at.fhv.hike.data.Bitmask;
 import at.fhv.hike.data.CoordinateEntity;
 import at.fhv.hike.data.RouteEntity;
-import at.fhv.hike.data.TimeOfYearEntity;
+//import at.fhv.hike.data.TimeOfYearEntity;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -80,9 +81,10 @@ public class RouteCreateServlet extends HttpServlet {
         Integer experience = Integer.parseInt(request.getParameter("experience"));
         Integer condition = Integer.parseInt(request.getParameter("condition"));
 
-        TimeOfYearEntity newMonths = new TimeOfYearEntity();
-        newMonths.setMonthId(UUID.randomUUID().toString());
-        newMonths.setJanuary(false);
+
+//        TimeOfYearEntity newMonths = new TimeOfYearEntity();
+//        newMonths.setMonthId(UUID.randomUUID().toString());
+/*        newMonths.setJanuary(false);
         newMonths.setFebruary(false);
         newMonths.setMarch(false);
         newMonths.setApril(false);
@@ -93,7 +95,10 @@ public class RouteCreateServlet extends HttpServlet {
         newMonths.setSeptember(false);
         newMonths.setOctober(false);
         newMonths.setNovember(false);
-        newMonths.setDecember(false);
+        newMonths.setDecember(false);*/
+
+ //       Bitmask bm = new Bitmask();
+
         if(months != null){
             for (int i = 0; i < months.length; i++) {
                 System.out.println("FOR LOOP");
@@ -137,15 +142,15 @@ public class RouteCreateServlet extends HttpServlet {
                 }
             }
         }
-
         AttributeEntity newAttributes = new AttributeEntity();
-        newAttributes.setAttributeId(UUID.randomUUID().toString());
+//        newAttributes.setAttributeId(UUID.randomUUID().toString());
         newAttributes.setStrength(power);
         newAttributes.setScenery(scenery);
         newAttributes.setExperience(experience);
         newAttributes.setCondition(condition);
 
         RouteEntity newRoute = new RouteEntity();
+<<<<<<< Updated upstream
 
         //seting ID
         String routeId = request.getParameter("routeId");
@@ -154,6 +159,9 @@ public class RouteCreateServlet extends HttpServlet {
         else
             newRoute.setRouteId(routeId);
 
+=======
+//        newRoute.setRouteId(UUID.randomUUID().toString());
+>>>>>>> Stashed changes
         newRoute.setName(name);
         newRoute.setLength(length);
         newRoute.setAltitude(altitude);
@@ -161,16 +169,16 @@ public class RouteCreateServlet extends HttpServlet {
         newRoute.setDuration(duration);
         newRoute.setDescription(description);
         newRoute.setAttributeEntity(newAttributes);
-        newRoute.setTimeOfYearEntity(newMonths);
+//        newRoute.setTimeOfYearEntity(newMonths);
 
         CoordinateEntity startCoord = new CoordinateEntity();
-        startCoord.setCoordinateId(UUID.randomUUID().toString());
+//        startCoord.setCoordinateId(UUID.randomUUID().toString());
         startCoord.setSequence(0);
         startCoord.setLatitude(Double.parseDouble(request.getParameter("startLatitude")));
         startCoord.setLongitude(Double.parseDouble(request.getParameter("startLongitude")));
 
         CoordinateEntity endCoord = new CoordinateEntity();
-        endCoord.setCoordinateId(UUID.randomUUID().toString());
+//        endCoord.setCoordinateId(UUID.randomUUID().toString());
         endCoord.setSequence(1);
         endCoord.setLatitude(Double.parseDouble(request.getParameter("endLatitude")));
         endCoord.setLongitude(Double.parseDouble(request.getParameter("endLongitude")));

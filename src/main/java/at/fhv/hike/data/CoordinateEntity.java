@@ -9,7 +9,7 @@ public class CoordinateEntity {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "coordinate_id")
-    private String coordinateId;
+    private Integer coordinateId;
     @Basic
     @Column(name = "sequence")
     private Integer sequence;
@@ -25,11 +25,11 @@ public class CoordinateEntity {
     private RouteEntity route;
 
 
-    public String getCoordinateId() {
+    public Integer getCoordinateId() {
         return coordinateId;
     }
 
-    public void setCoordinateId(String coordinateId) {
+    public void setCoordinateId(Integer coordinateId) {
         this.coordinateId = coordinateId;
     }
 

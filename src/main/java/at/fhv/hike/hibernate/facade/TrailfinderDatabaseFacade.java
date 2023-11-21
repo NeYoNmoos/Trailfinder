@@ -3,7 +3,7 @@ package at.fhv.hike.hibernate.facade;
 import at.fhv.hike.data.AttributeEntity;
 import at.fhv.hike.data.CoordinateEntity;
 import at.fhv.hike.data.RouteEntity;
-import at.fhv.hike.data.TimeOfYearEntity;
+//import at.fhv.hike.data.TimeOfYearEntity;
 import at.fhv.hike.hibernate.broker.AttributeBroker;
 import at.fhv.hike.hibernate.broker.CoordinateBroker;
 import at.fhv.hike.hibernate.broker.RouteBroker;
@@ -36,9 +36,9 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         else if (value instanceof AttributeEntity) {
             _attributeBroker.insert((AttributeEntity) value);
         }
-        else if (value instanceof TimeOfYearEntity) {
+ /*       else if (value instanceof TimeOfYearEntity) {
             _timeOfYearBroker.insert((TimeOfYearEntity) value);
-        }
+        }*/
         else if (value instanceof CoordinateEntity) {
             _coordinateBroker.insert((CoordinateEntity) value);
         }
@@ -52,10 +52,10 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         }
         else if (value instanceof AttributeEntity) {
             _attributeBroker.delete((AttributeEntity) value);
-        }
+        }/*
         else if (value instanceof TimeOfYearEntity) {
             _timeOfYearBroker.delete((TimeOfYearEntity) value);
-        }
+        }*/
         else if (value instanceof CoordinateEntity) {
             _coordinateBroker.delete((CoordinateEntity) value);
         }

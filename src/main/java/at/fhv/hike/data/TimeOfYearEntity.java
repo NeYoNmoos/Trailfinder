@@ -1,4 +1,4 @@
-package at.fhv.hike.data;
+/*package at.fhv.hike.data;
 
 import jakarta.persistence.*;
 
@@ -192,3 +192,4 @@ public class TimeOfYearEntity {
         return result;
     }
 }
+*/

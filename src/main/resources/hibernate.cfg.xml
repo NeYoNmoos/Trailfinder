@@ -5,11 +5,11 @@
 <hibernate-configuration>
     <session-factory>
 
-        <property name="connection.url">jdbc:postgresql://ep-misty-cake-26378207.eu-central-1.aws.neon.tech/Trailfinder</property>
+        <property name="connection.url">jdbc:postgresql://elmo.hostingcenter.uclv.net:5432/ftb_inv_2023_vz_3_a</property>
 
         <property name="connection.driver_class">org.postgresql.Driver</property> <!-- DB Driver -->
-        <property name="connection.username">MarkPleschberger</property> <!-- DB User -->
-        <property name="connection.password">dA1jpSrWCq4O</property> <!-- DB Password -->
+        <property name="connection.username">ftb_inv_2023_vz_3_a</property> <!-- DB User -->
+        <property name="connection.password">a9d4f6aa</property> <!-- DB Password -->
 
         <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> <!-- DB Dialect -->
         <property name="hbm2ddl.auto">update</property> <!-- create / create-drop / update -->
