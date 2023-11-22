@@ -28,24 +28,25 @@ public class TestServlet extends HttpServlet {
         newAttributes.setCondition(5);
 
         RouteEntity newRoute = new RouteEntity();
-        newRoute.setName("testroute");
-        newRoute.setLength(23.34);
-        newRoute.setAltitude(12.2);
+        newRoute.setName("anothertestroute");
+        newRoute.setLength(23.54);
+        newRoute.setAltitude(13.2);
         newRoute.setLocation("Test location");
         newRoute.setDuration(2.35);
-        newRoute.setDescription("Test description");
+        newRoute.setDescription("Test working");
         newRoute.setAttributeEntity(newAttributes);
-        newRoute.setMonths(7);
+        newRoute.setMonths(64);
+        newRoute.setRouteId(9);
 
         CoordinateEntity startCoord = new CoordinateEntity();
         startCoord.setSequence(0);
-        startCoord.setLatitude(9.342312);
-        startCoord.setLongitude(17.23235);
+        startCoord.setLatitude(10.342312);
+        startCoord.setLongitude(18.23235);
 
         CoordinateEntity endCoord = new CoordinateEntity();
         endCoord.setSequence(0);
-        endCoord.setLatitude(10.342312);
-        endCoord.setLongitude(18.23235);
+        endCoord.setLatitude(11.342312);
+        endCoord.setLongitude(19.23235);
 
         newRoute.addCoordinate(startCoord);
         newRoute.addCoordinate(endCoord);

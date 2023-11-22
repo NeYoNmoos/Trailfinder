@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "route", schema = "trailfinder_dev", catalog = "Trailfinder")
+@Table(name = "route", schema = "trailfinder_dev", catalog = "ftb_inv_2023_vz_3_a")
 public class RouteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

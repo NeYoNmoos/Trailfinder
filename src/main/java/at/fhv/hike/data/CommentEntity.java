@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "comment", schema = "trailfinder_dev", catalog = "Trailfinder")
+@Table(name = "comment", schema = "trailfinder_dev", catalog = "ftb_inv_2023_vz_3_a")
 public class CommentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

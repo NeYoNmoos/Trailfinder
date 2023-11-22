@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Arrays;
 
 @Entity
-@Table(name = "gallery", schema = "trailfinder_dev", catalog = "Trailfinder")
+@Table(name = "gallery", schema = "trailfinder_dev", catalog = "ftb_inv_2023_vz_3_a")
 public class GalleryEntity {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

@@ -3,7 +3,7 @@ package at.fhv.hike.data;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "lodge", schema = "trailfinder_dev", catalog = "Trailfinder")
+@Table(name = "lodge", schema = "trailfinder_dev", catalog = "ftb_inv_2023_vz_3_a")
 public class LodgeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

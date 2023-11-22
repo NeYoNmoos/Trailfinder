@@ -3,6 +3,9 @@ import at.fhv.hike.data.AttributeEntity;
 import at.fhv.hike.data.CoordinateEntity;
 import at.fhv.hike.data.RouteEntity;
 //import at.fhv.hike.data.TimeOfYearEntity;
+
+//import at.fhv.hike.hibernate.broker.TimeOfYearBroker;
+
 //import at.fhv.hike.hibernate.broker.TimeOfYearBroker;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import org.junit.Before;

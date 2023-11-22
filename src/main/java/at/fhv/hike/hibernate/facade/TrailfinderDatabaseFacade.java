@@ -24,7 +24,7 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         SessionFactory sessionFactory = (SessionFactory) context.getAttribute("SessionFactory");
         this._routeBroker = new RouteBroker(sessionFactory);
         this._attributeBroker = new AttributeBroker(sessionFactory);
-        //this._timeOfYearBroker = new TimeOfYearBroker(sessionFactory);
+       // this._timeOfYearBroker = new TimeOfYearBroker(sessionFactory);
         this._coordinateBroker = new CoordinateBroker(sessionFactory);
     }
 
