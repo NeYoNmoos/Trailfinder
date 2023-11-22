@@ -1,0 +1,67 @@
+{
+  "id": "075fbd25-8d12-43e2-84fc-4f979e342a45",
+  "version": "2.0",
+  "name": "Trailfinder",
+  "url": "http://localhost:8080",
+  "tests": [{
+    "id": "406fe36a-7a38-408f-a7b7-e4507170e95d",
+    "name": "Test_route_detail_descriptioni",
+    "commands": [{
+      "id": "0bee8a0f-f6c6-4344-be6d-d8070eff8584",
+      "comment": "",
+      "command": "open",
+      "target": "/hike_war_exploded/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "26183c2a-78c8-4e67-8f6d-e48983ca1568",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "991x701",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ef585e0e-ab4c-4945-ac37-7b029397bd24",
+      "comment": "",
+      "command": "click",
+      "target": "css=.block:nth-child(6) > .text-sm > .mb-2:nth-child(1)",
+      "targets": [
+        ["css=.block:nth-child(6) > .text-sm > .mb-2:nth-child(1)", "css:finder"],
+        ["xpath=//a[6]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c7513d33-1240-4d3b-a23e-c6e36fcce87f",
+      "comment": "",
+      "command": "click",
+      "target": "css=p:nth-child(1)",
+      "targets": [
+        ["css=p:nth-child(1)", "css:finder"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'A wonderful hike to the Karren platform.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f346d76-822e-4648-8700-4621517346d1",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "css=p:nth-child(1)",
+      "targets": [
+        ["css=p:nth-child(1)", "css:finder"],
+        ["xpath=//p", "xpath:position"],
+        ["xpath=//p[contains(.,'A wonderful hike to the Karren platform.')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "b858eff1-fd33-4fb9-9145-1efced0e0e32",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["406fe36a-7a38-408f-a7b7-e4507170e95d"]
+  }],
+  "urls": ["http://localhost:8080/"],
+  "plugins": []
+}
