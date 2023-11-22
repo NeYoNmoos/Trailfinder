@@ -40,20 +40,20 @@ public class RouteCreateServlet extends HttpServlet {
             request.setAttribute("scenery", route.getAttributeEntity().getScenery());
             request.setAttribute("condition", route.getAttributeEntity().getCondition());
             request.setAttribute("experience", route.getAttributeEntity().getExperience());
-/*
-            request.setAttribute("january", route.getTimeOfYearEntity().getJanuary());
-            request.setAttribute("february", route.getTimeOfYearEntity().getFebruary());
-            request.setAttribute("march", route.getTimeOfYearEntity().getMarch());
-            request.setAttribute("april", route.getTimeOfYearEntity().getApril());
-            request.setAttribute("may", route.getTimeOfYearEntity().getMay());
-            request.setAttribute("june", route.getTimeOfYearEntity().getJune());
-            request.setAttribute("july", route.getTimeOfYearEntity().getJuly());
-            request.setAttribute("august", route.getTimeOfYearEntity().getAugust());
-            request.setAttribute("september", route.getTimeOfYearEntity().getSeptember());
-            request.setAttribute("october", route.getTimeOfYearEntity().getOctober());
-            request.setAttribute("november", route.getTimeOfYearEntity().getNovember());
-            request.setAttribute("december", route.getTimeOfYearEntity().getDecember());
-*/
+
+            request.setAttribute("january", (route.getMonths() & Bitmask.Month_1_Jan) != 0);
+            request.setAttribute("february", (route.getMonths() & Bitmask.Month_2_Feb) != 0);
+            request.setAttribute("march", (route.getMonths() & Bitmask.Month_3_Mar) != 0);
+            request.setAttribute("april", (route.getMonths() & Bitmask.Month_4_Apr) != 0);
+            request.setAttribute("may", (route.getMonths() & Bitmask.Month_5_May) != 0);
+            request.setAttribute("june", (route.getMonths() & Bitmask.Month_6_Jun) != 0);
+            request.setAttribute("july", (route.getMonths() & Bitmask.Month_7_Jul) != 0);
+            request.setAttribute("august", (route.getMonths() & Bitmask.Month_8_Aug) != 0);
+            request.setAttribute("september", (route.getMonths() & Bitmask.Month_9_Sep) != 0);
+            request.setAttribute("october", (route.getMonths() & Bitmask.Month_10_Oct) != 0);
+            request.setAttribute("november", (route.getMonths() & Bitmask.Month_11_Nov) != 0);
+            request.setAttribute("december", (route.getMonths() & Bitmask.Month_12_Dec) != 0);
+
 
             request.setAttribute("startLongitude", route.getCoordinates().get(0).getLongitude());
             request.setAttribute("startLatitude", route.getCoordinates().get(0).getLatitude());
@@ -155,13 +155,26 @@ public class RouteCreateServlet extends HttpServlet {
         newAttributes.setCondition(condition);
 
         RouteEntity newRoute = new RouteEntity();
-
+        System.out.println("works");
         //seting ID
         //looking for id
         String routeId = request.getParameter("routeId");
-        if (routeId != null) {
+
+        if(!routeId.equals("null")) {
+            newRoute.setRouteId(Integer.parseInt(routeId));
+        }
+
+        /* int check = 1;
+        System.out.println(routeId);
+        if(routeId == null || routeId.equals("null") || routeId.equals(null)){
+            check = 0;
+            System.out.println("Check is 0");
+        }
+        if (check != 0) {
+            System.out.println("here?");
             newRoute.setRouteId(Integer.parseInt(routeId));
             //newRoute.setRouteId(UUID.randomUUID().toString());
+        }
      /*   }else
             newRoute.setRouteId(Integer.parseInt(routeId));*/
 
@@ -198,7 +211,7 @@ public class RouteCreateServlet extends HttpServlet {
             rc.createRoute(newRoute);
 
             request.getRequestDispatcher("/create_route/create_confirmation.jsp").forward(request, response);
-        }
+
 
     }
 }
