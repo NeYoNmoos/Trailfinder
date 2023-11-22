@@ -9,7 +9,9 @@
 <%@ page import="java.nio.charset.StandardCharsets" %>
 <%@ page import="java.net.HttpURLConnection" %>
 <%@ page import="java.io.BufferedReader" %>
-<%@ page import="java.io.InputStreamReader" %><%--
+<%@ page import="java.io.InputStreamReader" %>
+<%@ page import="at.fhv.hike.data.Bitmask"%>
+<%--
   Created by IntelliJ IDEA.
   User: matth
   Date: 01/11/2023
@@ -112,11 +114,24 @@
 
 
         <!-- Best Time to Visit -->
-        <%// if (timeOfYear != null) { %>
+        <% if (route.getMonths()>0) { %>
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
             <div class="px-4 py-5 sm:p-6">
                 <h2 class="text-xl font-bold text-gray-900">Best Time to Visit</h2>
                 <p class="mt-1 text-sm text-gray-900">
+                    <% int bm = route.getMonths();%>
+                    <%= (bm & Bitmask.Month_1_Jan) != 0 ? "January" : ""%>
+                    <%= (bm & Bitmask.Month_2_Feb) != 0 ? "February " : "" %>
+                    <%= (bm & Bitmask.Month_3_Mar) != 0 ? "March " : "" %>
+                    <%= (bm & Bitmask.Month_4_Apr) != 0 ? "April " : "" %>
+                    <%= (bm & Bitmask.Month_5_May) != 0 ? "May " : "" %>
+                    <%= (bm & Bitmask.Month_6_Jun) != 0 ? "June " : "" %>
+                    <%= (bm & Bitmask.Month_7_Jul) != 0 ? "July " : "" %>
+                    <%= (bm & Bitmask.Month_8_Aug) != 0 ? "August " : "" %>
+                    <%= (bm & Bitmask.Month_9_Sep) != 0 ? "September " : "" %>
+                    <%= (bm & Bitmask.Month_10_Oct) != 0 ? "October " : "" %>
+                    <%= (bm & Bitmask.Month_11_Nov) != 0 ? "November " : "" %>
+                    <%= (bm & Bitmask.Month_12_Dec) != 0 ? "December " : "" %>
                     <%--
                     <%= timeOfYear.getJanuary() ? "January " : "" %>
                     <%= timeOfYear.getFebruary() ? "February " : "" %>
@@ -133,7 +148,7 @@
                 </p>
             </div>
         </div>
-        <%// } %>
+        <% } %>
 
         <!-- Weather
          <div id="ww_87c83204446d5" v='1.3' loc='id' a='{"t":"responsive","lang":"en","sl_lpl":1,"ids":["wl1514"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","sl_tof":"3"}'>More forecasts: <a href="https://wetterlang.de/wetter_14_tage/" id="ww_87c83204446d5_u" target="_blank">Wettervorhersage 14 tage</a></div><script async src="https://app2.weatherwidget.org/js/?id=ww_87c83204446d5"></script>
