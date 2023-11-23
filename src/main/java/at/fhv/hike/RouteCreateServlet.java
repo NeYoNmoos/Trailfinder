@@ -162,8 +162,6 @@ public class RouteCreateServlet extends HttpServlet {
 
         List<CoordinateEntity> coordinateEntities = new ArrayList<>();
 
-        System.out.println("parsing coordinates in servlet!");
-
         int index = 0;
         while (request.getParameter("coords_" + index + "_latitude") != null &&
                 request.getParameter("coords_" + index + "_longitude") != null) {
@@ -175,7 +173,6 @@ public class RouteCreateServlet extends HttpServlet {
             coord.setSequence(index);
             coordinateEntities.add(coord);
             index++;
-            System.out.println("parsed coordinate: " + index);
         }
 
         if(!coordinateEntities.isEmpty()){
