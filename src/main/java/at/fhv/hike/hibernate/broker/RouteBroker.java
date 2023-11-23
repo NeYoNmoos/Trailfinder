@@ -45,7 +45,6 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
                     "AND (a.experience >= :experience) " +
                     "AND (a.condition >= :condition))";
 
-System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             Query<RouteEntity> query = session.createQuery(hql, RouteEntity.class)
                     .setParameter("routename", routename)
                     .setParameter("lengthMin", lengthMin)
