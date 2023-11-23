@@ -16,6 +16,11 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/create_route/create_route.css">
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    <script src="https://unpkg.com/leaflet-routing-machine"></script>
+    <script src="${pageContext.request.contextPath}/route_detail/fetch_hiking_route.js"></script>
     <title>Create New Route</title>
 </head>
 <body>
@@ -100,6 +105,111 @@
             </select>
 
             <h2>Define Route:</h2>
+            <div class="map-container">
+                <div id="routeMap" style="height: 400px;"></div>
+            </div>
+            <script>
+                // Initialize the map
+                let map = L.map('routeMap').setView([47.406121, 9.742360], 13); // Set initial coordinates and zoom level
+
+                // set map style
+                L.tileLayer(
+                    'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=35adf7fcff8d4453ab157783a4c0f0be',
+                    { attribution: 'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>' }
+                ).addTo(map);
+
+                // start, middle and end icons
+                let startIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/home_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 41]
+                });
+
+                let goalIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/goal_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [5, 41]
+                });
+
+                let middleIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/middle_pin.png', // Path to your middle icon image
+                    iconSize: [25, 25], // Size of the icon
+                    iconAnchor: [12, 25] // Anchor point of the icon
+                });
+
+                // Array to store waypoints
+                let waypoints = [];
+
+                // route layer
+                let currentRouteLayer = null;
+
+                // Function to add marker
+                function addMarker(lat, lng) {
+                    let marker = L.marker([lat, lng], {
+                        draggable: true,
+                        icon: waypoints.length === 0 ? startIcon : L.Icon.Default.prototype
+                    }).addTo(map);
+
+                    marker.on('dragend', function() {
+                        //updateWaypointsArray();
+                        updateRoute();
+                    });
+
+                    marker.on('click', function() {
+                        map.removeLayer(marker);
+                        waypoints = waypoints.filter(wp => wp !== marker);
+                        updateRoute();
+                    });
+
+                    waypoints.push(marker);
+                    updateIcons();
+                    updateRoute();
+                }
+
+                // Map click event to add markers
+                map.on('click', function(e) {
+                    addMarker(e.latlng.lat, e.latlng.lng);
+                });
+
+                let geoJsonWaypoints = [];
+
+                // Function to update the displayed route
+                async function updateRoute() {
+                    if (currentRouteLayer) {
+                        map.removeLayer(currentRouteLayer); // Remove the old route layer
+                        currentRouteLayer = null;
+                    }
+
+                    if (waypoints.length >= 2) {
+                        try {
+                            const geojson = await fetchHikingRoute(waypoints.map(marker => marker.getLatLng()));
+                            currentRouteLayer = L.geoJSON(geojson).addTo(map); // Update the route layer
+                        } catch (error) {
+                            console.error('Error fetching hiking route:', error);
+                        }
+                    }
+                }
+
+                function updateIcons() {
+                    if (waypoints.length > 0) {
+                        waypoints[0].setIcon(startIcon);
+                        if (waypoints.length > 1) {
+                            waypoints.forEach((wp, index) => {
+                                if (index > 0 && index < waypoints.length - 1) {
+                                    wp.setIcon(middleIcon);
+                                }
+                            });
+                            waypoints[waypoints.length - 1].setIcon(goalIcon);
+                        }
+                    }
+                }
+
+                fetchHikingRoute(waypoints).then(geojson => {
+                    L.geoJSON(waypoints).addTo(map);
+                }).catch(error => {
+                    console.error('Error fetching hiking route:', error);
+                });
+            </script>
             <label>Startpoint</label>
             <div class="coordinate-row">
                 <div class="coordinate-input">
