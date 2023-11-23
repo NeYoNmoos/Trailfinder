@@ -64,13 +64,15 @@ public class RouteCreateServlet extends HttpServlet {
             request.setAttribute("endLongitude", route.getCoordinates().get(1).getLongitude());
             request.setAttribute("endLatitude", route.getCoordinates().get(1).getLatitude());
 
+            request.setAttribute("route", route);
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
             dispatcher.forward(request, response);
         }
-        // else {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
-        dispatcher.forward(request, response);
-        //}
+        else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

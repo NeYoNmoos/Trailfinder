@@ -3,7 +3,10 @@
 <%@ page import="java.util.UUID" %>
 <%@ page import="at.fhv.hike.data.AttributeEntity" %>
 <%@ page import="at.fhv.hike.controllers.RouteController" %>
-<%@ page import="at.fhv.hike.data.CoordinateEntity" %><%--
+<%@ page import="at.fhv.hike.data.CoordinateEntity" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="java.util.Comparator" %><%--
   Created by IntelliJ IDEA.
   User: matth
   Date: 03/11/2023
@@ -11,6 +14,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    RouteEntity route = (RouteEntity) request.getAttribute("route");
+    List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;
+
+    if(coordinates != null){
+        Collections.sort(coordinates, Comparator.comparingInt(CoordinateEntity::getSequence));
+    }
+%>
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/create_route/create_route.css">
@@ -138,11 +149,17 @@
                     iconAnchor: [12, 25] // Anchor point of the icon
                 });
 
+                // route layer
+                let currentRouteLayer = null;
+
                 // Array to store waypoints
                 let waypoints = [];
 
-                // route layer
-                let currentRouteLayer = null;
+                // parse waypoints from existing route for editing
+                <% for (CoordinateEntity coord : coordinates) { %>
+                addMarker(<%= coord.getLatitude() %>, <%= coord.getLongitude() %>)
+                <% } %>
+                fetchAndDrawRoute();
 
                 // Function to add marker
                 function addMarker(lat, lng) {
@@ -152,7 +169,6 @@
                     }).addTo(map);
 
                     marker.on('dragend', function() {
-                        //updateWaypointsArray();
                         updateRoute();
                     });
 
@@ -174,6 +190,27 @@
 
                 let geoJsonWaypoints = [];
 
+                // Function to draw the fetched hiking route on the map
+                function drawFetchedRoute(geojson) {
+                    if (currentRouteLayer) {
+                        map.removeLayer(currentRouteLayer);
+                    }
+                    currentRouteLayer = L.geoJSON(geojson).addTo(map);
+                }
+
+                // Function to fetch and draw the hiking route based on waypoints
+                function fetchAndDrawRoute() {
+                    if (waypoints.length >= 2) {
+                        fetchHikingRoute(waypoints.map(marker => marker.getLatLng()))
+                            .then(geojson => {
+                                drawFetchedRoute(geojson);
+                            })
+                            .catch(error => {
+                                console.error('Error fetching hiking route:', error);
+                            });
+                    }
+                }
+
                 // Function to update the displayed route
                 async function updateRoute() {
                     if (currentRouteLayer) {
@@ -181,14 +218,7 @@
                         currentRouteLayer = null;
                     }
 
-                    if (waypoints.length >= 2) {
-                        try {
-                            const geojson = await fetchHikingRoute(waypoints.map(marker => marker.getLatLng()));
-                            currentRouteLayer = L.geoJSON(geojson).addTo(map); // Update the route layer
-                        } catch (error) {
-                            console.error('Error fetching hiking route:', error);
-                        }
-                    }
+                    fetchAndDrawRoute(); // This now uses the separated function to fetch and draw the route
                 }
 
                 function updateIcons() {
@@ -272,3 +302,4 @@
     });
 </script>
 </html>
+
