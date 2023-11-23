@@ -30,7 +30,7 @@
         <div class="loading-overlay" id="loadingOverlay">
             <div class="loader"></div>
         </div>
-        <form action="${pageContext.request.contextPath}/route-create" method="post">
+        <form id="createform" action="${pageContext.request.contextPath}/route-create" method="post">
             <h1>Create a new Route</h1>
             <h2>General Information:</h2>
             <label for="name">Route Name:</label>
@@ -104,6 +104,7 @@
                 <option value="5" ${condition == 5 ? 'selected' : ''}>5</option>
             </select>
 
+            <!-- route creation via map -->
             <h2>Define Route:</h2>
             <div class="map-container">
                 <div id="routeMap" style="height: 400px;"></div>
@@ -209,7 +210,34 @@
                 }).catch(error => {
                     console.error('Error fetching hiking route:', error);
                 });
+
+                function addCoordinatesToForm() {
+                    // Clear any existing coordinate inputs
+                    document.querySelectorAll('.dynamic-coord').forEach(el => el.remove());
+
+                    waypoints.forEach((marker, index) => {
+                        // Create inputs for latitude, longitude, and sequence
+                        const latInput = createHiddenInput('coords_' + index + '_latitude', marker.getLatLng().lat);
+                        const lngInput = createHiddenInput('coords_' + index + '_longitude', marker.getLatLng().lng);
+                        const seqInput = createHiddenInput('coords_' +index + '_sequence', index);
+
+                        // Append inputs to the form
+                        document.querySelector('form').appendChild(latInput);
+                        document.querySelector('form').appendChild(lngInput);
+                        document.querySelector('form').appendChild(seqInput);
+                    });
+                }
+
+                function createHiddenInput(name, value) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = name;
+                    input.value = value;
+                    input.classList.add('dynamic-coord');
+                    return input;
+                }
             </script>
+            <!--
             <label>Startpoint</label>
             <div class="coordinate-row">
                 <div class="coordinate-input">
@@ -229,6 +257,7 @@
                     <input type="text" value="${endLongitude}" placeholder="Longitude" id="endLongitude" name="endLongitude" pattern="^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,15})?))$" title="Enter a valid longitude (-180.0 to +180.0)" required>
                 </div>
             </div>
+            -->
 
             <input type="hidden" name="routeId" value="<%= request.getParameter("routeId") %>">
 
@@ -238,6 +267,7 @@
 </body>
 <script>
     document.querySelector('form').addEventListener('submit', function() {
+        addCoordinatesToForm(); // adds coordinates to the form before submitting
         document.getElementById('loadingOverlay').style.display = 'block';
     });
 </script>
