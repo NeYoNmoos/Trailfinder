@@ -81,6 +81,10 @@
 
                     </div>
                 </dl>
+                <form action="https://www.google.com/maps/dir/?api=1" method="get">
+                    <input type="hidden" name="api" value="1">
+                    <button type="submit" name="destination" value="<%= coordinates.get(0).getLatitude() %>,<%= coordinates.get(0).getLongitude() %>" class="w-48 btn-primary rounded-md px-4 py-2 mt-8">Get Approach Way</button>
+                </form>
             </div>
         </div>
 
