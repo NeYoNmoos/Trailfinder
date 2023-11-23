@@ -4,6 +4,9 @@
 <%@ page import="at.fhv.hike.data.TimeOfYearEntity" %>
 <%@ page import="at.fhv.hike.data.AttributeEntity" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="java.util.Comparator" %><%--
+<%@ page import="java.util.List" %>
 <%@ page import="java.net.URI" %>
 <%@ page import="java.net.URL" %>
 <%@ page import="java.util.Base64" %>
@@ -25,18 +28,26 @@
     TimeOfYearEntity timeOfYear = route != null ? route.getTimeOfYearEntity() : null;
     AttributeEntity attributes = route != null ? route.getAttributeEntity() : null;
     List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;
+
+    Collections.sort(coordinates, Comparator.comparingInt(CoordinateEntity::getSequence));
 %>
 
 <html>
     <head>
+        <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
         <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+        <script src="https://unpkg.com/leaflet-routing-machine"></script>
+        <script src="${pageContext.request.contextPath}/route_detail/fetch_hiking_route.js"></script>
         <title><%= route.getName() %></title>
     </head>
 <body class="bg-gray-100">
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
 
 <main class="py-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl lg:w-[75vw] mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Route Title -->
         <div class="mb-8 flex justify-between items-center">
             <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
@@ -134,43 +145,88 @@
         </div>
         <% } %>
 
-        <!-- Weather
-         <div id="ww_87c83204446d5" v='1.3' loc='id' a='{"t":"responsive","lang":"en","sl_lpl":1,"ids":["wl1514"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","sl_tof":"3"}'>More forecasts: <a href="https://wetterlang.de/wetter_14_tage/" id="ww_87c83204446d5_u" target="_blank">Wettervorhersage 14 tage</a></div><script async src="https://app2.weatherwidget.org/js/?id=ww_87c83204446d5"></script>
-        <%
-            try {
-        String username = "schoolproject_karapandic_staa";
-        String password = "1W8pkRQ3to";
-        URI uri = new URI("https://api.meteomatics.com/2023-11-20T01:15:00.000+01:00/t_2m:C/51.5073219,-0.1276474/html?model=mix");
-        URL url = uri.toURL();
-        String credentials = username + ":" + password;
-        String encoding = Base64.getEncoder().encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Accept", "application/json");
-        conn.setRequestProperty("Authorization", "Basic " + encoding);
-
-        if (conn.getResponseCode() != 200) {
-        throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-        }
-        BufferedReader streamReader = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-        StringBuilder responseStrBuilder = new StringBuilder();
-
-        String inputStr;
-        while ((inputStr = streamReader.readLine()) != null) {
-        responseStrBuilder.append(inputStr);
-        }
-
-        System.out.print("Positive respons: "+responseStrBuilder.toString());
-        } catch (Exception e) {
-        e.printStackTrace();
-        }%>-->
-
-
-        <!-- Coordinates -->
+        <!-- Coordinates on map -->
         <% if (coordinates != null && !coordinates.isEmpty()) { %>
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+
+            <div id="map" class="w-full h-[400px]"></div>
+            <script>
+                let firstLat = <%= coordinates.get(0).getLatitude() %>;
+                let firstLon = <%= coordinates.get(0).getLongitude() %>;
+                let map = L.map('map').setView([firstLat, firstLon], 13);
+
+                /* // default map style
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map); */
+
+                // thunderforest map style
+                L.tileLayer(
+                    'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=35adf7fcff8d4453ab157783a4c0f0be',
+                    { attribution: 'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>' }
+                ).addTo(map);
+
+                // start and end icons
+                let startIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/home_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 41]
+                });
+
+                let goalIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/goal_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [5, 41]
+                });
+
+                let waypoints = [];
+                <% for (CoordinateEntity coord : coordinates) { %>
+                waypoints.push(L.latLng(<%= coord.getLatitude() %>, <%= coord.getLongitude() %>));
+                <% } %>
+
+                fetchHikingRoute(waypoints).then(geojson => {
+                    L.geoJSON(geojson).addTo(map);
+
+                    // Add Start Marker
+                    if (waypoints.length > 0) {
+                        L.marker(waypoints[0], {icon: startIcon}).addTo(map)
+                            .bindPopup("Start Point");
+                    }
+
+                    // Add Goal Marker
+                    if (waypoints.length > 1) {
+                        L.marker(waypoints[waypoints.length - 1], {icon: goalIcon}).addTo(map)
+                            .bindPopup("Goal Point");
+                    }
+                }).catch(error => {
+                    console.error('Error fetching hiking route:', error);
+                });
+
+
+                let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+
+                /*
+                // leaflet routing machine
+                L.Routing.control({
+                    waypoints: waypoints,
+                    lineOptions : {
+                        color: primaryColor,
+                        addWaypoints: false,
+                        styles: [{ color: primaryColor, opacity: 0.95, weight: 4 }]
+                    },
+                    createMarker: function(index, wp) {
+                        return L.marker(wp.latLng).bindPopup(`Waypoint ${index + 1}`);
+                    }
+                }).addTo(map);
+                */
+
+                // used to load the map (without it shows unloaded spots)
+                setTimeout(function() {
+                    map.invalidateSize();
+                }, 100);
+            </script>
+
             <div class="px-4 py-5 sm:p-6">
                 <h2 class="text-xl font-bold text-gray-900">Coordinates</h2>
                 <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
