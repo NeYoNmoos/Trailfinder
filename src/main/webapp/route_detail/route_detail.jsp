@@ -31,6 +31,7 @@
     <head>
         <script src="https://cdn.tailwindcss.com"></script>
         <title><%= route.getName() %></title>
+        <!--<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/route_detail/route_detail.css">-->
     </head>
 <body class="bg-gray-100">
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
@@ -137,37 +138,37 @@
         <!-- Weather-->
 
         <div class="wrapper">
-        <section class="weather-part">
-            <img src="#" alt="Weather Icon" />
-            <div class="temp">
-                <span class="numb">_</span>
-                <span class="deg">°C</span>
-            </div>
-            <div class="weather">_</div>
-            <div class="location">
-                <i class="bx bx-map"></i>
-                <span>_,_</span>
-            </div>
-            <div class="bottom-details">
-                <div class="column feels">
-                    <i class="bx bxs-thermometer"></i>
-                    <div class="details">
-                        <div class="temp">
-                            <span class="numb-2">_</span>
-                            <span class="deg">°C</span>
+            <div class="weather-part">
+                <img src="#" alt="Weather Icon" />
+                <div class="temp1">
+                    <span class="numb">_</span>
+                    <span class="deg">°C</span>
+                </div>
+                <div class="weather">_</div>
+                <div class="location">
+                    <i class="bx bx-map"></i>
+                    <span>,</span>
+                </div>
+                <div class="bottom-details">
+                    <div class="column feels">
+                        <i class="bx bxs-thermometer"></i>
+                        <div class="details">
+                            <div class="temp">
+                                <span id="feelstemp">_</span>
+                                <span class="deg">°C</span>
+                            </div>
+                            <p>Feels like</p>
                         </div>
-                        <p>Feels like</p>
                     </div>
-                </div>
-                <div class="column humidity">
-                    <i class="bx bxs-droplet-half"></i>
-                    <div class="details">
-                        <span>_</span>
-                        <p>Humidity</p>
+                    <div class="column humidity">
+                        <i class="bx bxs-droplet-half"></i>
+                        <div class="details">
+                            <span>_</span>
+                            <p>Humidity</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
         </div>
         <script>
             // Declare variables
@@ -177,14 +178,16 @@
 
             // Function to handle API request
             function requestApi(latitude, longitude) {
-                const apiKey = "e5f513d1970d2495b51b0417729b36f2";
-                const api = `https://api.openweathermap.org/data/2.5/weather?lat=37.7749&lon=-122.4194&units=metric&appid=e5f513d1970d2495b51b0417729b36f2`;
+                console.log("latitude"+latitude);
+                console.log("longitude"+longitude);
+
+                const api = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&units=metric&appid=e5f513d1970d2495b51b0417729b36f2";
+                console.log("api"+api);
                 fetchData(api);
             }
 
             // Function to handle API fetch
             function fetchData(api) {
-                infoTxt.innerText = "Getting weather details...";
                 infoTxt.classList.add("pending");
                 fetch(api).then(response => response.json()).then(result => weatherDetails(result));
             }
@@ -218,11 +221,11 @@
                     }
 
                     // Update HTML elements with weather details
-                    wrapper.querySelector(".temp .numb").innerText =  Math.floor(temp);
-                    wrapper.querySelector(".weather").innerText = description.toUpperCase();
-                    wrapper.querySelector(".location span").innerText =city+" "+country;
-                    wrapper.querySelector(".temp .numb-2").innerText = Math.floor(feels_like);
-                    wrapper.querySelector(".humidity span").innerText=humidity;
+                    updateWeatherElement(".temp1 .numb", Math.floor(temp));
+                    updateWeatherElement(".weather", description.toUpperCase());
+                    updateWeatherElement(".location span", city + "," + country);
+                    updateWeatherElement(".temp .numb-2", Math.floor(feels_like));
+                    updateWeatherElement(".humidity span", humidity + " %");
 
                     // Clear status and input field
                     infoTxt.classList.remove("pending", "error");
@@ -230,11 +233,18 @@
                 }
             }
 
+            function updateWeatherElement(selector, text) {
+                const element = document.querySelector(selector);
+                if (element) {
+                    element.innerText = text;
+                } else {
+                    console.error(`Element not found for selector: ${selector}`);
+                }
+            }
 
             // Initial request with constants
-            const latitude = <%=coordinates.getLast().getLatitude()%>>; // Replace with your actual latitude
-            const longitude = <%=coordinates.getLast().getLatitude()%>; // Replace with your actual longitude
-            requestApi(latitude, longitude);
+            // Replace with your actual longitude
+            requestApi(<%=coordinates.getLast().getLatitude()%>, <%=coordinates.getLast().getLongitude()%>);
 
         </script>
 
