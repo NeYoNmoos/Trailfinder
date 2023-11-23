@@ -27,12 +27,13 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
         }
     }
 
-    public List<RouteEntity> getFiltered(Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery, Integer experience, Integer condition) {
+    public List<RouteEntity> getFiltered(String routename, Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery, Integer experience, Integer condition) {
 
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM RouteEntity AS r " +
                     "WHERE (r.length >= :lengthMin) " +
                     "AND (r.length <= :lengthMax) " +
+                    "AND (LOWER(r.name) LIKE '%' ||:routename|| '%') " +
                     "AND (r.duration >= :durationMin) " +
                     "AND (r.duration <= :durationMax) " +
                     "AND (r.altitude >= :altitudeMin) " +
@@ -44,8 +45,9 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
                     "AND (a.experience >= :experience) " +
                     "AND (a.condition >= :condition))";
 
-
+System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             Query<RouteEntity> query = session.createQuery(hql, RouteEntity.class)
+                    .setParameter("routename", routename)
                     .setParameter("lengthMin", lengthMin)
                     .setParameter("lengthMax", lengthMax)
                     .setParameter("durationMin", durationMin)

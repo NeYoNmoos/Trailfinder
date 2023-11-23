@@ -11,7 +11,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-
     List<RouteEntity> allRoutes = (List<RouteEntity>) request.getAttribute("allRoutes");
 %>
 <html>
@@ -24,11 +23,33 @@
 </head>
 <body class="bg-gray-100">
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
-
 <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+
+    <form action="${pageContext.request.contextPath}/" method="post">
+        <!-- Search by name -->
+        <div class="flex justify-center">
+            <input type="text" name="routename" id="routename" class="mt-1 w-96 h-10 text-lg p-2 border-gray-300 rounded-md shadow-sm content-center my-10" placeholder="Search by Name" value="<%= request.getParameter("routename") == null?"":request.getParameter("routename") %>">
+            <button type="submit"class="w-25 h-10 btn-primary text-white rounded-md px-4 py-2 mt-1 mx-1">
+                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+                <span class="sr-only">Search</span>
+            </button>
+        </div>
+
+
     <div class="flex flex-wrap -mx-4">
         <!-- Routes Grid -->
         <div class="w-full lg:w-3/4 px-4 mb-4">
+
+            <%
+                if (allRoutes.size() == 0) {
+            %>
+            <h1 class="text-center">Could not find any routes!</h1>
+            <%
+                }
+            %>
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <%
                     for (RouteEntity currentRoute : allRoutes) {
@@ -71,7 +92,7 @@
             <div class="sticky top-32">
                 <div class="bg-white rounded-lg shadow p-6">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">Filters</h2>
-                    <form action="${pageContext.request.contextPath}/" method="post">
+
                         <!-- Duration filter -->
                         <div class="mb-4">
                             <label for="durationMin" class="block text-sm font-medium text-gray-700">Duration</label>
@@ -154,11 +175,12 @@
 
                         <button type="submit" class="w-full btn-primary rounded-md px-4 py-2 mt-4">Apply</button>
 
-                    </form>
                 </div>
             </div>
         </div>
     </div>
+    </form>
+
 </main>
 </body>
 </html>
