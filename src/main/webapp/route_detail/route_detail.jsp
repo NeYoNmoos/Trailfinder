@@ -134,39 +134,109 @@
         </div>
         <% } %>
 
-        <!-- Weather
-         <div id="ww_87c83204446d5" v='1.3' loc='id' a='{"t":"responsive","lang":"en","sl_lpl":1,"ids":["wl1514"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","sl_tof":"3"}'>More forecasts: <a href="https://wetterlang.de/wetter_14_tage/" id="ww_87c83204446d5_u" target="_blank">Wettervorhersage 14 tage</a></div><script async src="https://app2.weatherwidget.org/js/?id=ww_87c83204446d5"></script>
-        <%
-            try {
-        String username = "schoolproject_karapandic_staa";
-        String password = "1W8pkRQ3to";
-        URI uri = new URI("https://api.meteomatics.com/2023-11-20T01:15:00.000+01:00/t_2m:C/51.5073219,-0.1276474/html?model=mix");
-        URL url = uri.toURL();
-        String credentials = username + ":" + password;
-        String encoding = Base64.getEncoder().encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Accept", "application/json");
-        conn.setRequestProperty("Authorization", "Basic " + encoding);
+        <!-- Weather-->
 
-        if (conn.getResponseCode() != 200) {
-        throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-        }
-        BufferedReader streamReader = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+        <div class="wrapper">
+        <section class="weather-part">
+            <img src="#" alt="Weather Icon" />
+            <div class="temp">
+                <span class="numb">_</span>
+                <span class="deg">°C</span>
+            </div>
+            <div class="weather">_</div>
+            <div class="location">
+                <i class="bx bx-map"></i>
+                <span>_,_</span>
+            </div>
+            <div class="bottom-details">
+                <div class="column feels">
+                    <i class="bx bxs-thermometer"></i>
+                    <div class="details">
+                        <div class="temp">
+                            <span class="numb-2">_</span>
+                            <span class="deg">°C</span>
+                        </div>
+                        <p>Feels like</p>
+                    </div>
+                </div>
+                <div class="column humidity">
+                    <i class="bx bxs-droplet-half"></i>
+                    <div class="details">
+                        <span>_</span>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        </div>
+        <script>
+            // Declare variables
+            const infoTxt = document.querySelector(".weather-part .temp");
+            const wIcon = document.querySelector(".weather-part img");
+            const wrapper = document.querySelector(".wrapper");  //container div
 
-        StringBuilder responseStrBuilder = new StringBuilder();
+            // Function to handle API request
+            function requestApi(latitude, longitude) {
+                const apiKey = "e5f513d1970d2495b51b0417729b36f2";
+                const api = `https://api.openweathermap.org/data/2.5/weather?lat=37.7749&lon=-122.4194&units=metric&appid=e5f513d1970d2495b51b0417729b36f2`;
+                fetchData(api);
+            }
 
-        String inputStr;
-        while ((inputStr = streamReader.readLine()) != null) {
-        responseStrBuilder.append(inputStr);
-        }
+            // Function to handle API fetch
+            function fetchData(api) {
+                infoTxt.innerText = "Getting weather details...";
+                infoTxt.classList.add("pending");
+                fetch(api).then(response => response.json()).then(result => weatherDetails(result));
+            }
 
-        System.out.print("Positive respons: "+responseStrBuilder.toString());
-        } catch (Exception e) {
-        e.printStackTrace();
-        }%>-->
+            function weatherDetails(info) {
+                console.log(info);
+                if (info.cod === 404) {
+                    infoTxt.classList.replace("pending", "error");
+                    infoTxt.innerText = `isn't a valid city name`;
+                } else {
+                    // Extracted information
+                    const city = info.name;
+                    const country = info.sys.country;
+                    const { description, id } = info.weather[0];
+                    const { feels_like, humidity, temp } = info.main;
 
+                    console.log(temp);
+                    // Assign weather icon based on weather condition ID
+                    if (id === 800) {
+                        wIcon.src = `${pageContext.request.contextPath}/assets/weather_icons/clear.svg`;
+                    } else if (id >= 200 && id <= 232) {
+                        wIcon.src = `${pageContext.request.contextPath}/assets/weather_icons/storm.svg`;
+                    } else if (id >= 600 && id <= 622) {
+                        wIcon.src = `${pageContext.request.contextPath}/assets/weather_icons/snowy.svg`;
+                    } else if (id >= 701 && id <= 781) {
+                        wIcon.src = `${pageContext.request.contextPath}/assets/weather_icons/haze.svg`;
+                    } else if (id >= 801 && id <= 804) {
+                        wIcon.src = `${pageContext.request.contextPath}/assets/weather_icons/cloudy.svg`;
+                    } else if ((id >= 300 && id <= 321) || (id >= 500 && id <= 531)) {
+                        wIcon.src = `${pageContext.request.contextPath}/assets/weather_icons/rainy.svg`;
+                    }
+
+                    // Update HTML elements with weather details
+                    wrapper.querySelector(".temp .numb").innerText =  Math.floor(temp);
+                    wrapper.querySelector(".weather").innerText = description.toUpperCase();
+                    wrapper.querySelector(".location span").innerText =city+" "+country;
+                    wrapper.querySelector(".temp .numb-2").innerText = Math.floor(feels_like);
+                    wrapper.querySelector(".humidity span").innerText=humidity;
+
+                    // Clear status and input field
+                    infoTxt.classList.remove("pending", "error");
+                    infoTxt.classList.add("active"); // Show weather details
+                }
+            }
+
+
+            // Initial request with constants
+            const latitude = <%=coordinates.getLast().getLatitude()%>>; // Replace with your actual latitude
+            const longitude = <%=coordinates.getLast().getLatitude()%>; // Replace with your actual longitude
+            requestApi(latitude, longitude);
+
+        </script>
 
         <!-- Coordinates -->
         <% if (coordinates != null && !coordinates.isEmpty()) { %>
