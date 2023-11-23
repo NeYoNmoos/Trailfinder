@@ -117,6 +117,14 @@
 
             <!-- route creation via map -->
             <h2>Define Route:</h2>
+            <div class="route-instructions">
+                <h2>How to Create Your Route</h2>
+                <ul>
+                    <li><strong>Creating Waypoints:</strong> Click on the map to create a new waypoint. The route will automatically update to include the new point.</li>
+                    <li><strong>Dragging Waypoints:</strong> Drag any waypoint to a new location to modify the route.</li>
+                    <li><strong>Removing Waypoints:</strong> Click on an existing waypoint to remove it from the route.</li>
+                </ul>
+            </div>
             <div class="map-container">
                 <div id="routeMap" style="height: 400px;"></div>
             </div>
@@ -156,10 +164,12 @@
                 let waypoints = [];
 
                 // parse waypoints from existing route for editing
-                <% for (CoordinateEntity coord : coordinates) { %>
-                addMarker(<%= coord.getLatitude() %>, <%= coord.getLongitude() %>)
+                <% if (coordinates != null){ %>
+                    <% for (CoordinateEntity coord : coordinates) { %>
+                    addMarker(<%= coord.getLatitude() %>, <%= coord.getLongitude() %>)
+                    <% } %>
+                    fetchAndDrawRoute();
                 <% } %>
-                fetchAndDrawRoute();
 
                 // Function to add marker
                 function addMarker(lat, lng) {
