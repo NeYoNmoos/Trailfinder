@@ -118,7 +118,7 @@
             <!-- route creation via map -->
             <h2>Define Route:</h2>
             <div class="route-instructions">
-                <h2>How to Create Your Route</h2>
+                <h3>How to Create Your Route</h3>
                 <ul>
                     <li><strong>Creating Waypoints:</strong> Click on the map to create a new waypoint. The route will automatically update to include the new point.</li>
                     <li><strong>Dragging Waypoints:</strong> Drag any waypoint to a new location to modify the route.</li>
