@@ -1,7 +1,6 @@
 <%@ page import="at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade" %>
 <%@ page import="at.fhv.hike.data.RouteEntity" %>
 <%@ page import="at.fhv.hike.data.CoordinateEntity" %>
-<%@ page import="at.fhv.hike.data.TimeOfYearEntity" %>
 <%@ page import="at.fhv.hike.data.AttributeEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
@@ -13,7 +12,9 @@
 <%@ page import="java.nio.charset.StandardCharsets" %>
 <%@ page import="java.net.HttpURLConnection" %>
 <%@ page import="java.io.BufferedReader" %>
-<%@ page import="java.io.InputStreamReader" %><%--
+<%@ page import="java.io.InputStreamReader" %>
+<%@ page import="at.fhv.hike.data.Bitmask"%>
+<%--
   Created by IntelliJ IDEA.
   User: matth
   Date: 01/11/2023
@@ -24,8 +25,6 @@
 
 <%
     RouteEntity route = (RouteEntity) request.getAttribute("route");
-
-    TimeOfYearEntity timeOfYear = route != null ? route.getTimeOfYearEntity() : null;
     AttributeEntity attributes = route != null ? route.getAttributeEntity() : null;
     List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;
 
@@ -122,24 +121,26 @@
         </div>
         <% } %>
 
+
         <!-- Best Time to Visit -->
-        <% if (timeOfYear != null) { %>
+        <% if (route.getMonths()>0) { %>
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
             <div class="px-4 py-5 sm:p-6">
                 <h2 class="text-xl font-bold text-gray-900">Best Time to Visit</h2>
                 <p class="mt-1 text-sm text-gray-900">
-                    <%= timeOfYear.getJanuary() ? "January " : "" %>
-                    <%= timeOfYear.getFebruary() ? "February " : "" %>
-                    <%= timeOfYear.getMarch() ? "March " : "" %>
-                    <%= timeOfYear.getApril() ? "April " : "" %>
-                    <%= timeOfYear.getMay() ? "May " : "" %>
-                    <%= timeOfYear.getJune() ? "June " : "" %>
-                    <%= timeOfYear.getJuly() ? "July " : "" %>
-                    <%= timeOfYear.getAugust() ? "August " : "" %>
-                    <%= timeOfYear.getSeptember() ? "September " : "" %>
-                    <%= timeOfYear.getOctober() ? "October " : "" %>
-                    <%= timeOfYear.getNovember() ? "November " : "" %>
-                    <%= timeOfYear.getDecember() ? "December " : "" %>
+                    <% int bm = route.getMonths();%>
+                    <%= (bm & Bitmask.Month_1_Jan) != 0 ? "January" : ""%>
+                    <%= (bm & Bitmask.Month_2_Feb) != 0 ? "February " : "" %>
+                    <%= (bm & Bitmask.Month_3_Mar) != 0 ? "March " : "" %>
+                    <%= (bm & Bitmask.Month_4_Apr) != 0 ? "April " : "" %>
+                    <%= (bm & Bitmask.Month_5_May) != 0 ? "May " : "" %>
+                    <%= (bm & Bitmask.Month_6_Jun) != 0 ? "June " : "" %>
+                    <%= (bm & Bitmask.Month_7_Jul) != 0 ? "July " : "" %>
+                    <%= (bm & Bitmask.Month_8_Aug) != 0 ? "August " : "" %>
+                    <%= (bm & Bitmask.Month_9_Sep) != 0 ? "September " : "" %>
+                    <%= (bm & Bitmask.Month_10_Oct) != 0 ? "October " : "" %>
+                    <%= (bm & Bitmask.Month_11_Nov) != 0 ? "November " : "" %>
+                    <%= (bm & Bitmask.Month_12_Dec) != 0 ? "December " : "" %>
                 </p>
             </div>
         </div>
