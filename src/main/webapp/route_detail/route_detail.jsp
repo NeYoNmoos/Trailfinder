@@ -22,8 +22,6 @@
 
 <%
     RouteEntity route = (RouteEntity) request.getAttribute("route");
-
-//    TimeOfYearEntity timeOfYear = route != null ? route.getTimeOfYearEntity() : null;
     AttributeEntity attributes = route != null ? route.getAttributeEntity() : null;
     List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;
 %>
@@ -132,19 +130,6 @@
                     <%= (bm & Bitmask.Month_10_Oct) != 0 ? "October " : "" %>
                     <%= (bm & Bitmask.Month_11_Nov) != 0 ? "November " : "" %>
                     <%= (bm & Bitmask.Month_12_Dec) != 0 ? "December " : "" %>
-                    <%--
-                    <%= timeOfYear.getJanuary() ? "January " : "" %>
-                    <%= timeOfYear.getFebruary() ? "February " : "" %>
-                    <%= timeOfYear.getMarch() ? "March " : "" %>
-                    <%= timeOfYear.getApril() ? "April " : "" %>
-                    <%= timeOfYear.getMay() ? "May " : "" %>
-                    <%= timeOfYear.getJune() ? "June " : "" %>
-                    <%= timeOfYear.getJuly() ? "July " : "" %>
-                    <%= timeOfYear.getAugust() ? "August " : "" %>
-                    <%= timeOfYear.getSeptember() ? "September " : "" %>
-                    <%= timeOfYear.getOctober() ? "October " : "" %>
-                    <%= timeOfYear.getNovember() ? "November " : "" %>
-                    <%= timeOfYear.getDecember() ? "December " : "" %>--%>
                 </p>
             </div>
         </div>

@@ -5,7 +5,6 @@ import at.fhv.hike.data.AttributeEntity;
 import at.fhv.hike.data.Bitmask;
 import at.fhv.hike.data.CoordinateEntity;
 import at.fhv.hike.data.RouteEntity;
-//import at.fhv.hike.data.TimeOfYearEntity;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -21,7 +20,6 @@ public class TestServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // create mockdata
         AttributeEntity newAttributes = new AttributeEntity();
-//        newAttributes.setAttributeId(UUID.randomUUID().toString());
         newAttributes.setStrength(2);
         newAttributes.setScenery(3);
         newAttributes.setExperience(4);
