@@ -1,8 +1,10 @@
-<%@ page import="at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade" %>
 <%@ page import="at.fhv.hike.data.RouteEntity" %>
 <%@ page import="at.fhv.hike.data.CoordinateEntity" %>
-<%@ page import="at.fhv.hike.data.TimeOfYearEntity" %>
 <%@ page import="at.fhv.hike.data.AttributeEntity" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="java.util.Comparator" %>
+<%@ page import="at.fhv.hike.data.Bitmask" %><%--
 <%@ page import="java.util.List" %>
 <%@ page import="java.net.URI" %>
 <%@ page import="java.net.URL" %>
@@ -10,7 +12,9 @@
 <%@ page import="java.nio.charset.StandardCharsets" %>
 <%@ page import="java.net.HttpURLConnection" %>
 <%@ page import="java.io.BufferedReader" %>
-<%@ page import="java.io.InputStreamReader" %><%--
+<%@ page import="java.io.InputStreamReader" %>
+<%@ page import="at.fhv.hike.data.Bitmask"%>
+<%--
   Created by IntelliJ IDEA.
   User: matth
   Date: 01/11/2023
@@ -21,23 +25,28 @@
 
 <%
     RouteEntity route = (RouteEntity) request.getAttribute("route");
-
-    TimeOfYearEntity timeOfYear = route != null ? route.getTimeOfYearEntity() : null;
     AttributeEntity attributes = route != null ? route.getAttributeEntity() : null;
     List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;
+
+    Collections.sort(coordinates, Comparator.comparingInt(CoordinateEntity::getSequence));
 %>
 
 <html>
     <head>
+        <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
         <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+        <script src="https://unpkg.com/leaflet-routing-machine"></script>
+        <script src="${pageContext.request.contextPath}/route_detail/fetch_hiking_route.js"></script>
         <title><%= route.getName() %></title>
-        <!--<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/route_detail/route_detail.css">-->
     </head>
 <body class="bg-gray-100">
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
 
 <main class="py-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl lg:w-[75vw] mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Route Title -->
         <div class="mb-8 flex justify-between items-center">
             <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
@@ -113,28 +122,29 @@
         <% } %>
 
         <div class="flex justify-between mb-6">
-            <!-- Best Time to Visit -->
-            <% if (timeOfYear != null) { %>
+        <!-- Best Time to Visit -->
+        <% if (route.getMonths()>0) { %>
             <div class="bg-white shadow overflow-hidden sm:rounded-lg w-1/2 mr-2">
                 <div class="px-4 py-5 sm:p-6 text-center">
-                    <h2 class="text-xl font-bold text-gray-900">Best Time to Visit</h2>
-                    <p class="mt-1 text-sm text-gray-900">
-                        <%= timeOfYear.getJanuary() ? "January " : "" %>
-                        <%= timeOfYear.getFebruary() ? "February " : "" %>
-                        <%= timeOfYear.getMarch() ? "March " : "" %>
-                        <%= timeOfYear.getApril() ? "April " : "" %>
-                        <%= timeOfYear.getMay() ? "May " : "" %>
-                        <%= timeOfYear.getJune() ? "June " : "" %>
-                        <%= timeOfYear.getJuly() ? "July " : "" %>
-                        <%= timeOfYear.getAugust() ? "August " : "" %>
-                        <%= timeOfYear.getSeptember() ? "September " : "" %>
-                        <%= timeOfYear.getOctober() ? "October " : "" %>
-                        <%= timeOfYear.getNovember() ? "November " : "" %>
-                        <%= timeOfYear.getDecember() ? "December " : "" %>
-                    </p>
-                </div>
+                <h2 class="text-xl font-bold text-gray-900">Best Time to Visit</h2>
+                <p class="mt-1 text-sm text-gray-900">
+                    <% int bm = route.getMonths();%>
+                    <%= (bm & Bitmask.Month_1_Jan) != 0 ? "January" : ""%>
+                    <%= (bm & Bitmask.Month_2_Feb) != 0 ? "February " : "" %>
+                    <%= (bm & Bitmask.Month_3_Mar) != 0 ? "March " : "" %>
+                    <%= (bm & Bitmask.Month_4_Apr) != 0 ? "April " : "" %>
+                    <%= (bm & Bitmask.Month_5_May) != 0 ? "May " : "" %>
+                    <%= (bm & Bitmask.Month_6_Jun) != 0 ? "June " : "" %>
+                    <%= (bm & Bitmask.Month_7_Jul) != 0 ? "July " : "" %>
+                    <%= (bm & Bitmask.Month_8_Aug) != 0 ? "August " : "" %>
+                    <%= (bm & Bitmask.Month_9_Sep) != 0 ? "September " : "" %>
+                    <%= (bm & Bitmask.Month_10_Oct) != 0 ? "October " : "" %>
+                    <%= (bm & Bitmask.Month_11_Nov) != 0 ? "November " : "" %>
+                    <%= (bm & Bitmask.Month_12_Dec) != 0 ? "December " : "" %>
+                </p>
             </div>
-            <% } %>
+        </div>
+        <% } %>
 
             <!-- Weather -->
             <div class="bg-white shadow overflow-hidden sm:rounded-lg w-1/2 ml-2">
@@ -262,8 +272,88 @@
         </script>
 
         <!-- Coordinates -->
+        <!-- Coordinates on map -->
         <% if (coordinates != null && !coordinates.isEmpty()) { %>
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+
+            <div id="map" class="w-full h-[400px]"></div>
+            <script>
+                let firstLat = <%= coordinates.get(0).getLatitude() %>;
+                let firstLon = <%= coordinates.get(0).getLongitude() %>;
+                let map = L.map('map').setView([firstLat, firstLon], 13);
+
+                /* // default map style
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map); */
+
+                // thunderforest map style
+                L.tileLayer(
+                    'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=35adf7fcff8d4453ab157783a4c0f0be',
+                    { attribution: 'Maps © <a href="https://www.thunderforest.com">Thunderforest</a>, Data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>' }
+                ).addTo(map);
+
+                // start and end icons
+                let startIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/home_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 41]
+                });
+
+                let goalIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/goal_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [5, 41]
+                });
+
+                let waypoints = [];
+                <% for (CoordinateEntity coord : coordinates) { %>
+                waypoints.push(L.latLng(<%= coord.getLatitude() %>, <%= coord.getLongitude() %>));
+                <% } %>
+
+                fetchHikingRoute(waypoints).then(geojson => {
+                    L.geoJSON(geojson).addTo(map);
+
+                    // Add Start Marker
+                    if (waypoints.length > 0) {
+                        L.marker(waypoints[0], {icon: startIcon}).addTo(map)
+                            .bindPopup("Start Point");
+                    }
+
+                    // Add Goal Marker
+                    if (waypoints.length > 1) {
+                        L.marker(waypoints[waypoints.length - 1], {icon: goalIcon}).addTo(map)
+                            .bindPopup("Goal Point");
+                    }
+                }).catch(error => {
+                    console.error('Error fetching hiking route:', error);
+                });
+
+
+                let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
+
+                /*
+                // leaflet routing machine
+                L.Routing.control({
+                    waypoints: waypoints,
+                    lineOptions : {
+                        color: primaryColor,
+                        addWaypoints: false,
+                        styles: [{ color: primaryColor, opacity: 0.95, weight: 4 }]
+                    },
+                    createMarker: function(index, wp) {
+                        return L.marker(wp.latLng).bindPopup(`Waypoint ${index + 1}`);
+                    }
+                }).addTo(map);
+                */
+
+                // used to load the map (without it shows unloaded spots)
+                setTimeout(function() {
+                    map.invalidateSize();
+                }, 100);
+            </script>
+
             <div class="px-4 py-5 sm:p-6">
                 <h2 class="text-xl font-bold text-gray-900">Coordinates</h2>
                 <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">

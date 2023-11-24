@@ -11,7 +11,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-
     List<RouteEntity> allRoutes = (List<RouteEntity>) request.getAttribute("allRoutes");
 %>
 <html>
@@ -24,11 +23,33 @@
 </head>
 <body class="bg-gray-100">
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
-
 <main class="container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+
+    <form action="${pageContext.request.contextPath}/" method="post">
+        <!-- Search by name -->
+        <div class="flex justify-center">
+            <input type="text" name="routename" id="routename" class="mt-1 w-96 h-10 text-lg p-2 border-gray-300 rounded-md shadow-sm content-center my-10" placeholder="Search by Name" value="<%= request.getParameter("routename") == null?"":request.getParameter("routename") %>">
+            <button type="submit"class="w-25 h-10 btn-primary text-white rounded-md px-4 py-2 mt-1 mx-1">
+                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                </svg>
+                <span class="sr-only">Search</span>
+            </button>
+        </div>
+
+
     <div class="flex flex-wrap -mx-4">
         <!-- Routes Grid -->
         <div class="w-full lg:w-3/4 px-4 mb-4">
+
+            <%
+                if (allRoutes.size() == 0) {
+            %>
+            <h1 class="text-center">Could not find any routes!</h1>
+            <%
+                }
+            %>
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <%
                     for (RouteEntity currentRoute : allRoutes) {
@@ -71,7 +92,7 @@
             <div class="sticky top-32">
                 <div class="bg-white rounded-lg shadow p-6">
                     <h2 class="text-xl font-semibold text-gray-800 mb-4">Filters</h2>
-                    <form action="${pageContext.request.contextPath}/" method="post">
+
                         <!-- Duration filter -->
                         <div class="mb-4">
                             <label for="durationMin" class="block text-sm font-medium text-gray-700">Duration</label>
@@ -154,157 +175,12 @@
 
                         <button type="submit" class="w-full btn-primary rounded-md px-4 py-2 mt-4">Apply</button>
 
-                    </form>
                 </div>
             </div>
         </div>
     </div>
+    </form>
+
 </main>
 </body>
 </html>
-
-<!--<header>
-<div class="header-content">
-<h1>Trailfinder</h1>
-<img src="${pageContext.request.contextPath}/assets/home_page_img/header-image.jpg" alt="Header Image">
-</div>
-</header>-->
-
-<!--<div class="search-bar">
-<input type="text" placeholder="Search by Name">
-<button>Search</button>
-</div>-->
-<!--
-<div class="route-content">
-<div class="route-boxes">
-<%
-    for (int i = 0; i < allRoutes.size(); i++) {
-        RouteEntity currentRoute = allRoutes.get(i);
-        String detailPageUrl = "route-detail?routeId=" + currentRoute.getRouteId(); %>
-<a href="<%= detailPageUrl %>" class="route-box-link">
-<div class="route-box">
-<div class="route-info">
-<h2><%=currentRoute.getName()%></h2>
-
-<tr class="route-data">
-<td><%
-    AttributeEntity attributes = currentRoute != null ? currentRoute.getAttributeEntity() : null;
-    if (attributes != null) { %>
-<td>Power: <%= attributes.getStrength() %>, </td>
-<td>Scenery: <%= attributes.getScenery() %>, </td>
-<td>Experience: <%= attributes.getExperience() %>, </td>
-<td>Condition: <%= attributes.getCondition() %></td>
-<% } %>
-</tr>
-<p>
-<%=currentRoute.getDescription()%>
-</p>
-</div>
-<tr class="route-data">
-<td>Length: <%=currentRoute.getLength()%>km, </td>
-<td>Altitude: <%=currentRoute.getAltitude()%>m, </td>
-<%
-    double totalHours = currentRoute.getDuration();
-    int wholeHours = (int) totalHours;
-    int wholeMinutes = (int) Math.round((totalHours - wholeHours) * 60);
-%>
-<td>Duration: <%= wholeHours %>h <%= wholeMinutes %>m</td>
-<td>Location: <%=currentRoute.getLocation()%></td>
-</tr>
-</div>
-</a>
-<% }
-%>
-</div>
-<div class="filter-box">
-<div class="filter-header"><h1>Filters</h1></div>
-<div class="filter-content">
-<form action="${pageContext.request.contextPath}/" method="post">
-<div class="filter-label">Length</div>
-<div class="filter-inputs">
-<input type="text" name="lengthMin" id="lengthMin" placeholder="Min" class="filter-input">
-<span>to</span>
-<input type="number" name="lengthMax" id="lengthMax" placeholder="Max" class="filter-input">
-</div>
-<div class="filter-label">Altitude</div>
-<div class="filter-inputs">
-<input type="number" name="altitudeMin" id="altitudeMin" placeholder="Min" class="filter-input">
-<span>to</span>
-<input type="number" name="altitudeMax" id="altitudeMax" placeholder="Max" class="filter-input">
-</div>
-<div class="filter-label">Duration</div>
-<div class="filter-inputs">
-<input type="number" name="durationMin" id="durationMin" placeholder="Min" class="filter-input">
-<span>to</span>
-<input type="number" name="durationMax" id="durationMax" placeholder="Max" class="filter-input">
-</div>
-<div class="filter-label">Months</div>
-<div class="filter-inputs">
-<select name="months" id="months" multiple>
-<option value="january">January</option>
-<option value="february">February</option>
-<option value="march">March</option>
-<option value="march">April</option>
-<option value="may">May</option>
-<option value="june">June</option>
-<option value="july">July</option>
-<option value="august">August</option>
-<option value="september">September</option>
-<option value="october">October</option>
-<option value="november">November</option>
-<option value="december">December</option>
-</select>
-</div>
-
-<div class="filter-label">Power level</div>
-<div class="filter-inputs">
-<select name="power" id="power">
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
-</select>
-</div>
-<div class="filter-label">Scenery level</div>
-<div class="filter-inputs">
-<select name="scenery" id="scenery">
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
-</select>
-</div>
-
-<div class="filter-label">Experience level</div>
-<div class="filter-inputs">
-<select name="experience" id="experience">
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
-</select>
-</div>
-
-<div class="filter-label">Condition level</div>
-<div class="filter-inputs">
-<select name="condition" id="condition">
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
-</select>
-</div>
-
-<button type="submit" id="applyButton">Apply</button>
-</form>
-</div>
-</div>
-</div>
-</body>
-</html>
-
--->
