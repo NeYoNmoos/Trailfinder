@@ -112,64 +112,77 @@
         </div>
         <% } %>
 
-        <!-- Best Time to Visit -->
-        <% if (timeOfYear != null) { %>
-        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
-            <div class="px-4 py-5 sm:p-6">
-                <h2 class="text-xl font-bold text-gray-900">Best Time to Visit</h2>
-                <p class="mt-1 text-sm text-gray-900">
-                    <%= timeOfYear.getJanuary() ? "January " : "" %>
-                    <%= timeOfYear.getFebruary() ? "February " : "" %>
-                    <%= timeOfYear.getMarch() ? "March " : "" %>
-                    <%= timeOfYear.getApril() ? "April " : "" %>
-                    <%= timeOfYear.getMay() ? "May " : "" %>
-                    <%= timeOfYear.getJune() ? "June " : "" %>
-                    <%= timeOfYear.getJuly() ? "July " : "" %>
-                    <%= timeOfYear.getAugust() ? "August " : "" %>
-                    <%= timeOfYear.getSeptember() ? "September " : "" %>
-                    <%= timeOfYear.getOctober() ? "October " : "" %>
-                    <%= timeOfYear.getNovember() ? "November " : "" %>
-                    <%= timeOfYear.getDecember() ? "December " : "" %>
-                </p>
+        <div class="flex justify-between mb-6">
+            <!-- Best Time to Visit -->
+            <% if (timeOfYear != null) { %>
+            <div class="bg-white shadow overflow-hidden sm:rounded-lg w-1/2 mr-2">
+                <div class="px-4 py-5 sm:p-6 text-center">
+                    <h2 class="text-xl font-bold text-gray-900">Best Time to Visit</h2>
+                    <p class="mt-1 text-sm text-gray-900">
+                        <%= timeOfYear.getJanuary() ? "January " : "" %>
+                        <%= timeOfYear.getFebruary() ? "February " : "" %>
+                        <%= timeOfYear.getMarch() ? "March " : "" %>
+                        <%= timeOfYear.getApril() ? "April " : "" %>
+                        <%= timeOfYear.getMay() ? "May " : "" %>
+                        <%= timeOfYear.getJune() ? "June " : "" %>
+                        <%= timeOfYear.getJuly() ? "July " : "" %>
+                        <%= timeOfYear.getAugust() ? "August " : "" %>
+                        <%= timeOfYear.getSeptember() ? "September " : "" %>
+                        <%= timeOfYear.getOctober() ? "October " : "" %>
+                        <%= timeOfYear.getNovember() ? "November " : "" %>
+                        <%= timeOfYear.getDecember() ? "December " : "" %>
+                    </p>
+                </div>
             </div>
-        </div>
-        <% } %>
+            <% } %>
 
-        <!-- Weather-->
-
-        <div class="wrapper">
-            <div class="weather-part">
-                <img src="#" alt="Weather Icon" />
-                <div class="temp1">
-                    <span class="numb">_</span>
-                    <span class="deg">°C</span>
-                </div>
-                <div class="weather">_</div>
-                <div class="location">
-                    <i class="bx bx-map"></i>
-                    <span>,</span>
-                </div>
-                <div class="bottom-details">
-                    <div class="column feels">
-                        <i class="bx bxs-thermometer"></i>
-                        <div class="details">
-                            <div class="temp">
-                                <span id="feelstemp">_</span>
+            <!-- Weather -->
+            <div class="bg-white shadow overflow-hidden sm:rounded-lg w-1/2 ml-2">
+                <div class="px-4 py-5 sm:p-6 flex flex-col items-center text-center">
+                    <h2 class="text-xl font-bold text-gray-900">Weather</h2>
+                    <div class="wrapper">
+                        <div class="weather-part">
+                            <div class="flex items-center justify-center mb-4">
+                                <img src="#" alt="Weather Icon" />
+                            </div>
+                            <div class="temp1">
+                                <span class="numb">_</span>
                                 <span class="deg">°C</span>
                             </div>
-                            <p>Feels like</p>
-                        </div>
-                    </div>
-                    <div class="column humidity">
-                        <i class="bx bxs-droplet-half"></i>
-                        <div class="details">
-                            <span>_</span>
-                            <p>Humidity</p>
+                            <div class="weather">_</div>
+                            <div class="location">
+                                <i class="bx bx-map"></i>
+                                <span>,</span>
+                            </div>
+                            </br>
+                            <div class="bottom-details flex">
+                                <!-- Feels like column -->
+                                <div class="column feels flex items-center">
+                                    <i class="bx bxs-thermometer"></i>
+                                    <div class="details ml-2">
+                                        <div class="temp">
+                                            <span class="feelstemp">_</span>
+                                            <span class="deg">°C</span>
+                                        </div>
+                                        <p class="mb-0">Feels like</p>
+                                    </div>
+                                </div>
+
+                                <!-- Humidity column -->
+                                <div class="column humidity ml-4 flex items-center">
+                                    <i class="bx bxs-droplet-half"></i>
+                                    <div class="details ml-2">
+                                        <span>_</span>
+                                        <p class="mb-0">Humidity</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <script>
             // Declare variables
             const infoTxt = document.querySelector(".weather-part .temp");
@@ -224,7 +237,7 @@
                     updateWeatherElement(".temp1 .numb", Math.floor(temp));
                     updateWeatherElement(".weather", description.toUpperCase());
                     updateWeatherElement(".location span", city + "," + country);
-                    updateWeatherElement(".temp .numb-2", Math.floor(feels_like));
+                    updateWeatherElement(".temp span", Math.floor(feels_like));
                     updateWeatherElement(".humidity span", humidity + " %");
 
                     // Clear status and input field
