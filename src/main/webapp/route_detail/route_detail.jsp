@@ -52,9 +52,15 @@
 
         <!-- Route Details -->
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+            <div class="px-4 py-5 sm:p-6 flex justify-between items-center">
+                <h2 class="text-xl font-bold text-gray-900 mb-1 sm:mb-0">Route Details</h2>
+                <form action="https://www.google.com/maps/dir/" method="get" target="_blank">
+                    <input type="hidden" name="api" value="1">
+                    <button type="submit" name="destination" value="<%= coordinates.get(0).getLatitude() %>,<%= coordinates.get(0).getLongitude() %>" class="w-48 btn-primary rounded-md px-4 py-2">How to get here</button>
+                </form>
+            </div>
             <div class="px-4 py-5 sm:p-6">
-                <h2 class="text-xl font-bold text-gray-900">Route Details</h2>
-                <div>
+                <div class="mb-2">
                     <p><%= route.getDescription() %> </p>
                 </div>
                 <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
@@ -81,10 +87,6 @@
 
                     </div>
                 </dl>
-                <form action="https://www.google.com/maps/dir/" method="get" target="_blank">
-                    <input type="hidden" name="api" value="1">
-                    <button type="submit" name="destination" value="<%= coordinates.get(0).getLatitude() %>,<%= coordinates.get(0).getLongitude() %>" class="w-48 btn-primary rounded-md px-4 py-2 mt-8">Get Approach Way</button>
-                </form>
             </div>
         </div>
 
@@ -137,39 +139,6 @@
             </div>
         </div>
         <% } %>
-
-        <!-- Weather
-         <div id="ww_87c83204446d5" v='1.3' loc='id' a='{"t":"responsive","lang":"en","sl_lpl":1,"ids":["wl1514"],"font":"Arial","sl_ics":"one","sl_sot":"celsius","cl_bkg":"image","cl_font":"#FFFFFF","cl_cloud":"#FFFFFF","cl_persp":"#81D4FA","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722","sl_tof":"3"}'>More forecasts: <a href="https://wetterlang.de/wetter_14_tage/" id="ww_87c83204446d5_u" target="_blank">Wettervorhersage 14 tage</a></div><script async src="https://app2.weatherwidget.org/js/?id=ww_87c83204446d5"></script>
-        <%
-            try {
-        String username = "schoolproject_karapandic_staa";
-        String password = "1W8pkRQ3to";
-        URI uri = new URI("https://api.meteomatics.com/2023-11-20T01:15:00.000+01:00/t_2m:C/51.5073219,-0.1276474/html?model=mix");
-        URL url = uri.toURL();
-        String credentials = username + ":" + password;
-        String encoding = Base64.getEncoder().encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoOutput(true);
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Accept", "application/json");
-        conn.setRequestProperty("Authorization", "Basic " + encoding);
-
-        if (conn.getResponseCode() != 200) {
-        throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-        }
-        BufferedReader streamReader = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-        StringBuilder responseStrBuilder = new StringBuilder();
-
-        String inputStr;
-        while ((inputStr = streamReader.readLine()) != null) {
-        responseStrBuilder.append(inputStr);
-        }
-
-        System.out.print("Positive respons: "+responseStrBuilder.toString());
-        } catch (Exception e) {
-        e.printStackTrace();
-        }%>-->
 
 
         <!-- Coordinates -->
