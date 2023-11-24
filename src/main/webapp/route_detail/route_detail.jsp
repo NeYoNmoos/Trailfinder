@@ -1,4 +1,3 @@
-<%@ page import="at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade" %>
 <%@ page import="at.fhv.hike.data.RouteEntity" %>
 <%@ page import="at.fhv.hike.data.CoordinateEntity" %>
 <%@ page import="at.fhv.hike.data.AttributeEntity" %>
@@ -122,11 +121,11 @@
         </div>
         <% } %>
 
-
+        <div class="flex justify-between mb-6">
         <!-- Best Time to Visit -->
         <% if (route.getMonths()>0) { %>
-        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
-            <div class="px-4 py-5 sm:p-6">
+            <div class="bg-white shadow overflow-hidden sm:rounded-lg w-1/2 mr-2">
+                <div class="px-4 py-5 sm:p-6 text-center">
                 <h2 class="text-xl font-bold text-gray-900">Best Time to Visit</h2>
                 <p class="mt-1 text-sm text-gray-900">
                     <% int bm = route.getMonths();%>
@@ -147,6 +146,132 @@
         </div>
         <% } %>
 
+            <!-- Weather -->
+            <div class="bg-white shadow overflow-hidden sm:rounded-lg w-1/2 ml-2">
+                <div class="px-4 py-5 sm:p-6 flex flex-col items-center text-center">
+                    <h2 class="text-xl font-bold text-gray-900">Weather</h2>
+                    <div class="wrapper">
+                        <div class="weather-part">
+                            <div class="flex items-center justify-center mb-4">
+                                <img src="#" alt="Weather Icon" />
+                            </div>
+                            <div class="temp1">
+                                <span class="numb">_</span>
+                                <span class="deg">°C</span>
+                            </div>
+                            <div class="weather">_</div>
+                            <div class="location">
+                                <i class="bx bx-map"></i>
+                                <span>,</span>
+                            </div>
+                            </br>
+                            <div class="bottom-details flex">
+                                <!-- Feels like column -->
+                                <div class="column feels flex items-center">
+                                    <i class="bx bxs-thermometer"></i>
+                                    <div class="details ml-2">
+                                        <div class="temp">
+                                            <span class="feelstemp">_</span>
+                                            <span class="deg">°C</span>
+                                        </div>
+                                        <p class="mb-0">Feels like</p>
+                                    </div>
+                                </div>
+
+                                <!-- Humidity column -->
+                                <div class="column humidity ml-4 flex items-center">
+                                    <i class="bx bxs-droplet-half"></i>
+                                    <div class="details ml-2">
+                                        <span>_</span>
+                                        <p class="mb-0">Humidity</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Declare variables
+            const infoTxt = document.querySelector(".weather-part .temp");
+            const wIcon = document.querySelector(".weather-part img");
+            const wrapper = document.querySelector(".wrapper");  //container div
+
+            // Function to handle API request
+            function requestApi(latitude, longitude) {
+                console.log("latitude"+latitude);
+                console.log("longitude"+longitude);
+
+                const api = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&units=metric&appid=e5f513d1970d2495b51b0417729b36f2";
+                console.log("api"+api);
+                fetchData(api);
+            }
+
+            // Function to handle API fetch
+            function fetchData(api) {
+                infoTxt.classList.add("pending");
+                fetch(api).then(response => response.json()).then(result => weatherDetails(result));
+            }
+
+            function weatherDetails(info) {
+                console.log(info);
+                if (info.cod === 404) {
+                    infoTxt.classList.replace("pending", "error");
+                    infoTxt.innerText = `isn't a valid city name`;
+                } else {
+                    // Extracted information
+                    const city = info.name;
+                    const country = info.sys.country;
+                    const { description, id } = info.weather[0];
+                    const { feels_like, humidity, temp } = info.main;
+
+                    console.log(temp);
+                    // Assign weather icon based on weather condition ID
+                    if (id === 800) {
+                        wIcon.src = `${pageContext.request.contextPath}/assets/weather_icons/clear.svg`;
+                    } else if (id >= 200 && id <= 232) {
+                        wIcon.src = `${pageContext.request.contextPath}/assets/weather_icons/storm.svg`;
+                    } else if (id >= 600 && id <= 622) {
+                        wIcon.src = `${pageContext.request.contextPath}/assets/weather_icons/snowy.svg`;
+                    } else if (id >= 701 && id <= 781) {
+                        wIcon.src = `${pageContext.request.contextPath}/assets/weather_icons/haze.svg`;
+                    } else if (id >= 801 && id <= 804) {
+                        wIcon.src = `${pageContext.request.contextPath}/assets/weather_icons/cloudy.svg`;
+                    } else if ((id >= 300 && id <= 321) || (id >= 500 && id <= 531)) {
+                        wIcon.src = `${pageContext.request.contextPath}/assets/weather_icons/rainy.svg`;
+                    }
+
+                    // Update HTML elements with weather details
+                    updateWeatherElement(".temp1 .numb", Math.floor(temp));
+                    updateWeatherElement(".weather", description.toUpperCase());
+                    updateWeatherElement(".location span", city + "," + country);
+                    updateWeatherElement(".temp span", Math.floor(feels_like));
+                    updateWeatherElement(".humidity span", humidity + " %");
+
+                    // Clear status and input field
+                    infoTxt.classList.remove("pending", "error");
+                    infoTxt.classList.add("active"); // Show weather details
+                }
+            }
+
+            function updateWeatherElement(selector, text) {
+                const element = document.querySelector(selector);
+                if (element) {
+                    element.innerText = text;
+                } else {
+                    console.error(`Element not found for selector: ${selector}`);
+                }
+            }
+
+            // Initial request with constants
+            // Replace with your actual longitude
+            requestApi(<%=coordinates.getLast().getLatitude()%>, <%=coordinates.getLast().getLongitude()%>);
+
+        </script>
+
+        <!-- Coordinates -->
         <!-- Coordinates on map -->
         <% if (coordinates != null && !coordinates.isEmpty()) { %>
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
