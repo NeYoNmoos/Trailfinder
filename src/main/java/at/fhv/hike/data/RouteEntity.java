@@ -7,15 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "route", schema = "trailfinder_dev", catalog = "Trailfinder")
+@Table(name = "route", schema = "trailfinder_dev", catalog = "ftb_inv_2023_vz_3_a")
 public class RouteEntity {
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "route_id")
-    private String routeId;
+    private Integer routeId;
     @Basic
     @Column(name = "author")
-    private String author;
+    private Integer author;
     @Basic
     @Column(name = "name")
     private String name;
@@ -34,13 +34,16 @@ public class RouteEntity {
     @Basic
     @Column(name = "duration")
     private Double duration;
+    @Basic
+    @Column(name="months")
+    private Integer months;
+    @Basic
+    @Column(name="active")
+    private Boolean active;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "attribute_id", referencedColumnName = "attribute_id")
     private AttributeEntity attributeEntity;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "month_id", referencedColumnName = "month_id")
-    private TimeOfYearEntity timeOfYearEntity;
 
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CoordinateEntity> coordinates = new ArrayList<>();
@@ -67,7 +70,7 @@ public class RouteEntity {
 
     }
 
-    public RouteEntity(String routeId, String author, String name, Double length, Double altitude, String location, String description, Double duration) {
+    public RouteEntity(Integer routeId, Integer author, String name, Double length, Double altitude, String location, String description, Double duration) {
         this.routeId = routeId;
         this.author = author;
         this.name = name;
@@ -78,19 +81,19 @@ public class RouteEntity {
         this.duration = duration;
     }
 
-    public String getRouteId() {
+    public Integer getRouteId() {
         return routeId;
     }
 
-    public void setRouteId(String routeId) {
+    public void setRouteId(Integer routeId) {
         this.routeId = routeId;
     }
 
-    public String getAuthor() {
+    public Integer getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Integer author) {
         this.author = author;
     }
 
@@ -138,10 +141,18 @@ public class RouteEntity {
         return duration;
     }
 
-
     public void setDuration(Double duration) {
         this.duration = duration;
     }
+
+    public void setMonths(Integer months) { this.months = months; }
+
+    public Integer getMonths() { return months; }
+
+    public void setActive(Boolean active) { this.active = active; }
+
+    public Boolean getActive() { return active; }
+
 
     @Override
     public boolean equals(Object o) {
@@ -183,11 +194,4 @@ public class RouteEntity {
         this.attributeEntity = attributeEntity;
     }
 
-    public TimeOfYearEntity getTimeOfYearEntity() {
-        return timeOfYearEntity;
-    }
-
-    public void setTimeOfYearEntity(TimeOfYearEntity timeOfYearEntity) {
-        this.timeOfYearEntity = timeOfYearEntity;
-    }
 }

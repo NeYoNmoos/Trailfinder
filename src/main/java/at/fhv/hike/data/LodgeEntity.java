@@ -3,43 +3,43 @@ package at.fhv.hike.data;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "lodge", schema = "trailfinder_dev", catalog = "Trailfinder")
+@Table(name = "lodge", schema = "trailfinder_dev", catalog = "ftb_inv_2023_vz_3_a")
 public class LodgeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "lodge_id")
-    private String lodgeId;
+    private Integer lodgeId;
     @Basic
     @Column(name = "route_id")
-    private String routeId;
+    private Integer routeId;
     @Basic
     @Column(name = "coordinate_id")
-    private String coordinateId;
+    private Integer coordinateId;
     @Basic
     @Column(name = "description")
     private String description;
 
-    public String getLodgeId() {
+    public Integer getLodgeId() {
         return lodgeId;
     }
 
-    public void setLodgeId(String lodgeId) {
+    public void setLodgeId(Integer lodgeId) {
         this.lodgeId = lodgeId;
     }
 
-    public String getRouteId() {
+    public Integer getRouteId() {
         return routeId;
     }
 
-    public void setRouteId(String routeId) {
+    public void setRouteId(Integer routeId) {
         this.routeId = routeId;
     }
 
-    public String getCoordinateId() {
+    public Integer getCoordinateId() {
         return coordinateId;
     }
 
-    public void setCoordinateId(String coordinateId) {
+    public void setCoordinateId(Integer coordinateId) {
         this.coordinateId = coordinateId;
     }
 

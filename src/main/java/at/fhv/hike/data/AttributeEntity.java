@@ -5,12 +5,12 @@ import jakarta.persistence.*;
 import java.lang.Integer;
 
 @Entity
-@Table(name = "attribute", schema = "trailfinder_dev", catalog = "Trailfinder")
+@Table(name = "attribute", schema = "trailfinder_dev", catalog = "ftb_inv_2023_vz_3_a")
 public class AttributeEntity {
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "attribute_id")
-    private String attributeId;
+    private Integer attributeId;
     @Basic
     @Column(name = "strength")
     private Integer strength;
@@ -24,11 +24,11 @@ public class AttributeEntity {
     @Column(name = "experience")
     private Integer experience;
 
-    public String getAttributeId() {
+    public Integer getAttributeId() {
         return attributeId;
     }
 
-    public void setAttributeId(String attributeId) {
+    public void setAttributeId(Integer attributeId) {
         this.attributeId = attributeId;
     }
 
