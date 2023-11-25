@@ -125,7 +125,27 @@
                             </div>
                         </div>
 
-                        <!-- Power level filter -->
+                        <!--Months filter-->
+                    <div class="mb-4">
+                    <label for="months" class="block text-sm font-medium text-gray-700">Select Month</label>
+                    <select name="months" id="months" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <option value="" ${!january && !february && !march && !april && !may && !june && !july && !august && !september && !october && !november && !december ? 'selected' : ''}>--null--</option>
+                        <option value="january" ${january ? 'selected' : ''}>January</option>
+                        <option value="february" ${february ? 'selected' : ''}>February</option>
+                        <option value="march" ${march ? 'selected' : ''}>March</option>
+                        <option value="april" ${april ? 'selected' : ''}>April</option>
+                        <option value="may" ${may ? 'selected' : ''}>May</option>
+                        <option value="june" ${june ? 'selected' : ''}>June</option>
+                        <option value="july" ${july ? 'selected' : ''}>July</option>
+                        <option value="august" ${august ? 'selected' : ''}>August</option>
+                        <option value="september" ${september ? 'selected' : ''}>September</option>
+                        <option value="october" ${october ? 'selected' : ''}>October</option>
+                        <option value="november" ${november ? 'selected' : ''}>November</option>
+                        <option value="december" ${december ? 'selected' : ''}>December</option>
+                    </select>
+                    </div>
+
+                    <!-- Power level filter -->
                         <div class="mb-4">
                             <label for="power" class="block text-sm font-medium text-gray-700">Power level</label>
                             <select name="power" id="power" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
