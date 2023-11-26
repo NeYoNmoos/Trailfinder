@@ -17,22 +17,28 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
     @Override
     public List<RouteEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            List<RouteEntity> routes = session.createQuery("from " + RouteEntity.class.getName(), RouteEntity.class).list();
-            for(RouteEntity route : routes){
+            String hql = "FROM " + RouteEntity.class.getName() + " r WHERE r.active = true";
+            List<RouteEntity> routes = session.createQuery(hql, RouteEntity.class).list();
+
+            for (RouteEntity route : routes) {
                 if (route != null) {
                     Hibernate.initialize(route.getCoordinates());
                 }
             }
+
             return routes;
         }
     }
 
-    public List<RouteEntity> getFiltered(Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery, Integer experience, Integer condition) {
+
+    public List<RouteEntity> getFiltered(String routename, Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery, Integer experience, Integer condition) {
 
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM RouteEntity AS r " +
                     "WHERE (r.length >= :lengthMin) " +
+                    "AND (r.active = true) " +
                     "AND (r.length <= :lengthMax) " +
+                    "AND (LOWER(r.name) LIKE '%' ||:routename|| '%') " +
                     "AND (r.duration >= :durationMin) " +
                     "AND (r.duration <= :durationMax) " +
                     "AND (r.altitude >= :altitudeMin) " +
@@ -44,8 +50,8 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
                     "AND (a.experience >= :experience) " +
                     "AND (a.condition >= :condition))";
 
-
             Query<RouteEntity> query = session.createQuery(hql, RouteEntity.class)
+                    .setParameter("routename", routename)
                     .setParameter("lengthMin", lengthMin)
                     .setParameter("lengthMax", lengthMax)
                     .setParameter("durationMin", durationMin)

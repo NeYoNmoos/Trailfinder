@@ -2,7 +2,7 @@ package at.fhv.hike.controllers;
 
 import at.fhv.hike.data.AttributeEntity;
 import at.fhv.hike.data.RouteEntity;
-import at.fhv.hike.data.TimeOfYearEntity;
+//import at.fhv.hike.data.TimeOfYearEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.ServletContext;
 
@@ -19,8 +19,9 @@ public class RouteController {
         List<RouteEntity> allRoutes = _facade.getAllRoutes();
         return allRoutes;
     }
-    public List<RouteEntity> getFilteredRoutes(Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery,Integer experience, Integer condition) {
-        List<RouteEntity> filteredRoutes = _facade.getFilteredRoutes(lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition);
+    public List<RouteEntity> getFilteredRoutes(String routename, Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery,Integer experience, Integer condition) {
+        routename = routename.toLowerCase();
+        List<RouteEntity> filteredRoutes = _facade.getFilteredRoutes(routename, lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition);
         return filteredRoutes;
     }
 

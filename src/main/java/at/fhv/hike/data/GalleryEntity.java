@@ -5,12 +5,12 @@ import jakarta.persistence.*;
 import java.util.Arrays;
 
 @Entity
-@Table(name = "gallery", schema = "trailfinder_dev", catalog = "Trailfinder")
+@Table(name = "gallery", schema = "trailfinder_dev", catalog = "ftb_inv_2023_vz_3_a")
 public class GalleryEntity {
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "picture_id")
-    private String pictureId;
+    private Integer pictureId;
     @Basic
     @Column(name = "route_id")
     private String routeId;
@@ -18,11 +18,11 @@ public class GalleryEntity {
     @Column(name = "picture")
     private byte[] picture;
 
-    public String getPictureId() {
+    public Integer getPictureId() {
         return pictureId;
     }
 
-    public void setPictureId(String pictureId) {
+    public void setPictureId(Integer pictureId) {
         this.pictureId = pictureId;
     }
 

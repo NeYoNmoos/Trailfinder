@@ -30,6 +30,7 @@ public class DeleteServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
         RouteEntity route = rc.getRouteById(routeId);
+        route.setActive(false);
 
         rc.createRoute(route);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/route_detail/delete_confirmation.jsp");
