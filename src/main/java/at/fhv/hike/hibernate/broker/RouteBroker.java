@@ -38,6 +38,7 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
                     "AND (r.duration <= :durationMax) " +
                     "AND (r.altitude >= :altitudeMin) " +
                     "AND (r.altitude <= :altitudeMax) " +
+                   // "AND ((r.months & :selectedMonth) > 0) " +  // Check if the selected month bit is set
                     "AND r.attributeEntity IN (" +
                     "SELECT a.attributeId FROM AttributeEntity AS a " +
                     "WHERE (a.strength >= :power) " +
