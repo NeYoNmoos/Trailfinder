@@ -14,7 +14,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "RouteCreateServlet", urlPatterns = {"/route-create"})
 public class RouteCreateServlet extends HttpServlet {
@@ -59,13 +64,15 @@ public class RouteCreateServlet extends HttpServlet {
             request.setAttribute("endLongitude", route.getCoordinates().get(1).getLongitude());
             request.setAttribute("endLatitude", route.getCoordinates().get(1).getLatitude());
 
+            request.setAttribute("route", route);
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
             dispatcher.forward(request, response);
         }
-        // else {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
-        dispatcher.forward(request, response);
-        //}
+        else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -82,6 +89,8 @@ public class RouteCreateServlet extends HttpServlet {
         Integer scenery = Integer.parseInt(request.getParameter("scenery"));
         Integer experience = Integer.parseInt(request.getParameter("experience"));
         Integer condition = Integer.parseInt(request.getParameter("condition"));
+
+
 
         Bitmask bm = new Bitmask();
 
@@ -143,35 +152,41 @@ public class RouteCreateServlet extends HttpServlet {
             newRoute.setRouteId(Integer.parseInt(routeId));
         }
 
-            newRoute.setName(name);
-            newRoute.setLength(length);
-            newRoute.setAltitude(altitude);
-            newRoute.setLocation(location);
-            newRoute.setDuration(duration);
-            newRoute.setDescription(description);
-            newRoute.setAttributeEntity(newAttributes);
-            newRoute.setMonths(bm.returnBitmask());
-            newRoute.setActive(true);
+        newRoute.setName(name);
+        newRoute.setLength(length);
+        newRoute.setAltitude(altitude);
+        newRoute.setLocation(location);
+        newRoute.setDuration(duration);
+        newRoute.setDescription(description);
+        newRoute.setAttributeEntity(newAttributes);
+        newRoute.setMonths(bm.returnBitmask());
+        newRoute.setActive(true);
 
-            CoordinateEntity startCoord = new CoordinateEntity();
-            startCoord.setSequence(0);
-            startCoord.setLatitude(Double.parseDouble(request.getParameter("startLatitude")));
-            startCoord.setLongitude(Double.parseDouble(request.getParameter("startLongitude")));
+        List<CoordinateEntity> coordinateEntities = new ArrayList<>();
 
-            CoordinateEntity endCoord = new CoordinateEntity();
-            endCoord.setSequence(1);
-            endCoord.setLatitude(Double.parseDouble(request.getParameter("endLatitude")));
-            endCoord.setLongitude(Double.parseDouble(request.getParameter("endLongitude")));
+        int index = 0;
+        while (request.getParameter("coords_" + index + "_latitude") != null &&
+                request.getParameter("coords_" + index + "_longitude") != null) {
+            double lat = Double.parseDouble(request.getParameter("coords_" + index + "_latitude"));
+            double lng = Double.parseDouble(request.getParameter("coords_" + index + "_longitude"));
+            CoordinateEntity coord = new CoordinateEntity();
+            coord.setLatitude(lat);
+            coord.setLongitude(lng);
+            coord.setSequence(index);
+            coordinateEntities.add(coord);
+            index++;
+        }
 
-            newRoute.addCoordinate(startCoord);
-            newRoute.addCoordinate(endCoord);
+        if(!coordinateEntities.isEmpty()){
+            for(CoordinateEntity coord: coordinateEntities){
+                newRoute.addCoordinate(coord);
+            }
+        }
 
-            ServletContext context = request.getServletContext();
-            RouteController rc = new RouteController(context);
-            rc.createRoute(newRoute);
+        ServletContext context = request.getServletContext();
+        RouteController rc = new RouteController(context);
+        rc.createRoute(newRoute);
 
-            request.getRequestDispatcher("/create_route/create_confirmation.jsp").forward(request, response);
-
-
+        request.getRequestDispatcher("/create_route/create_confirmation.jsp").forward(request, response);
     }
 }
