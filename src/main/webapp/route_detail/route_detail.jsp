@@ -48,7 +48,7 @@
 <main class="py-10">
     <div class="max-w-7xl lg:w-[75vw] mx-auto px-4 sm:px-6 lg:px-8">
         <!-- Route Title -->
-        <div class="mb-8 d-flex justify-content-between align-items-center">
+        <div class="mb-8 flex flex-row justify-between">
             <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
             <% String editPageUrl = "/route-create?routeId=" + route.getRouteId(); %>
             <a href="${pageContext.request.contextPath}<%= editPageUrl %>"
@@ -401,8 +401,6 @@
         </div>
         <% } %>
     </div>
-
-
 </main>
 </body>
 </html>
