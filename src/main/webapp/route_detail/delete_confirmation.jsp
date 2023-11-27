@@ -20,6 +20,9 @@
 </div>
 <div class="create-confirmation">
     <h1>Route has been successfully deleted :)</h1>
+    <button class="btn-primary">
+        <a href="${pageContext.request.contextPath}/">Back to list of routes</a>
+    </button>
 </div>
 
 </body>

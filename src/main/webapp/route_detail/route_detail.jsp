@@ -51,6 +51,7 @@
         <div class="mb-8 flex flex-row justify-between">
             <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
             <% String editPageUrl = "/route-create?routeId=" + route.getRouteId(); %>
+            <div class="flex flex-row">
             <a href="${pageContext.request.contextPath}<%= editPageUrl %>"
                class="inline-flex items-center ml-2 text-white bg-blue-500 rounded-lg px-3 py-1 hover:bg-blue-700 transition duration-300" style="float:right">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
@@ -58,6 +59,7 @@
                 </svg>
                 Edit
             </a>
+
             <script>
                 function deleteFunction() {
                     var confirmDelete = confirm("Are you sure you want to delete this route?");
@@ -73,6 +75,7 @@
                 </svg>
                 Delete
             </button>
+            </div>
         </div>
     </div>
 
