@@ -130,8 +130,15 @@
             </div>
             <script>
                 // Initialize the map
-                let map = L.map('routeMap').setView([47.406121, 9.742360], 13); // Set initial coordinates and zoom level
+                <%
+                    double defaultLatitude = 47.406121;  // Default latitude value
+                    double defaultLongitude = 9.742360; // Default longitude value
 
+                    double mapLatitude = (coordinates != null && !coordinates.isEmpty()) ? coordinates.get(0).getLatitude() : defaultLatitude;
+                    double mapLongitude = (coordinates != null && !coordinates.isEmpty()) ? coordinates.get(0).getLongitude() : defaultLongitude;
+                %>
+
+                let map = L.map('routeMap').setView([<%= mapLatitude %>, <%= mapLongitude %>], 13);
                 // set map style
                 L.tileLayer(
                     'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=35adf7fcff8d4453ab157783a4c0f0be',
