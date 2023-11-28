@@ -2,6 +2,7 @@ async function fetchHikingRoute(waypoints) {
     const apiKey = '5b3ce3597851110001cf62485ca8ad3559e045a288a2bf868a1afd96';
     const url = 'https://api.openrouteservice.org/v2/directions/foot-hiking/geojson';
 
+    console.log("waypoints in fetch: ", waypoints);
     const formattedWaypoints = waypoints.map(wp => [wp.lng, wp.lat]);
 
     const body = {
