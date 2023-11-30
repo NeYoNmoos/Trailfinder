@@ -71,9 +71,24 @@
           <scope>compile</scope>
       </dependency>
       <dependency>
-          <groupId>org.seleniumhq.selenium</groupId>
-          <artifactId>selenium-java</artifactId>
-          <version>2.53.1</version>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-api</artifactId>
+      <version>4.15.0</version>
+      </dependency>
+      <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-chrome-driver</artifactId>
+      <version>4.15.0</version>
+      </dependency>
+      <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-firefox-driver</artifactId>
+      <version>4.15.0</version>
+      </dependency>
+      <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-support</artifactId>
+      <version>4.15.0</version>
       </dependency>
       <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
       <dependency>
