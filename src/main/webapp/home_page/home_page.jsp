@@ -127,21 +127,21 @@
 
                         <!--Months filter-->
                     <div class="mb-4">
-                    <label for="months" class="block text-sm font-medium text-gray-700">Select Month</label>
-                    <select name="months" id="months" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                        <option value="" ${!january && !february && !march && !april && !may && !june && !july && !august && !september && !october && !november && !december ? 'selected' : ''}>--null--</option>
-                        <option value="january" ${january ? 'selected' : ''}>January</option>
-                        <option value="february" ${february ? 'selected' : ''}>February</option>
-                        <option value="march" ${march ? 'selected' : ''}>March</option>
-                        <option value="april" ${april ? 'selected' : ''}>April</option>
-                        <option value="may" ${may ? 'selected' : ''}>May</option>
-                        <option value="june" ${june ? 'selected' : ''}>June</option>
-                        <option value="july" ${july ? 'selected' : ''}>July</option>
-                        <option value="august" ${august ? 'selected' : ''}>August</option>
-                        <option value="september" ${september ? 'selected' : ''}>September</option>
-                        <option value="october" ${october ? 'selected' : ''}>October</option>
-                        <option value="november" ${november ? 'selected' : ''}>November</option>
-                        <option value="december" ${december ? 'selected' : ''}>December</option>
+                    <label for="month" class="block text-sm font-medium text-gray-700">Select A Month</label>
+                    <select name="month" id="month" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <option value="4095" ${!january && !february && !march && !april && !may && !june && !july && !august && !september && !october && !november && !december ? 'selected' : ''}>--null--</option>
+                        <option value="1" ${january ? 'selected' : ''}>January</option>
+                        <option value="2" ${february ? 'selected' : ''}>February</option>
+                        <option value="4" ${march ? 'selected' : ''}>March</option>
+                        <option value="8" ${april ? 'selected' : ''}>April</option>
+                        <option value="16" ${may ? 'selected' : ''}>May</option>
+                        <option value="32" ${june ? 'selected' : ''}>June</option>
+                        <option value="64" ${july ? 'selected' : ''}>July</option>
+                        <option value="128" ${august ? 'selected' : ''}>August</option>
+                        <option value="256" ${september ? 'selected' : ''}>September</option>
+                        <option value="512" ${october ? 'selected' : ''}>October</option>
+                        <option value="1024" ${november ? 'selected' : ''}>November</option>
+                        <option value="2048" ${december ? 'selected' : ''}>December</option>
                     </select>
                     </div>
 
