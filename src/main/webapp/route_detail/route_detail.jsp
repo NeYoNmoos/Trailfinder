@@ -83,6 +83,7 @@
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
             <div class="px-4 py-5 sm:p-6 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-gray-900 mb-1 sm:mb-0">Route Details</h2>
+
                 <form action="https://www.google.com/maps/dir/" method="get" target="_blank">
                     <input type="hidden" name="api" value="1">
                     <% if (coordinates != null && !coordinates.isEmpty()) { %>
@@ -117,10 +118,10 @@
                         %>
                         <dt class="text-sm font-medium text-gray-500">Duration</dt>
                         <dd class="mt-1 text-sm text-gray-900"><%= wholeHours + "h " + wholeMinutes + "min" %></dd>
-
-                </div>
-            </dl>
-        </div>
+                     </div>
+                 </dl>
+                <p class="text-gray-400">Creation date: <%= route.getCreated_at() %></p>
+            </div>
     </div>
     <div class="flex mb-6">
         <!-- Left side -->

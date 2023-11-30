@@ -3,6 +3,7 @@ package at.fhv.hike.data;
 import jakarta.persistence.*;
 
 import java.math.BigInteger;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,10 @@ public class RouteEntity {
     @Basic
     @Column(name = "description")
     private String description;
+
+    @Basic
+    @Column(name = "created_at")
+    private LocalDateTime created_at;
     @Basic
     @Column(name = "duration")
     private Double duration;
@@ -83,6 +88,9 @@ public class RouteEntity {
 
     public Integer getRouteId() {
         return routeId;
+    }
+    public LocalDateTime getCreated_at() {
+        return created_at;
     }
 
     public void setRouteId(Integer routeId) {
