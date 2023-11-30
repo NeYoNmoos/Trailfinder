@@ -129,19 +129,19 @@
                     <div class="mb-4">
                     <label for="month" class="block text-sm font-medium text-gray-700">Select A Month</label>
                     <select name="month" id="month" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                        <option value="4095" ${!january && !february && !march && !april && !may && !june && !july && !august && !september && !october && !november && !december ? 'selected' : ''}>--null--</option>
-                        <option value="1" ${january ? 'selected' : ''}>January</option>
-                        <option value="2" ${february ? 'selected' : ''}>February</option>
-                        <option value="4" ${march ? 'selected' : ''}>March</option>
-                        <option value="8" ${april ? 'selected' : ''}>April</option>
-                        <option value="16" ${may ? 'selected' : ''}>May</option>
-                        <option value="32" ${june ? 'selected' : ''}>June</option>
-                        <option value="64" ${july ? 'selected' : ''}>July</option>
-                        <option value="128" ${august ? 'selected' : ''}>August</option>
-                        <option value="256" ${september ? 'selected' : ''}>September</option>
-                        <option value="512" ${october ? 'selected' : ''}>October</option>
-                        <option value="1024" ${november ? 'selected' : ''}>November</option>
-                        <option value="2048" ${december ? 'selected' : ''}>December</option>
+                        <option value="4095" <%="4095".equals(request.getParameter("month")) ? "selected" : "" %>>--null--</option>
+                        <option value="1" <%="1".equals(request.getParameter("month")) ? "selected" : "" %>>January</option>
+                        <option value="2" <%="2".equals(request.getParameter("month")) ? "selected" : "" %>>February</option>
+                        <option value="4" <%="4".equals(request.getParameter("month")) ? "selected" : "" %>>March</option>
+                        <option value="8" <%="8".equals(request.getParameter("month")) ? "selected" : "" %>>April</option>
+                        <option value="16" <%="16".equals(request.getParameter("month")) ? "selected" : "" %>>May</option>
+                        <option value="32" <%="32".equals(request.getParameter("month")) ? "selected" : "" %>>June</option>
+                        <option value="64" <%="64".equals(request.getParameter("month")) ? "selected" : "" %>>July</option>
+                        <option value="128" <%="128".equals(request.getParameter("month")) ? "selected" : "" %>>August</option>
+                        <option value="256" <%="256".equals(request.getParameter("month")) ? "selected" : "" %>>September</option>
+                        <option value="512" <%="512".equals(request.getParameter("month")) ? "selected" : "" %>>October</option>
+                        <option value="1024" <%="1024".equals(request.getParameter("month")) ? "selected" : "" %>>November</option>
+                        <option value="2048" <%="2048".equals(request.getParameter("month")) ? "selected" : "" %>>December</option>
                     </select>
                     </div>
 
