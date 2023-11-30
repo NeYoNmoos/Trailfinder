@@ -2,9 +2,9 @@ package at.fhv.hike;
 
 import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.data.AttributeEntity;
+import at.fhv.hike.data.Bitmask;
 import at.fhv.hike.data.CoordinateEntity;
 import at.fhv.hike.data.RouteEntity;
-import at.fhv.hike.data.TimeOfYearEntity;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -14,55 +14,65 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "RouteCreateServlet", urlPatterns = {"/route-create"})
 public class RouteCreateServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String routeId = request.getParameter("routeId");
-        if(routeId != null) {
+        if (routeId != null) {
             ServletContext context = request.getServletContext();
             RouteController rc = new RouteController(context);
             RouteEntity route = rc.getRouteById(routeId);
-            request.setAttribute("routeId",routeId);
+            request.setAttribute("routeId", Integer.parseInt(routeId));
             request.setAttribute("name", route.getName());
             request.setAttribute("location", route.getLocation());
             request.setAttribute("altitude", route.getAltitude());
             request.setAttribute("length", route.getLength());
             request.setAttribute("duration", route.getDuration());
             request.setAttribute("description", route.getDescription());
+            request.setAttribute("months", route.getMonths());
+            request.setAttribute("active", route.getActive());
 
-            request.setAttribute("power",route.getAttributeEntity().getStrength());
-            request.setAttribute("scenery",route.getAttributeEntity().getScenery());
-            request.setAttribute("condition",route.getAttributeEntity().getCondition());
-            request.setAttribute("experience",route.getAttributeEntity().getExperience());
+            request.setAttribute("power", route.getAttributeEntity().getStrength());
+            request.setAttribute("scenery", route.getAttributeEntity().getScenery());
+            request.setAttribute("condition", route.getAttributeEntity().getCondition());
+            request.setAttribute("experience", route.getAttributeEntity().getExperience());
 
-            request.setAttribute("january", route.getTimeOfYearEntity().getJanuary());
-            request.setAttribute("february", route.getTimeOfYearEntity().getFebruary());
-            request.setAttribute("march", route.getTimeOfYearEntity().getMarch());
-            request.setAttribute("april", route.getTimeOfYearEntity().getApril());
-            request.setAttribute("may", route.getTimeOfYearEntity().getMay());
-            request.setAttribute("june", route.getTimeOfYearEntity().getJune());
-            request.setAttribute("july", route.getTimeOfYearEntity().getJuly());
-            request.setAttribute("august", route.getTimeOfYearEntity().getAugust());
-            request.setAttribute("september", route.getTimeOfYearEntity().getSeptember());
-            request.setAttribute("october", route.getTimeOfYearEntity().getOctober());
-            request.setAttribute("november", route.getTimeOfYearEntity().getNovember());
-            request.setAttribute("december", route.getTimeOfYearEntity().getDecember());
+            request.setAttribute("january", (route.getMonths() & Bitmask.Month_1_Jan) != 0);
+            request.setAttribute("february", (route.getMonths() & Bitmask.Month_2_Feb) != 0);
+            request.setAttribute("march", (route.getMonths() & Bitmask.Month_3_Mar) != 0);
+            request.setAttribute("april", (route.getMonths() & Bitmask.Month_4_Apr) != 0);
+            request.setAttribute("may", (route.getMonths() & Bitmask.Month_5_May) != 0);
+            request.setAttribute("june", (route.getMonths() & Bitmask.Month_6_Jun) != 0);
+            request.setAttribute("july", (route.getMonths() & Bitmask.Month_7_Jul) != 0);
+            request.setAttribute("august", (route.getMonths() & Bitmask.Month_8_Aug) != 0);
+            request.setAttribute("september", (route.getMonths() & Bitmask.Month_9_Sep) != 0);
+            request.setAttribute("october", (route.getMonths() & Bitmask.Month_10_Oct) != 0);
+            request.setAttribute("november", (route.getMonths() & Bitmask.Month_11_Nov) != 0);
+            request.setAttribute("december", (route.getMonths() & Bitmask.Month_12_Dec) != 0);
+
 
             request.setAttribute("startLongitude", route.getCoordinates().get(0).getLongitude());
             request.setAttribute("startLatitude", route.getCoordinates().get(0).getLatitude());
             request.setAttribute("endLongitude", route.getCoordinates().get(1).getLongitude());
             request.setAttribute("endLatitude", route.getCoordinates().get(1).getLatitude());
 
-           // RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
-           // dispatcher.forward(request, response);
-        }
-       // else {
+            request.setAttribute("route", route);
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
             dispatcher.forward(request, response);
-        //}
+        }
+        else {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -80,66 +90,55 @@ public class RouteCreateServlet extends HttpServlet {
         Integer experience = Integer.parseInt(request.getParameter("experience"));
         Integer condition = Integer.parseInt(request.getParameter("condition"));
 
-        TimeOfYearEntity newMonths = new TimeOfYearEntity();
-        newMonths.setMonthId(UUID.randomUUID().toString());
-        newMonths.setJanuary(false);
-        newMonths.setFebruary(false);
-        newMonths.setMarch(false);
-        newMonths.setApril(false);
-        newMonths.setMay(false);
-        newMonths.setJune(false);
-        newMonths.setJuly(false);
-        newMonths.setAugust(false);
-        newMonths.setSeptember(false);
-        newMonths.setOctober(false);
-        newMonths.setNovember(false);
-        newMonths.setDecember(false);
-        if(months != null){
+
+
+        Bitmask bm = new Bitmask();
+
+
+        if (months != null) {
             for (int i = 0; i < months.length; i++) {
                 System.out.println("FOR LOOP");
                 switch (months[i]) {
                     case "january":
-                        newMonths.setJanuary(true);
+                        bm.addJan();
                         break;
                     case "february":
-                        newMonths.setFebruary(true);
+                        bm.addFeb();
                         break;
                     case "march":
-                        newMonths.setMarch(true);
+                        bm.addMar();
                         break;
                     case "april":
-                        newMonths.setApril(true);
+                        bm.addApr();
                         break;
                     case "may":
-                        newMonths.setMay(true);
+                        bm.addMay();
                         break;
                     case "june":
-                        newMonths.setJune(true);
+                        bm.addJun();
                         break;
                     case "july":
-                        newMonths.setJuly(true);
+                        bm.addJul();
                         break;
                     case "august":
-                        newMonths.setAugust(true);
+                        bm.addAug();
                         break;
                     case "september":
-                        newMonths.setSeptember(true);
+                        bm.addSep();
                         break;
                     case "october":
-                        newMonths.setOctober(true);
+                        bm.addOct();
                         break;
                     case "november":
-                        newMonths.setNovember(true);
+                        bm.addNov();
                         break;
                     case "december":
-                        newMonths.setDecember(true);
+                        bm.addDec();
                         break;
                 }
             }
         }
-
         AttributeEntity newAttributes = new AttributeEntity();
-        newAttributes.setAttributeId(UUID.randomUUID().toString());
         newAttributes.setStrength(power);
         newAttributes.setScenery(scenery);
         newAttributes.setExperience(experience);
@@ -147,12 +146,11 @@ public class RouteCreateServlet extends HttpServlet {
 
         RouteEntity newRoute = new RouteEntity();
 
-        //seting ID
         String routeId = request.getParameter("routeId");
-        if(routeId == null)
-            newRoute.setRouteId(UUID.randomUUID().toString());
-        else
-            newRoute.setRouteId(routeId);
+
+        if(!routeId.equals("null")) {
+            newRoute.setRouteId(Integer.parseInt(routeId));
+        }
 
         newRoute.setName(name);
         newRoute.setLength(length);
@@ -161,22 +159,29 @@ public class RouteCreateServlet extends HttpServlet {
         newRoute.setDuration(duration);
         newRoute.setDescription(description);
         newRoute.setAttributeEntity(newAttributes);
-        newRoute.setTimeOfYearEntity(newMonths);
+        newRoute.setMonths(bm.returnBitmask());
+        newRoute.setActive(true);
 
-        CoordinateEntity startCoord = new CoordinateEntity();
-        startCoord.setCoordinateId(UUID.randomUUID().toString());
-        startCoord.setSequence(0);
-        startCoord.setLatitude(Double.parseDouble(request.getParameter("startLatitude")));
-        startCoord.setLongitude(Double.parseDouble(request.getParameter("startLongitude")));
+        List<CoordinateEntity> coordinateEntities = new ArrayList<>();
 
-        CoordinateEntity endCoord = new CoordinateEntity();
-        endCoord.setCoordinateId(UUID.randomUUID().toString());
-        endCoord.setSequence(1);
-        endCoord.setLatitude(Double.parseDouble(request.getParameter("endLatitude")));
-        endCoord.setLongitude(Double.parseDouble(request.getParameter("endLongitude")));
+        int index = 0;
+        while (request.getParameter("coords_" + index + "_latitude") != null &&
+                request.getParameter("coords_" + index + "_longitude") != null) {
+            double lat = Double.parseDouble(request.getParameter("coords_" + index + "_latitude"));
+            double lng = Double.parseDouble(request.getParameter("coords_" + index + "_longitude"));
+            CoordinateEntity coord = new CoordinateEntity();
+            coord.setLatitude(lat);
+            coord.setLongitude(lng);
+            coord.setSequence(index);
+            coordinateEntities.add(coord);
+            index++;
+        }
 
-        newRoute.addCoordinate(startCoord);
-        newRoute.addCoordinate(endCoord);
+        if(!coordinateEntities.isEmpty()){
+            for(CoordinateEntity coord: coordinateEntities){
+                newRoute.addCoordinate(coord);
+            }
+        }
 
         ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
@@ -184,5 +189,4 @@ public class RouteCreateServlet extends HttpServlet {
 
         request.getRequestDispatcher("/create_route/create_confirmation.jsp").forward(request, response);
     }
-
 }

@@ -3,12 +3,12 @@ package at.fhv.hike.data;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user", schema = "trailfinder_dev", catalog = "Trailfinder")
+@Table(name = "user", schema = "trailfinder_dev", catalog = "ftb_inv_2023_vz_3_a")
 public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "user_id")
-    private String userId;
+    private Integer userId;
     @Basic
     @Column(name = "fname")
     private String fname;
@@ -28,14 +28,14 @@ public class UserEntity {
     @Column(name = "username")
     private String username;
     @Basic
-    @Column(name = "user_type")
-    private Object userType;
+    @Column(name = "user_admin")
+    private Boolean userType;
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
@@ -91,7 +91,7 @@ public class UserEntity {
         return userType;
     }
 
-    public void setUserType(Object userType) {
+    public void setUserType(Boolean userType) {
         this.userType = userType;
     }
 
