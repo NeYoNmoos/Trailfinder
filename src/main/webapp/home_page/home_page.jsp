@@ -129,7 +129,7 @@
                     <div class="mb-4">
                     <label for="month" class="block text-sm font-medium text-gray-700">Select A Month</label>
                     <select name="month" id="month" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
-                        <option value="4095" <%="4095".equals(request.getParameter("month")) ? "selected" : "" %>>--null--</option>
+                        <option value="4095" <%="4095".equals(request.getParameter("month")) ? "selected" : "" %>>Select Month</option>
                         <option value="1" <%="1".equals(request.getParameter("month")) ? "selected" : "" %>>January</option>
                         <option value="2" <%="2".equals(request.getParameter("month")) ? "selected" : "" %>>February</option>
                         <option value="4" <%="4".equals(request.getParameter("month")) ? "selected" : "" %>>March</option>
