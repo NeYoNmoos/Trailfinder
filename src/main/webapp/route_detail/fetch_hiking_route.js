@@ -7,7 +7,8 @@ async function fetchHikingRoute(waypoints) {
 
     const body = {
         coordinates: formattedWaypoints,
-        format: 'geojson'
+        format: 'geojson',
+        elevation: true
     };
 
     console.log(JSON.stringify(body));
@@ -53,5 +54,5 @@ async function fetchHikingRoute(waypoints) {
     console.log("Responsedata!");
     console.log(responseData);
 
-    return await {geojson: responseData, details: routeDetails};
+    return {geojson: responseData, details: routeDetails};
 }

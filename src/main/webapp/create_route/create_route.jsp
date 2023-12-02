@@ -220,7 +220,7 @@
                     if (waypoints.length >= 2) {
                         fetchHikingRoute(waypoints.map(marker => marker.getLatLng()))
                             .then(geojson => {
-                                drawFetchedRoute(geojson);
+                                drawFetchedRoute(geojson.geojson);
                             })
                             .catch(error => {
                                 console.error('Error fetching hiking route:', error);

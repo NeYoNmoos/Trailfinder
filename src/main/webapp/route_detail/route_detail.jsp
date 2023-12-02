@@ -127,6 +127,14 @@
                         <dt class="text-sm font-medium text-gray-500">Calculated Duration</dt>
                         <dd id="calculatedDuration" class="mt-1 text-sm text-gray-900">Calculating...</dd>
                     </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Calculated Ascent</dt>
+                        <dd id="calculatedAscent" class="mt-1 text-sm text-gray-900">Calculating...</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Calculated Descent</dt>
+                        <dd id="calculatedDescent" class="mt-1 text-sm text-gray-900">Calculating...</dd>
+                    </div>
                  </dl>
                 <p class="text-gray-400">Creation date: <%= route.getCreated_at() %></p>
             </div>
@@ -366,7 +374,10 @@
                     const durationMins = Math.round((details.duration % 3600) / 60);
                     document.getElementById('calculatedDuration').textContent = durationHrs + 'h ' + durationMins + 'min';
 
-
+                    const ascent = Math.round(details.ascent * 100)/100;
+                    const descent = Math.round(details.descent * 100)/100;
+                    document.getElementById('calculatedAscent').textContent = ascent + 'm';
+                    document.getElementById('calculatedDescent').textContent = descent + 'm';
 
                     L.geoJSON(geojson).addTo(map);
 
