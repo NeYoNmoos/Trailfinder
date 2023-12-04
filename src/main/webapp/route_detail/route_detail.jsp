@@ -139,8 +139,8 @@
                         <dd id="calculatedDescent" class="mt-1 text-sm text-gray-900">Calculating...</dd>
                     </div>
                  </dl>
-                <%
-                    // Assuming route.getCreated_at() returns a LocalDateTime object
+                <div class="flex space-x-4">
+                <%// Assuming route.getCreated_at() returns a LocalDateTime object
                     LocalDateTime creationDate = route.getCreated_at();
                     if(creationDate!=null)
                     {
@@ -154,6 +154,19 @@
                     {%>
                     <p class="text-gray-400">Creation date:</p>
                 <%}%>
+
+                <%
+                    String authorName =route.getAuthor().getUsername();
+                    if(authorName!=null)
+                    {
+                    %><p class="text-gray-400">Created by: <%= authorName %></p><%
+                    }
+                    else
+                    {
+                        %><p class="text-gray-400">Created by:</p><%
+                    }
+                %>
+                </div>
                 <!--Images slide show-->
                 <div class="container mx-auto p-4">
                     <!-- Slideshow Container -->

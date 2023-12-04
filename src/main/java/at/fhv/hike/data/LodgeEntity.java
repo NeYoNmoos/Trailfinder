@@ -9,15 +9,15 @@ public class LodgeEntity {
     @Id
     @Column(name = "lodge_id")
     private Integer lodgeId;
-    @Basic
-    @Column(name = "route_id")
-    private Integer routeId;
-    @Basic
-    @Column(name = "coordinate_id")
-    private Integer coordinateId;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "coordinate_id", referencedColumnName = "coordinate_id")
+    private CoordinateEntity coordinateEntity;
     @Basic
     @Column(name = "description")
     private String description;
+    @Basic
+    @Column(name = "name")
+    private String name;
 
     public Integer getLodgeId() {
         return lodgeId;
@@ -27,20 +27,12 @@ public class LodgeEntity {
         this.lodgeId = lodgeId;
     }
 
-    public Integer getRouteId() {
-        return routeId;
+    public CoordinateEntity getCoordinateEntity() {
+        return coordinateEntity;
     }
 
-    public void setRouteId(Integer routeId) {
-        this.routeId = routeId;
-    }
-
-    public Integer getCoordinateId() {
-        return coordinateId;
-    }
-
-    public void setCoordinateId(Integer coordinateId) {
-        this.coordinateId = coordinateId;
+    public void setCoordinateEntity(CoordinateEntity coordinateEntity) {
+        this.coordinateEntity = coordinateEntity;
     }
 
     public String getDescription() {
@@ -51,6 +43,10 @@ public class LodgeEntity {
         this.description = description;
     }
 
+    public String getName() {return name; }
+
+    public void setName(String name) { this.name = name; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -59,9 +55,9 @@ public class LodgeEntity {
         LodgeEntity that = (LodgeEntity) o;
 
         if (lodgeId != null ? !lodgeId.equals(that.lodgeId) : that.lodgeId != null) return false;
-        if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) return false;
-        if (coordinateId != null ? !coordinateId.equals(that.coordinateId) : that.coordinateId != null) return false;
+        if (coordinateEntity != null ? !coordinateEntity.equals(that.coordinateEntity) : that.coordinateEntity != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
         return true;
     }
@@ -69,9 +65,9 @@ public class LodgeEntity {
     @Override
     public int hashCode() {
         int result = lodgeId != null ? lodgeId.hashCode() : 0;
-        result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
-        result = 31 * result + (coordinateId != null ? coordinateId.hashCode() : 0);
+        result = 31 * result + (coordinateEntity != null ? coordinateEntity.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (name != null ? description.hashCode() : 0);
         return result;
     }
 }
