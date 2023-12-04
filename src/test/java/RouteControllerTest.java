@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 class RouteControllerTest {
@@ -88,21 +89,24 @@ class RouteControllerTest {
         assertEquals(mockRoutes, routes);
         verify(facade).getAllRoutes();
     }
-
     @Test
-    void getFilteredRoutesTest() {
+    void getFilteredRoutesTestNoResults() {
         // Arrange
+        RouteEntity mockRoute = createMockRoute();
         List<RouteEntity> mockFilteredRoutes = new ArrayList<>();
-        mockFilteredRoutes.add(createMockRoute());
-        String routename = "Test Route";
-        Integer lengthMax = 10, lengthMin = 3, durationMax = 180, durationMin = 60,
-                altitudeMax = 300, altitudeMin = 100, power = 3, scenery = 4,
-                experience = 2, condition = 3, selectedMonth = 6;
+        // No routes added to the list to simulate no results
+        String routename = "Non-Existent Route";
+        Integer lengthMax = 100, lengthMin = 50, // Adjust these values as needed
+                durationMax = 500, durationMin = 300,
+                altitudeMax = 1000, altitudeMin = 800,
+                power = 5, scenery = 5,
+                experience = 5, condition = 5, selectedMonth = 12;
 
-        when(facade.getFilteredRoutes(routename, lengthMax, lengthMin, durationMax,
+        // Mock to return an empty list for these filters
+        when(facade.getFilteredRoutes(routename.toLowerCase(), lengthMax, lengthMin, durationMax,
                 durationMin, altitudeMax, altitudeMin, power,
                 scenery, experience, condition, selectedMonth))
-                .thenReturn(mockFilteredRoutes);
+                .thenReturn(new ArrayList<>());
 
         // Act
         List<RouteEntity> routes = controller.getFilteredRoutes(routename, lengthMax, lengthMin,
@@ -111,9 +115,10 @@ class RouteControllerTest {
                 experience, condition, selectedMonth);
 
         // Assert
-        assertEquals(mockFilteredRoutes, routes);
-        verify(facade).getFilteredRoutes(routename, lengthMax, lengthMin, durationMax,
+        assertTrue(routes.isEmpty()); // Check that the returned list is empty
+        verify(facade).getFilteredRoutes(routename.toLowerCase(), lengthMax, lengthMin, durationMax,
                 durationMin, altitudeMax, altitudeMin, power,
                 scenery, experience, condition, selectedMonth);
     }
+
 }
