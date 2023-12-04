@@ -11,9 +11,9 @@ public class GalleryEntity {
     @Id
     @Column(name = "picture_id")
     private Integer pictureId;
-    @Basic
-    @Column(name = "route_id")
-    private String routeId;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "route_id", referencedColumnName = "route_id")
+    private RouteEntity routeEntity;
     @Basic
     @Column(name = "picture")
     private byte[] picture;
@@ -26,12 +26,12 @@ public class GalleryEntity {
         this.pictureId = pictureId;
     }
 
-    public String getRouteId() {
-        return routeId;
+    public RouteEntity getRouteEntity() {
+        return routeEntity;
     }
 
-    public void setRouteId(String routeId) {
-        this.routeId = routeId;
+    public void setRouteEntity(RouteEntity routeEntity) {
+        this.routeEntity = routeEntity;
     }
 
     public byte[] getPicture() {
@@ -50,7 +50,7 @@ public class GalleryEntity {
         GalleryEntity that = (GalleryEntity) o;
 
         if (pictureId != null ? !pictureId.equals(that.pictureId) : that.pictureId != null) return false;
-        if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) return false;
+        if (routeEntity != null ? !routeEntity.equals(that.routeEntity) : that.routeEntity != null) return false;
         if (!Arrays.equals(picture, that.picture)) return false;
 
         return true;
@@ -59,7 +59,7 @@ public class GalleryEntity {
     @Override
     public int hashCode() {
         int result = pictureId != null ? pictureId.hashCode() : 0;
-        result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
+        result = 31 * result + (routeEntity != null ? routeEntity.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(picture);
         return result;
     }

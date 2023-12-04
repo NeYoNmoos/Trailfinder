@@ -13,9 +13,9 @@ public class RouteEntity {
     @Id
     @Column(name = "route_id")
     private Integer routeId;
-    @Basic
-    @Column(name = "author")
-    private Integer author;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "author", referencedColumnName = "user_id")
+    private UserEntity author;
     @Basic
     @Column(name = "name")
     private String name;
@@ -70,7 +70,7 @@ public class RouteEntity {
 
     }
 
-    public RouteEntity(Integer routeId, Integer author, String name, Double length, Double altitude, String location, String description, Double duration) {
+    public RouteEntity(Integer routeId, UserEntity author, String name, Double length, Double altitude, String location, String description, Double duration) {
         this.routeId = routeId;
         this.author = author;
         this.name = name;
@@ -89,11 +89,11 @@ public class RouteEntity {
         this.routeId = routeId;
     }
 
-    public Integer getAuthor() {
+    public UserEntity getAuthor() {
         return author;
     }
 
-    public void setAuthor(Integer author) {
+    public void setAuthor(UserEntity author) {
         this.author = author;
     }
 
@@ -169,6 +169,8 @@ public class RouteEntity {
         if (location != null ? !location.equals(that.location) : that.location != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
+        if (months != null ? !months.equals(that.months) : that.months != null) return false;
+        if (active != null ? !active.equals(that.active) : that.active != null) return false;
 
         return true;
     }
@@ -183,6 +185,8 @@ public class RouteEntity {
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (duration != null ? duration.hashCode() : 0);
+        result = 31 * result + (months != null ? months.hashCode() : 0);
+        result = 31 * result + (active != null ? active.hashCode() : 0);
         return result;
     }
 

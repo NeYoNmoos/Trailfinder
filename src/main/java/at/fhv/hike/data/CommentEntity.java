@@ -14,15 +14,15 @@ public class CommentEntity {
     @Basic
     @Column(name = "route_id")
     private Integer routeId;
-    @Basic
-    @Column(name = "author_id")
-    private Integer authorId;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id", referencedColumnName = "user_id")
+    private UserEntity authorEntity;
     @Basic
     @Column(name = "comment")
     private String comment;
-    @Basic
-    @Column(name = "attribute_id")
-    private Integer attributeId;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "attribute_id", referencedColumnName = "attribute_id")
+    private AttributeEntity attributeId;
     @Basic
     @Column(name = "date_comment")
     private Date dateComment;
@@ -43,12 +43,12 @@ public class CommentEntity {
         this.routeId = routeId;
     }
 
-    public Integer getAuthorId() {
-        return authorId;
+    public UserEntity getAuthorEntity() {
+        return authorEntity;
     }
 
-    public void setAuthorId(Integer authorId) {
-        this.authorId = authorId;
+    public void setAuthorEntity(UserEntity authorId) {
+        this.authorEntity = authorId;
     }
 
     public String getComment() {
@@ -59,11 +59,11 @@ public class CommentEntity {
         this.comment = comment;
     }
 
-    public Integer getAttributeId() {
+    public AttributeEntity getAttributeId() {
         return attributeId;
     }
 
-    public void setAttributeId(Integer attributeId) {
+    public void setAttributeId(AttributeEntity attributeId) {
         this.attributeId = attributeId;
     }
 
@@ -84,7 +84,7 @@ public class CommentEntity {
 
         if (commentId != null ? !commentId.equals(that.commentId) : that.commentId != null) return false;
         if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) return false;
-        if (authorId != null ? !authorId.equals(that.authorId) : that.authorId != null) return false;
+        if (authorEntity != null ? !authorEntity.equals(that.authorEntity) : that.authorEntity != null) return false;
         if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
         if (attributeId != null ? !attributeId.equals(that.attributeId) : that.attributeId != null) return false;
         if (dateComment != null ? !dateComment.equals(that.dateComment) : that.dateComment != null) return false;
@@ -96,7 +96,7 @@ public class CommentEntity {
     public int hashCode() {
         int result = commentId != null ? commentId.hashCode() : 0;
         result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
-        result = 31 * result + (authorId != null ? authorId.hashCode() : 0);
+        result = 31 * result + (authorEntity != null ? authorEntity.hashCode() : 0);
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (attributeId != null ? attributeId.hashCode() : 0);
         result = 31 * result + (dateComment != null ? dateComment.hashCode() : 0);
