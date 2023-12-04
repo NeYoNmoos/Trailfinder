@@ -25,7 +25,7 @@ public class UserEntity {
     @Column(name = "user_admin")
     private Boolean userType;
 
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CommentEntity> comments = new ArrayList<>();
 
     public List<CommentEntity> getComments() {
@@ -38,7 +38,7 @@ public class UserEntity {
         comment.setAuthor(null);
     }
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RouteEntity> routes = new ArrayList<>();
 
     public List<RouteEntity> getRoutes() {
