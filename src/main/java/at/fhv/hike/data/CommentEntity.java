@@ -12,7 +12,7 @@ public class CommentEntity {
     @Column(name = "comment_id")
     private Integer commentId;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Column(name = "route_id")
+    @JoinColumn(name = "route_id", referencedColumnName = "route_id")
     private RouteEntity route;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id", referencedColumnName = "user_id")

@@ -19,7 +19,7 @@ public class GalleryEntity {
     private byte[] picture;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "route_id")
+    @JoinColumn(name = "route_id", insertable = false, updatable = false)
     private RouteEntity route;
 
     public Integer getPictureId() {
