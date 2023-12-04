@@ -11,10 +11,10 @@ public class CommentEntity {
     @Id
     @Column(name = "comment_id")
     private Integer commentId;
-    @Basic
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Column(name = "route_id")
-    private Integer routeId;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private RouteEntity route;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "author_id", referencedColumnName = "user_id")
     private UserEntity authorEntity;
     @Basic
@@ -35,19 +35,19 @@ public class CommentEntity {
         this.commentId = commentId;
     }
 
-    public Integer getRouteId() {
-        return routeId;
+    public RouteEntity getRoute() {
+        return route;
     }
 
-    public void setRouteId(Integer routeId) {
-        this.routeId = routeId;
+    public void setRoute(RouteEntity route) {
+        this.route = route;
     }
 
-    public UserEntity getAuthorEntity() {
+    public UserEntity getAuthor() {
         return authorEntity;
     }
 
-    public void setAuthorEntity(UserEntity authorId) {
+    public void setAuthor(UserEntity authorId) {
         this.authorEntity = authorId;
     }
 
@@ -83,7 +83,7 @@ public class CommentEntity {
         CommentEntity that = (CommentEntity) o;
 
         if (commentId != null ? !commentId.equals(that.commentId) : that.commentId != null) return false;
-        if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) return false;
+        if (route != null ? !route.equals(that.route) : that.route != null) return false;
         if (authorEntity != null ? !authorEntity.equals(that.authorEntity) : that.authorEntity != null) return false;
         if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
         if (attributeId != null ? !attributeId.equals(that.attributeId) : that.attributeId != null) return false;
@@ -95,7 +95,7 @@ public class CommentEntity {
     @Override
     public int hashCode() {
         int result = commentId != null ? commentId.hashCode() : 0;
-        result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
+        result = 31 * result + (route != null ? route.hashCode() : 0);
         result = 31 * result + (authorEntity != null ? authorEntity.hashCode() : 0);
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (attributeId != null ? attributeId.hashCode() : 0);

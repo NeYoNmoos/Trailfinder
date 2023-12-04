@@ -37,4 +37,8 @@ public class RouteController {
     public void createRoute(RouteEntity route) {
         _facade.save(route);
     }
+
+    public void saveObjectInDb(Object object) { _facade.save(object);}
+
+    public TrailfinderDatabaseFacade getFacade() {return _facade;}
 }

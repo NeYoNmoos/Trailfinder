@@ -11,12 +11,16 @@ public class GalleryEntity {
     @Id
     @Column(name = "picture_id")
     private Integer pictureId;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id", referencedColumnName = "route_id")
     private RouteEntity routeEntity;
     @Basic
     @Column(name = "picture")
     private byte[] picture;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "route_id")
+    private RouteEntity route;
 
     public Integer getPictureId() {
         return pictureId;
@@ -26,11 +30,11 @@ public class GalleryEntity {
         this.pictureId = pictureId;
     }
 
-    public RouteEntity getRouteEntity() {
+    public RouteEntity getRoute() {
         return routeEntity;
     }
 
-    public void setRouteEntity(RouteEntity routeEntity) {
+    public void setRoute(RouteEntity routeEntity) {
         this.routeEntity = routeEntity;
     }
 

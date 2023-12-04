@@ -14,7 +14,7 @@ public class RouteEntity {
     @Id
     @Column(name = "route_id")
     private Integer routeId;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "author", referencedColumnName = "user_id")
     private UserEntity author;
     @Basic
@@ -49,7 +49,6 @@ public class RouteEntity {
     @JoinColumn(name = "attribute_id", referencedColumnName = "attribute_id")
     private AttributeEntity attributeEntity;
 
-
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CoordinateEntity> coordinates = new ArrayList<>();
 
@@ -69,6 +68,48 @@ public class RouteEntity {
     public void removeCoordinate(CoordinateEntity coordinate) {
         coordinates.remove(coordinate);
         coordinate.setRoute(null);
+    }
+
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<GalleryEntity> gallery = new ArrayList<>();
+
+    public List<GalleryEntity> getGallery() {
+        return gallery;
+    }
+
+    public void setGallery(List<GalleryEntity> gallery) {
+        this.gallery = gallery;
+    }
+
+    public void addGallery(GalleryEntity _gallery) {
+        gallery.add(_gallery);
+        _gallery.setRoute(this);
+    }
+
+    public void removeGallery(GalleryEntity _gallery) {
+        gallery.remove(_gallery);
+        _gallery.setRoute(null);
+    }
+
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> comments = new ArrayList<>();
+
+    public List<CommentEntity> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
+    }
+
+    public void addComment(CommentEntity comment) {
+        comments.add(comment);
+        comment.setRoute(this);
+    }
+
+    public void removeComment(CommentEntity comment) {
+        comments.remove(comment);
+        comment.setRoute(null);
     }
 
     public RouteEntity(){

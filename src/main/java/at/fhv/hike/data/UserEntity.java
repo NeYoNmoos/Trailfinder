@@ -2,6 +2,9 @@ package at.fhv.hike.data;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "user", schema = "trailfinder_dev", catalog = "ftb_inv_2023_vz_3_a")
 public class UserEntity {
@@ -21,6 +24,31 @@ public class UserEntity {
     @Basic
     @Column(name = "user_admin")
     private Boolean userType;
+
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> comments = new ArrayList<>();
+
+    public List<CommentEntity> getComments() {
+        return comments;
+    }
+
+    public void removeComment(CommentEntity comment) {
+        comments.remove(comment);
+        comment.setRoute(null);
+        comment.setAuthor(null);
+    }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<RouteEntity> routes = new ArrayList<>();
+
+    public List<RouteEntity> getRoutes() {
+        return routes;
+    }
+
+    public void removeRoute(RouteEntity route) {
+        routes.remove(route);
+        route.setActive(false);
+    }
 
     public Integer getUserId() {
         return userId;
