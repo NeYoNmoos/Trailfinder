@@ -101,16 +101,16 @@
                 </div>
                 <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                     <div class="sm:col-span-1">
-                        <dt class="text-sm font-medium text-gray-500">Length</dt>
-                        <dd class="mt-1 text-sm text-gray-900"><%= route.getLength() %> km</dd>
-                    </div>
-                    <div class="sm:col-span-1">
                         <dt class="text-sm font-medium text-gray-500">Altitude</dt>
                         <dd class="mt-1 text-sm text-gray-900"><%= route.getAltitude() %> m</dd>
                     </div>
                     <div class="sm:col-span-1">
                         <dt class="text-sm font-medium text-gray-500">Location</dt>
                         <dd class="mt-1 text-sm text-gray-900"><%= route.getLocation() %></dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Length</dt>
+                        <dd class="mt-1 text-sm text-gray-900"><%= route.getLength() %> km</dd>
                     </div>
                     <div class="sm:col-span-1">
                         <%
@@ -121,6 +121,22 @@
                         <dt class="text-sm font-medium text-gray-500">Duration</dt>
                         <dd class="mt-1 text-sm text-gray-900"><%= wholeHours + "h " + wholeMinutes + "min" %></dd>
                      </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Calculated Length</dt>
+                        <dd id="calculatedLength" class="mt-1 text-sm text-gray-900">Calculating...</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Calculated Duration</dt>
+                        <dd id="calculatedDuration" class="mt-1 text-sm text-gray-900">Calculating...</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Calculated Ascent</dt>
+                        <dd id="calculatedAscent" class="mt-1 text-sm text-gray-900">Calculating...</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Calculated Descent</dt>
+                        <dd id="calculatedDescent" class="mt-1 text-sm text-gray-900">Calculating...</dd>
+                    </div>
                  </dl>
                 <%
                     // Assuming route.getCreated_at() returns a LocalDateTime object
@@ -361,7 +377,24 @@
                 waypoints.push(L.latLng(<%= coord.getLatitude() %>, <%= coord.getLongitude() %>));
                 <% } %>
 
-                fetchHikingRoute(waypoints).then(geojson => {
+                fetchHikingRoute(waypoints).then(result  => {
+                    const geojson = result.geojson;
+                    const details = result.details;
+
+                    console.log("details in map: ", details);
+                    const distanceKm = (details.distance / 1000).toFixed(2);
+                    document.getElementById('calculatedLength').textContent = distanceKm + ' km';
+
+                    // Convert duration from seconds to hours and minutes
+                    const durationHrs = Math.floor(details.duration / 3600);
+                    const durationMins = Math.round((details.duration % 3600) / 60);
+                    document.getElementById('calculatedDuration').textContent = durationHrs + 'h ' + durationMins + 'min';
+
+                    const ascent = Math.round(details.ascent * 100)/100;
+                    const descent = Math.round(details.descent * 100)/100;
+                    document.getElementById('calculatedAscent').textContent = ascent + 'm';
+                    document.getElementById('calculatedDescent').textContent = descent + 'm';
+
                     L.geoJSON(geojson).addTo(map);
 
                     // Add Start Marker
