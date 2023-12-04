@@ -60,6 +60,7 @@
                     int wholeMinutes = (int) Math.round((totalHours - wholeHours) * 60);
                 %>
                 <a href="<%= detailPageUrl %>" class="block text-black bg-white rounded-lg shadow p-4 hover:shadow-md hover:scale-[1.05] transition duration-300 overflow-hidden">
+                    <img src="${pageContext.request.contextPath}/assets/home_page_img/header-image.jpg" alt="<%= currentRoute.getName() %> Image" class="mb-4 w-full h-40 object-cover object-center rounded-md">
                     <h2 class="text-xl font-semibold text-gray-800 mb-2"><%= currentRoute.getName() %></h2>
                     <p class="text-gray-600 mb-4 line-clamp-2"><%= currentRoute.getDescription() %></p>
                     <div class="text-sm">
