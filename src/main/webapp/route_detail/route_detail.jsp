@@ -1,12 +1,9 @@
-<%@ page import="at.fhv.hike.data.RouteEntity" %>
-<%@ page import="at.fhv.hike.data.CoordinateEntity" %>
-<%@ page import="at.fhv.hike.data.AttributeEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="java.util.Comparator" %>
-<%@ page import="at.fhv.hike.data.Bitmask" %>
 <%@ page import="java.time.LocalDateTime" %>
-<%@ page import="java.time.format.DateTimeFormatter" %><%--
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="at.fhv.hike.data.*" %><%--
 <%@ page import="java.util.List" %>
 <%@ page import="java.net.URI" %>
 <%@ page import="java.net.URL" %>
@@ -138,8 +135,8 @@
                         <dd id="calculatedDescent" class="mt-1 text-sm text-gray-900">Calculating...</dd>
                     </div>
                  </dl>
-                <%
-                    // Assuming route.getCreated_at() returns a LocalDateTime object
+                <div class="flex space-x-4">
+                <%// Assuming route.getCreated_at() returns a LocalDateTime object
                     LocalDateTime creationDate = route.getCreated_at();
                     if(creationDate!=null)
                     {
@@ -153,6 +150,19 @@
                     {%>
                     <p class="text-gray-400">Creation date:</p>
                 <%}%>
+
+                <%
+                    UserEntity authorName =route.getAuthor();
+                    if(authorName!=null)
+                    {
+                    %><p class="text-gray-400">Created by: <%= authorName.getUsername() %></p><%
+                    }
+                    else
+                    {
+                        %><p class="text-gray-400">Created by:</p><%
+                    }
+                %>
+                </div>
             </div>
     </div>
     <div class="flex mb-6">

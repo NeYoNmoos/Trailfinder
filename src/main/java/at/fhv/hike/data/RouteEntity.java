@@ -14,9 +14,9 @@ public class RouteEntity {
     @Id
     @Column(name = "route_id")
     private Integer routeId;
-    @Basic
-    @Column(name = "author")
-    private Integer author;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "author", referencedColumnName = "user_id")
+    private UserEntity author;
     @Basic
     @Column(name = "name")
     private String name;
@@ -49,7 +49,6 @@ public class RouteEntity {
     @JoinColumn(name = "attribute_id", referencedColumnName = "attribute_id")
     private AttributeEntity attributeEntity;
 
-
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CoordinateEntity> coordinates = new ArrayList<>();
 
@@ -71,11 +70,53 @@ public class RouteEntity {
         coordinate.setRoute(null);
     }
 
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<GalleryEntity> gallery = new ArrayList<>();
+
+    public List<GalleryEntity> getGallery() {
+        return gallery;
+    }
+
+    public void setGallery(List<GalleryEntity> gallery) {
+        this.gallery = gallery;
+    }
+
+    public void addGallery(GalleryEntity _gallery) {
+        gallery.add(_gallery);
+        _gallery.setRoute(this);
+    }
+
+    public void removeGallery(GalleryEntity _gallery) {
+        gallery.remove(_gallery);
+        _gallery.setRoute(null);
+    }
+
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> comments = new ArrayList<>();
+
+    public List<CommentEntity> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
+    }
+
+    public void addComment(CommentEntity comment) {
+        comments.add(comment);
+        comment.setRoute(this);
+    }
+
+    public void removeComment(CommentEntity comment) {
+        comments.remove(comment);
+        comment.setRoute(null);
+    }
+
     public RouteEntity(){
 
     }
 
-    public RouteEntity(Integer routeId, Integer author, String name, Double length, Double altitude, String location, String description, Double duration) {
+    public RouteEntity(Integer routeId, UserEntity author, String name, Double length, Double altitude, String location, String description, Double duration) {
         this.routeId = routeId;
         this.author = author;
         this.name = name;
@@ -97,11 +138,11 @@ public class RouteEntity {
         this.routeId = routeId;
     }
 
-    public Integer getAuthor() {
+    public UserEntity getAuthor() {
         return author;
     }
 
-    public void setAuthor(Integer author) {
+    public void setAuthor(UserEntity author) {
         this.author = author;
     }
 
@@ -177,6 +218,8 @@ public class RouteEntity {
         if (location != null ? !location.equals(that.location) : that.location != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (duration != null ? !duration.equals(that.duration) : that.duration != null) return false;
+        if (months != null ? !months.equals(that.months) : that.months != null) return false;
+        if (active != null ? !active.equals(that.active) : that.active != null) return false;
 
         return true;
     }
@@ -191,6 +234,8 @@ public class RouteEntity {
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (duration != null ? duration.hashCode() : 0);
+        result = 31 * result + (months != null ? months.hashCode() : 0);
+        result = 31 * result + (active != null ? active.hashCode() : 0);
         return result;
     }
 
