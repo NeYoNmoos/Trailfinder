@@ -20,4 +20,25 @@ public class RegisterServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/register_page/register.jsp");
         dispatcher.forward(request, response);
     }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // Retrieve values from the submitted form
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        // Perform registration logic
+        // Replace this with your actual registration logic
+        boolean isRegistrationSuccessful =false;// registerUser(username, email, password);
+
+        if (isRegistrationSuccessful) {
+            // Redirect to a success page or perform further actions
+            response.sendRedirect(request.getContextPath() + "/home");
+        } else {
+            // Set an error attribute in the request
+            request.setAttribute("registerError", "Email already used");
+            // Forward the request back to the login page
+            request.getRequestDispatcher("/register_page/register.jsp").forward(request, response);
+        }
+    }
 }

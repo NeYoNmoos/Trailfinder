@@ -17,7 +17,7 @@
 </head>
 <body>
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
-<div class="bg-gray-100 h-screen flex items-center justify-center">
+<div class="bg-gray-100 h-screen w-screen flex items-center justify-center">
 <div class="bg-white p-8 rounded shadow-md w-96">
 
     <h2 class="text-2xl font-semibold mb-6 text-center">Login</h2>
@@ -38,6 +38,12 @@
             <input type="password" id="password" name="password" placeholder="Your password"
                    class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
         </div>
+
+        <% if (request.getAttribute("loginError") != null) { %>
+        <div class="text-red-500 text-sm mb-4">
+            <%= request.getAttribute("loginError") %>
+        </div>
+        <% } %>
 
         <!-- Login Button -->
         <button type="submit"

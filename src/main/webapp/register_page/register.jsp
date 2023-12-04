@@ -46,6 +46,12 @@
                    class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
         </div>
 
+        <% if (request.getAttribute("registerError") != null) { %>
+        <div class="text-red-500 text-sm mb-4">
+            <%= request.getAttribute("registerError") %>
+        </div>
+        <% } %>
+
         <!-- Register Button -->
         <button type="submit"
                 class="btn-primary text-white p-2 rounded-md w-full focus:outline-none focus:ring ">

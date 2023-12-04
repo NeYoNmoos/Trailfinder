@@ -20,8 +20,24 @@ public class LogInServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/login_page/login.jsp");
         dispatcher.forward(request, response);
     }
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        // Retrieve values from the submitted form
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
 
+        // Perform login validation and authentication logic
+        // Replace this with your actual login logic
+        boolean isValidUser = false;//validateUser(email, password);
+
+        if (isValidUser) {
+            response.sendRedirect(request.getContextPath() + "/home");
+        } else {
+            // Set an error attribute in the request
+            request.setAttribute("loginError", "Invalid email or password");
+            // Forward the request back to the login page
+            request.getRequestDispatcher("/login_page/login.jsp").forward(request, response);
+        }
     }
-    }
+}
