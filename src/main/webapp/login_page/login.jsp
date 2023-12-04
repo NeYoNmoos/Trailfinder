@@ -15,15 +15,15 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Global.css">
 </head>
-
-<body class="bg-gray-100 h-screen flex items-center justify-center">
-
+<body>
+<jsp:include page="/components/navigation/nav_bar.jsp"/>
+<div class="bg-gray-100 h-screen flex items-center justify-center">
 <div class="bg-white p-8 rounded shadow-md w-96">
 
     <h2 class="text-2xl font-semibold mb-6 text-center">Login</h2>
 
     <!-- Login Form -->
-    <form action="/login" method="post">
+    <form action="${pageContext.request.contextPath}/login" method="post">
 
         <!-- Email Input -->
         <div class="mb-4">
@@ -48,11 +48,11 @@
 
     <!-- Register Link -->
     <p class="mt-4 text-sm text-gray-600 text-center">
-        Don't have an account? <a href="/register" class="text-blue-500">Register here</a>.
+        Don't have an account? <a href="${pageContext.request.contextPath}/register" class="text-blue-500">Register here</a>.
     </p>
 
 </div>
-
+</div>
 </body>
 
 </html>
