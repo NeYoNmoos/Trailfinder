@@ -7,7 +7,8 @@ async function fetchHikingRoute(waypoints) {
 
     const body = {
         coordinates: formattedWaypoints,
-        format: 'geojson'
+        format: 'geojson',
+        elevation: true
     };
 
     console.log(JSON.stringify(body));
@@ -22,6 +23,7 @@ async function fetchHikingRoute(waypoints) {
         }
     });
 
+    console.log("response: ", JSON.stringify(response));
     console.log(response);
 
     if (!response.ok) {
@@ -29,5 +31,28 @@ async function fetchHikingRoute(waypoints) {
         throw new Error(message);
     }
 
-    return await response.json();
+    const responseData = await response.json();
+
+    // Assuming the response includes sections with detailed statistics
+    if (responseData.features && responseData.features.length > 0) {
+        const segment = responseData.features[0].properties.segments[0];
+        const totalDistance = segment.distance; // Total distance in meters
+        const totalDuration = segment.duration; // Total duration in seconds
+        const totalAscent = segment.ascent; // Total ascent in meters
+        const totalDescent = segment.descent; // Total descent in meters
+        var routeDetails = {
+            distance: segment.distance, // in meters
+            duration: segment.duration, // in seconds
+            ascent: segment.ascent,     // in meters
+            descent: segment.descent    // in meters
+        };
+
+        // Display or return these values as needed
+        console.log(`Distance: ${totalDistance} meters, Duration: ${totalDuration} seconds, Ascent: ${totalAscent} meters, Descent: ${totalDescent} meters`);
+    }
+
+    console.log("Responsedata!");
+    console.log(responseData);
+
+    return {geojson: responseData, details: routeDetails};
 }

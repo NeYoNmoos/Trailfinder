@@ -4,7 +4,9 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="java.util.Comparator" %>
-<%@ page import="at.fhv.hike.data.Bitmask" %><%--
+<%@ page import="at.fhv.hike.data.Bitmask" %>
+<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.time.format.DateTimeFormatter" %><%--
 <%@ page import="java.util.List" %>
 <%@ page import="java.net.URI" %>
 <%@ page import="java.net.URL" %>
@@ -83,6 +85,7 @@
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
             <div class="px-4 py-5 sm:p-6 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-gray-900 mb-1 sm:mb-0">Route Details</h2>
+
                 <form action="https://www.google.com/maps/dir/" method="get" target="_blank">
                     <input type="hidden" name="api" value="1">
                     <% if (coordinates != null && !coordinates.isEmpty()) { %>
@@ -98,16 +101,16 @@
                 </div>
                 <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                     <div class="sm:col-span-1">
-                        <dt class="text-sm font-medium text-gray-500">Length</dt>
-                        <dd class="mt-1 text-sm text-gray-900"><%= route.getLength() %> km</dd>
-                    </div>
-                    <div class="sm:col-span-1">
                         <dt class="text-sm font-medium text-gray-500">Altitude</dt>
                         <dd class="mt-1 text-sm text-gray-900"><%= route.getAltitude() %> m</dd>
                     </div>
                     <div class="sm:col-span-1">
                         <dt class="text-sm font-medium text-gray-500">Location</dt>
                         <dd class="mt-1 text-sm text-gray-900"><%= route.getLocation() %></dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Length</dt>
+                        <dd class="mt-1 text-sm text-gray-900"><%= route.getLength() %> km</dd>
                     </div>
                     <div class="sm:col-span-1">
                         <%
@@ -117,66 +120,97 @@
                         %>
                         <dt class="text-sm font-medium text-gray-500">Duration</dt>
                         <dd class="mt-1 text-sm text-gray-900"><%= wholeHours + "h " + wholeMinutes + "min" %></dd>
+                     </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Calculated Length</dt>
+                        <dd id="calculatedLength" class="mt-1 text-sm text-gray-900">Calculating...</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Calculated Duration</dt>
+                        <dd id="calculatedDuration" class="mt-1 text-sm text-gray-900">Calculating...</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Calculated Ascent</dt>
+                        <dd id="calculatedAscent" class="mt-1 text-sm text-gray-900">Calculating...</dd>
+                    </div>
+                    <div class="sm:col-span-1">
+                        <dt class="text-sm font-medium text-gray-500">Calculated Descent</dt>
+                        <dd id="calculatedDescent" class="mt-1 text-sm text-gray-900">Calculating...</dd>
+                    </div>
+                 </dl>
+                <%
+                    // Assuming route.getCreated_at() returns a LocalDateTime object
+                    LocalDateTime creationDate = route.getCreated_at();
+                    if(creationDate!=null)
+                    {
+                    // Define the desired date-time format without fractional seconds
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy' 'HH:mm:ss");
 
-                </div>
-            </dl>
-        </div>
-    </div>
-
-    <!-- Attributes -->
-    <% if (attributes != null) { %>
-    <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
-        <div class="px-4 py-5 sm:p-6">
-            <h2 class="text-xl font-bold text-gray-900">Attributes</h2>
-            <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Power</dt>
-                    <dd class="mt-1 text-sm text-gray-900"><%= attributes.getStrength() %></dd>
-                </div>
-                <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Scenery</dt>
-                    <dd class="mt-1 text-sm text-gray-900"><%= attributes.getScenery() %></dd>
-                </div>
-                <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Experience</dt>
-                    <dd class="mt-1 text-sm text-gray-900"><%= attributes.getExperience() %></dd>
-                </div>
-                <div class="sm:col-span-1">
-                    <dt class="text-sm font-medium text-gray-500">Condition</dt>
-                    <dd class="mt-1 text-sm text-gray-900"><%= attributes.getCondition() %></dd>
-                </div>
-            </dl>
-        </div>
-    </div>
-    <% } %>
-
-        <div class="flex justify-between mb-6">
-        <!-- Best Time to Visit -->
-        <% if (route.getMonths()>0) { %>
-            <div class="bg-white shadow overflow-hidden sm:rounded-lg w-1/2 mr-2">
-                <div class="px-4 py-5 sm:p-6 text-center">
-                <h2 class="text-xl font-bold text-gray-900">Best Time to Visit</h2>
-                <p class="mt-1 text-sm text-gray-900">
-                    <% int bm = route.getMonths();%>
-                    <%= (bm & Bitmask.Month_1_Jan) != 0 ? "January" : ""%>
-                    <%= (bm & Bitmask.Month_2_Feb) != 0 ? "February " : "" %>
-                    <%= (bm & Bitmask.Month_3_Mar) != 0 ? "March " : "" %>
-                    <%= (bm & Bitmask.Month_4_Apr) != 0 ? "April " : "" %>
-                    <%= (bm & Bitmask.Month_5_May) != 0 ? "May " : "" %>
-                    <%= (bm & Bitmask.Month_6_Jun) != 0 ? "June " : "" %>
-                    <%= (bm & Bitmask.Month_7_Jul) != 0 ? "July " : "" %>
-                    <%= (bm & Bitmask.Month_8_Aug) != 0 ? "August " : "" %>
-                    <%= (bm & Bitmask.Month_9_Sep) != 0 ? "September " : "" %>
-                    <%= (bm & Bitmask.Month_10_Oct) != 0 ? "October " : "" %>
-                    <%= (bm & Bitmask.Month_11_Nov) != 0 ? "November " : "" %>
-                    <%= (bm & Bitmask.Month_12_Dec) != 0 ? "December " : "" %>
-                </p>
+                    // Format the LocalDateTime object
+                    String formattedCreationDate = creationDate.format(formatter);
+                    %><p class="text-gray-400">Creation date: <%= formattedCreationDate %></p>
+                  <%}else
+                    {%>
+                    <p class="text-gray-400">Creation date:</p>
+                <%}%>
             </div>
+    </div>
+    <div class="flex mb-6">
+        <!-- Left side -->
+        <div class="w-1/2 mr-4">
+            <!-- Attributes -->
+            <% if (attributes != null) { %>
+            <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+                <div class="px-4 py-5 sm:p-6 text-center">
+                    <h2 class="text-xl font-bold text-gray-900">Attributes</h2>
+                    <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500">Power</dt>
+                            <dd class="mt-1 text-sm text-gray-900"><%= attributes.getStrength() %></dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500">Scenery</dt>
+                            <dd class="mt-1 text-sm text-gray-900"><%= attributes.getScenery() %></dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500">Experience</dt>
+                            <dd class="mt-1 text-sm text-gray-900"><%= attributes.getExperience() %></dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                            <dt class="text-sm font-medium text-gray-500">Condition</dt>
+                            <dd class="mt-1 text-sm text-gray-900"><%= attributes.getCondition() %></dd>
+                        </div>
+                    </dl>
+                    <!-- Best Time to Visit -->
+                    <% if (route.getMonths() > 0) { %>
+                    <div class="px-4 py-5 sm:p-6 text-center">
+                        <h2 class="text-xl font-bold text-gray-900">Best Time to Visit</h2>
+                        <p class="mt-1 text-sm text-gray-900">
+                            <% int bm = route.getMonths(); %>
+                            <%= (bm & Bitmask.Month_1_Jan) != 0 ? "January" : "" %>
+                            <%= (bm & Bitmask.Month_2_Feb) != 0 ? "February " : "" %>
+                            <%= (bm & Bitmask.Month_3_Mar) != 0 ? "March " : "" %>
+                            <%= (bm & Bitmask.Month_4_Apr) != 0 ? "April " : "" %>
+                            <%= (bm & Bitmask.Month_5_May) != 0 ? "May " : "" %>
+                            <%= (bm & Bitmask.Month_6_Jun) != 0 ? "June " : "" %>
+                            <%= (bm & Bitmask.Month_7_Jul) != 0 ? "July " : "" %>
+                            <%= (bm & Bitmask.Month_8_Aug) != 0 ? "August " : "" %>
+                            <%= (bm & Bitmask.Month_9_Sep) != 0 ? "September " : "" %>
+                            <%= (bm & Bitmask.Month_10_Oct) != 0 ? "October " : "" %>
+                            <%= (bm & Bitmask.Month_11_Nov) != 0 ? "November " : "" %>
+                            <%= (bm & Bitmask.Month_12_Dec) != 0 ? "December " : "" %>
+                        </p>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <% } %>
         </div>
-        <% } %>
 
+        <!-- Right side -->
+        <div class="w-1/2">
             <!-- Weather -->
-            <div class="bg-white shadow overflow-hidden sm:rounded-lg w-1/2 ml-2">
+            <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6 flex flex-col items-center text-center">
                     <h2 class="text-xl font-bold text-gray-900">Weather</h2>
                     <div class="wrapper">
@@ -221,6 +255,8 @@
                 </div>
             </div>
         </div>
+    </div>
+
 
         <script>
             // Declare variables
@@ -341,7 +377,24 @@
                 waypoints.push(L.latLng(<%= coord.getLatitude() %>, <%= coord.getLongitude() %>));
                 <% } %>
 
-                fetchHikingRoute(waypoints).then(geojson => {
+                fetchHikingRoute(waypoints).then(result  => {
+                    const geojson = result.geojson;
+                    const details = result.details;
+
+                    console.log("details in map: ", details);
+                    const distanceKm = (details.distance / 1000).toFixed(2);
+                    document.getElementById('calculatedLength').textContent = distanceKm + ' km';
+
+                    // Convert duration from seconds to hours and minutes
+                    const durationHrs = Math.floor(details.duration / 3600);
+                    const durationMins = Math.round((details.duration % 3600) / 60);
+                    document.getElementById('calculatedDuration').textContent = durationHrs + 'h ' + durationMins + 'min';
+
+                    const ascent = Math.round(details.ascent * 100)/100;
+                    const descent = Math.round(details.descent * 100)/100;
+                    document.getElementById('calculatedAscent').textContent = ascent + 'm';
+                    document.getElementById('calculatedDescent').textContent = descent + 'm';
+
                     L.geoJSON(geojson).addTo(map);
 
                     // Add Start Marker
