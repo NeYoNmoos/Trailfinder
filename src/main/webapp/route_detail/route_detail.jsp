@@ -277,10 +277,12 @@
             </div>
             <% } %>
         </div>
+        <% if (coordinates != null && !coordinates.isEmpty()) { %>
 
         <!-- Right side -->
         <div class="w-1/2">
             <!-- Weather -->
+
             <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6 flex flex-col items-center text-center">
                     <h2 class="text-xl font-bold text-gray-900">Weather</h2>
@@ -326,6 +328,8 @@
                 </div>
             </div>
         </div>
+        <% } %>
+
     </div>
 
 
@@ -403,7 +407,9 @@
 
             // Initial request with constants
             // Replace with your actual longitude
-            requestApi(<%=coordinates.getLast().getLatitude()%>, <%=coordinates.getLast().getLongitude()%>);
+            <% if (coordinates != null && !coordinates.isEmpty()) { %>
+            requestApi(<%=coordinates.get(coordinates.size() - 1).getLatitude()%>, <%=coordinates.get(coordinates.size() - 1).getLongitude()%>);
+            <% } %>
 
         </script>
 
