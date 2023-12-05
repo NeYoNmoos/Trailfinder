@@ -183,6 +183,18 @@ public class RouteCreateServlet extends HttpServlet {
             }
         }
 
+        // Point of Interest
+        int i = 0;
+        while (request.getParameter("poi_" + i + "_latitude") != null &&
+                request.getParameter("poi_" + i + "_longitude") != null) {
+            System.out.println(("Vor Huette"));
+            double lat = Double.parseDouble(request.getParameter("poi_" + i + "_latitude"));
+            double lng = Double.parseDouble(request.getParameter("poi_" + i + "_longitude"));
+            System.out.println(lat + " " + lng);
+            System.out.println("Huette");
+            i++;
+        }
+
         ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
         rc.createRoute(newRoute);

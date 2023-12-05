@@ -164,11 +164,20 @@
                     iconAnchor: [12, 25] // Anchor point of the icon
                 });
 
+                let poiIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/poi_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 41]
+                });
+
                 // route layer
                 let currentRouteLayer = null;
 
                 // Array to store waypoints
                 let waypoints = [];
+
+                // Array to store points of interest
+                let pois = [];
 
                 // parse waypoints from existing route for editing
                 <% if (coordinates != null){ %>
@@ -200,9 +209,31 @@
                     updateRoute();
                 }
 
+                //Function to add point of interest marker
+                function addPoiMarker(lat, lng) {
+                    let marker = L.marker([lat, lng], {
+                        draggable: true,
+                        icon: poiIcon
+                    }).addTo(map);
+
+                    marker.on('contextmenu', function() {
+                        map.removeLayer(marker);
+                    });
+                    pois.push(marker);
+                }
+
                 // Map click event to add markers
                 map.on('click', function(e) {
                     addMarker(e.latlng.lat, e.latlng.lng);
+                });
+
+                // Map click event to add point of interest
+                map.on('contextmenu', function(e) {
+                    let name = prompt("Please enter the name of your point of interest:", "");
+                    let description = prompt("Please enter a description for your point of interest:", "");
+                    if ((name != null) && (name != "") && (description != null) && (description != "")) {
+                        addPoiMarker(e.latlng.lat, e.latlng.lng);
+                    }
                 });
 
                 let geoJsonWaypoints = [];
@@ -272,6 +303,15 @@
                         document.querySelector('form').appendChild(latInput);
                         document.querySelector('form').appendChild(lngInput);
                         document.querySelector('form').appendChild(seqInput);
+                    });
+
+                    // Point of Interest
+                    pois.forEach((marker, i) => {
+                        const latInputPoi = createHiddenInput('poi_' + i + '_latitude', marker.getLatLng().lat);
+                        const lngInputPoi = createHiddenInput('poi_' + i + '_longitude', marker.getLatLng().lng);
+
+                        document.querySelector('form').appendChild(latInputPoi);
+                        document.querySelector('form').appendChild(lngInputPoi);
                     });
                 }
 
