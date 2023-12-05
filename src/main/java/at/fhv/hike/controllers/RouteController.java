@@ -15,13 +15,17 @@ public class RouteController {
         _facade = new TrailfinderDatabaseFacade(context);
     }
 
+    public RouteController(TrailfinderDatabaseFacade facade) {
+        _facade = facade;
+    }
+
     public List<RouteEntity> getAllRoutes() {
         List<RouteEntity> allRoutes = _facade.getAllRoutes();
         return allRoutes;
     }
-    public List<RouteEntity> getFilteredRoutes(String routename, Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery,Integer experience, Integer condition) {
+    public List<RouteEntity> getFilteredRoutes(String routename, Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery,Integer experience, Integer condition, Integer selectedMonth) {
         routename = routename.toLowerCase();
-        List<RouteEntity> filteredRoutes = _facade.getFilteredRoutes(routename, lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition);
+        List<RouteEntity> filteredRoutes = _facade.getFilteredRoutes(routename, lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition,selectedMonth);
         return filteredRoutes;
     }
 
@@ -37,4 +41,8 @@ public class RouteController {
     public void createRoute(RouteEntity route) {
         _facade.save(route);
     }
+
+    public void saveObjectInDb(Object object) { _facade.save(object);}
+
+    public TrailfinderDatabaseFacade getFacade() {return _facade;}
 }

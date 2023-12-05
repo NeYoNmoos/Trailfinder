@@ -11,18 +11,18 @@ public class CommentEntity {
     @Id
     @Column(name = "comment_id")
     private Integer commentId;
-    @Basic
-    @Column(name = "route_id")
-    private Integer routeId;
-    @Basic
-    @Column(name = "author_id")
-    private Integer authorId;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "route_id", referencedColumnName = "route_id")
+    private RouteEntity route;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id", referencedColumnName = "user_id")
+    private UserEntity author;
     @Basic
     @Column(name = "comment")
     private String comment;
-    @Basic
-    @Column(name = "attribute_id")
-    private Integer attributeId;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "attribute_id", referencedColumnName = "attribute_id")
+    private AttributeEntity attributeId;
     @Basic
     @Column(name = "date_comment")
     private Date dateComment;
@@ -35,20 +35,20 @@ public class CommentEntity {
         this.commentId = commentId;
     }
 
-    public Integer getRouteId() {
-        return routeId;
+    public RouteEntity getRoute() {
+        return route;
     }
 
-    public void setRouteId(Integer routeId) {
-        this.routeId = routeId;
+    public void setRoute(RouteEntity route) {
+        this.route = route;
     }
 
-    public Integer getAuthorId() {
-        return authorId;
+    public UserEntity getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Integer authorId) {
-        this.authorId = authorId;
+    public void setAuthor(UserEntity authorId) {
+        this.author = authorId;
     }
 
     public String getComment() {
@@ -59,11 +59,11 @@ public class CommentEntity {
         this.comment = comment;
     }
 
-    public Integer getAttributeId() {
+    public AttributeEntity getAttributeId() {
         return attributeId;
     }
 
-    public void setAttributeId(Integer attributeId) {
+    public void setAttributeId(AttributeEntity attributeId) {
         this.attributeId = attributeId;
     }
 
@@ -83,8 +83,8 @@ public class CommentEntity {
         CommentEntity that = (CommentEntity) o;
 
         if (commentId != null ? !commentId.equals(that.commentId) : that.commentId != null) return false;
-        if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) return false;
-        if (authorId != null ? !authorId.equals(that.authorId) : that.authorId != null) return false;
+        if (route != null ? !route.equals(that.route) : that.route != null) return false;
+        if (author != null ? !author.equals(that.author) : that.author != null) return false;
         if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
         if (attributeId != null ? !attributeId.equals(that.attributeId) : that.attributeId != null) return false;
         if (dateComment != null ? !dateComment.equals(that.dateComment) : that.dateComment != null) return false;
@@ -95,8 +95,8 @@ public class CommentEntity {
     @Override
     public int hashCode() {
         int result = commentId != null ? commentId.hashCode() : 0;
-        result = 31 * result + (routeId != null ? routeId.hashCode() : 0);
-        result = 31 * result + (authorId != null ? authorId.hashCode() : 0);
+        result = 31 * result + (route != null ? route.hashCode() : 0);
+        result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
         result = 31 * result + (attributeId != null ? attributeId.hashCode() : 0);
         result = 31 * result + (dateComment != null ? dateComment.hashCode() : 0);

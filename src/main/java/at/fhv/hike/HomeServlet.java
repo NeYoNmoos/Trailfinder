@@ -47,6 +47,9 @@ public class HomeServlet extends HttpServlet {
         System.out.println("experience: " + experience);
         System.out.println("condition: " + condition);
 
+        Integer month=Integer.parseInt(request.getParameter("month"));
+        System.out.println(month);
+
 // Parse string parameters into integers
         if (lengthMaxStr != null && !lengthMaxStr.isEmpty()) {
             lengthMax = Integer.parseInt(lengthMaxStr);
@@ -73,7 +76,7 @@ public class HomeServlet extends HttpServlet {
 
         //if(lengthMin!=null || lengthMax!=null || altitudeMax!=null||altitudeMin!=null||durationMax!=null||durationMin!=null)
         //{
-            allRoutes=rc.getFilteredRoutes(routename, lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition);
+            allRoutes=rc.getFilteredRoutes(routename, lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition,month);
        // }
         //else
            // allRoutes = rc.getAllRoutes();

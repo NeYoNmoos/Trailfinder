@@ -1,11 +1,13 @@
 package at.fhv.hike.hibernate.broker;
 
+import at.fhv.hike.data.Bitmask;
 import at.fhv.hike.data.RouteEntity;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class RouteBroker extends BrokerBase<RouteEntity> {
@@ -31,7 +33,7 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
     }
 
 
-    public List<RouteEntity> getFiltered(String routename, Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery, Integer experience, Integer condition) {
+    public List<RouteEntity> getFiltered(String routename, Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery, Integer experience, Integer condition, Integer selectedMonth) {
 
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM RouteEntity AS r " +
@@ -70,10 +72,17 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
                     Hibernate.initialize(route.getCoordinates());
                 }
             }
+            List<RouteEntity>newRoutes=new LinkedList<>();
+            for(RouteEntity r : routes)
+            {
+                if((r.getMonths()&selectedMonth)>0)
+                    newRoutes.add(r);
+            }
 
-            return routes;
+            return newRoutes;
         }
     }
+
 
     @Override
     public RouteEntity getById(String id) {
