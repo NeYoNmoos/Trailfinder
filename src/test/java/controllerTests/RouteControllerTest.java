@@ -1,3 +1,5 @@
+package controllerTests;
+
 import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
@@ -12,7 +14,7 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class RouteServiceTest {
+public class RouteControllerTest {
 
     private RouteController routeService;
 

@@ -82,12 +82,20 @@ public class UserEntity {
         this.username = username;
     }
 
-    public Object getUserType() {
+    public Boolean getUserType() {
         return userType;
     }
 
     public void setUserType(Boolean userType) {
         this.userType = userType;
+    }
+
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
+    }
+
+    public void setRoutes(List<RouteEntity> routes) {
+        this.routes = routes;
     }
 
     @Override
