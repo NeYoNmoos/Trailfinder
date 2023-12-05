@@ -145,4 +145,9 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
     public RouteEntity getRouteById(String id) {
         return _routeBroker.getById(id);
     }
+
+    @Override
+    public List<UserEntity> getAllUsers() {
+        return _userBroker.getAll();
+    }
 }
