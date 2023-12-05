@@ -2,6 +2,7 @@ import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.data.AttributeEntity;
 import at.fhv.hike.data.CoordinateEntity;
+import at.fhv.hike.data.UserEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.ServletContext;
 
@@ -45,7 +46,7 @@ class RouteControllerTest {
     private RouteEntity createMockRoute() {
         RouteEntity route = new RouteEntity();
         route.setRouteId(1);
-        route.setAuthor(123);
+        route.setAuthor(new UserEntity());
         route.setName("Test Route");
         route.setLength(5.5);
         route.setAltitude(200.0);
