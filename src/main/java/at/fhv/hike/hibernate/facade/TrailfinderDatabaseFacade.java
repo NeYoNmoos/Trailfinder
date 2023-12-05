@@ -42,6 +42,22 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         this._userBroker = new UserBroker(sessionFactory);
     }
 
+    public TrailfinderDatabaseFacade(SessionFactory sessionFactory) {
+        this._routeBroker = new RouteBroker(sessionFactory);
+        this._attributeBroker = new AttributeBroker(sessionFactory);
+        // this._timeOfYearBroker = new TimeOfYearBroker(sessionFactory);
+        this._coordinateBroker = new CoordinateBroker(sessionFactory);
+        this._commentBroker = new CommentBroker(sessionFactory);
+        this._doneRouteBroker = new DoneRouteBroker(sessionFactory);
+        this._favouriteRouteBroker = new FavouriteRouteBroker(sessionFactory);
+        this._galleryBroker = new GalleryBroker(sessionFactory);
+        this._lodgeBroker = new LodgeBroker(sessionFactory);
+        this._lodgeOnRouteBroker = new LodgeOnRouteBroker(sessionFactory);
+        this._pointOfInterestBroker = new PointOfInterestBroker(sessionFactory);
+        this._poiOnRouteBroker = new PoiOnRouteBroker(sessionFactory);
+        this._userBroker = new UserBroker(sessionFactory);
+    }
+
     @Override
     public void save(Object value) {
         if (value instanceof RouteEntity) {
