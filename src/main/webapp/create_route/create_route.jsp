@@ -165,7 +165,13 @@
                 });
 
                 let poiIcon = L.icon({
-                    iconUrl: '${pageContext.request.contextPath}/assets/icons/poi_pin.png',
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/poi_pin.png', // TODO: change poi icon
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 41]
+                });
+
+                let huetteIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/poi_pin.png', // TODO: get huetten icon
                     iconSize: [40, 40],
                     iconAnchor: [20, 41]
                 });
@@ -175,6 +181,9 @@
 
                 // Array to store waypoints
                 let waypoints = [];
+
+                // Array to store huetten
+                let huetten = [];
 
                 // Array to store points of interest
                 let pois = [];
@@ -210,16 +219,33 @@
                 }
 
                 //Function to add point of interest marker
-                function addPoiMarker(lat, lng) {
+                function addPoiMarker(lat, lng, poiMarkerData) {
                     let marker = L.marker([lat, lng], {
+                        markerData: poiMarkerData,
                         draggable: true,
                         icon: poiIcon
                     }).addTo(map);
 
                     marker.on('contextmenu', function() {
+                        pois = pois.filter(poi => poi !== marker);
                         map.removeLayer(marker);
                     });
                     pois.push(marker);
+                }
+
+                //Function to add huette marker
+                function addHuetteMarker(lat, lng, huetteMarkerData) {
+                    let marker = L.marker([lat, lng], {
+                        markerData: huetteMarkerData,
+                        draggable: true,
+                        icon: huetteIcon
+                    }).addTo(map);
+
+                    marker.on('contextmenu', function() {
+                        huetten = huetten.filter(huette => huette !== marker);
+                        map.removeLayer(marker);
+                    });
+                    huetten.push(marker);
                 }
 
                 // Map click event to add markers
@@ -227,12 +253,29 @@
                     addMarker(e.latlng.lat, e.latlng.lng);
                 });
 
-                // Map click event to add point of interest
+                // Map click event to add point of interest or huette
                 map.on('contextmenu', function(e) {
-                    let name = prompt("Please enter the name of your point of interest:", "");
-                    let description = prompt("Please enter a description for your point of interest:", "");
-                    if ((name != null) && (name != "") && (description != null) && (description != "")) {
-                        addPoiMarker(e.latlng.lat, e.latlng.lng);
+                    if (e.originalEvent.ctrlKey && e.originalEvent.button === 2) {
+                        let huetteName = prompt("Please enter the name of your hut:", "");
+                        let huetteDescription = prompt("Please enter a description for your hut:", "");
+                        if ((huetteName != null) && (huetteName != "") && (huetteDescription != null) && (huetteDescription != "")) {
+                            var huetteMarkerData = {
+                                name: huetteName,
+                                description: huetteDescription
+                            }
+                            addHuetteMarker(e.latlng.lat, e.latlng.lng, huetteMarkerData); // TODO: change to huette marker
+                        }
+                    }
+                    else {
+                        let poiName = prompt("Please enter the name of your point of interest:", "");
+                        let poiDescription = prompt("Please enter a description for your point of interest:", "");
+                        if ((poiName != null) && (poiName != "") && (poiDescription != null) && (poiDescription != "")) {
+                            var poiMarkerData = {
+                                name: poiName,
+                                description: poiDescription
+                            }
+                            addPoiMarker(e.latlng.lat, e.latlng.lng, poiMarkerData);
+                        }
                     }
                 });
 
