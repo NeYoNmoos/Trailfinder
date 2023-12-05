@@ -19,7 +19,6 @@ INSERT INTO trailfinder_dev.route(route_id, author, name, length, altitude, loca
      (5, NULL, 'Leiterweg', 6.40, 354, 'Hohenems, Austria', 'Genieße diesen 6,4-Kilometer langen Rundweg in der Nähe von Hohenems, Vorarlberg. Die Route wird grundsätzlich als moderat eingestuft und kann zumeist in 2 Std 21 Min bewältigt werden. Obwohl sich der Weg bestens zum Wandern eignet und oftmals gut besucht ist, kannst du hier zur richtigen Tageszeit ein bisschen Ruhe genießen.', 2.21, 5, 1020, true);
 
 
-
 INSERT INTO trailfinder_dev.coordinate(coordinate_id, route_id, sequence, longitude, latitude) VALUES
     (1, 1, 0, 9.775992718176056, 47.391678657852516),
     (2, 1, 1, 9.77736770696476, 47.37893453043227),

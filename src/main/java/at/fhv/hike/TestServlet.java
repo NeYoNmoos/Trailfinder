@@ -1,10 +1,7 @@
 package at.fhv.hike;
 
 import at.fhv.hike.controllers.RouteController;
-import at.fhv.hike.data.AttributeEntity;
-import at.fhv.hike.data.Bitmask;
-import at.fhv.hike.data.CoordinateEntity;
-import at.fhv.hike.data.RouteEntity;
+import at.fhv.hike.data.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -19,6 +16,7 @@ import java.io.IOException;
 public class TestServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // create mockdata
+        /*
         AttributeEntity newAttributes = new AttributeEntity();
         newAttributes.setStrength(2);
         newAttributes.setScenery(3);
@@ -52,6 +50,16 @@ public class TestServlet extends HttpServlet {
         ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
         rc.createRoute(newRoute);
+*/
+        CommentEntity ce = new CommentEntity();
+        ce.setComment("TestingComment");
+
+        DoneRouteEntity dre = new DoneRouteEntity();
+        ServletContext context = request.getServletContext();
+        RouteController rc = new RouteController(context);
+        dre.setRouteId(rc.getRouteById("30"));
+        rc.saveObjectInDb(dre);
+        System.out.println("dre saved");
 
         request.getRequestDispatcher("/create_route/create_confirmation.jsp").forward(request, response);
     }
