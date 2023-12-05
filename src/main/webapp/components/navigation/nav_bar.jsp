@@ -51,22 +51,23 @@
 
 </script>
 <nav class="w-full sticky top-0 z-[1000] bg-white shadow py-2 px-4 flex justify-between items-center">
+    <!-- Left-aligned logo and title -->
     <a href="${pageContext.request.contextPath}/" class="flex items-center text-black">
         <img src="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png" alt="Logo" class="h-20 w-auto">
         <h2 class="font-bold">Trailfinder</h2>
     </a>
-    <a href="${pageContext.request.contextPath}/route-create" class="px-4 py-2 rounded-md btn-primary transition-colors">
-        Create Route
-    </a>
-    <%
-        if(sessionToken!=null) {
-            %> <button onclick="logoutAndRefresh()">LogOut</button>
-                <a href="${pageContext.request.contextPath}/profile" class="px-4 py-2 rounded-md btn-primary transition-colors">Profile</a><%
-        }
-        else {
-            %> <a href="${pageContext.request.contextPath}/login" class="px-4 py-2 rounded-md btn-primary transition-colors">LogIn</a><%
-        }
-    %>
+
+    <!-- Right-aligned elements -->
+    <div class="flex items-center space-x-4">
+        <a href="${pageContext.request.contextPath}/route-create" class="px-4 py-2 rounded-md btn-primary transition-colors">Create Route</a>
+
+        <% if (sessionToken != null) { %>
+        <button onclick="logoutAndRefresh()" class="px-4 py-2 rounded-md btn-primary transition-colors">LogOut</button>
+        <a href="${pageContext.request.contextPath}/profile" class="px-4 py-2 rounded-md btn-primary transition-colors">Profile</a>
+        <% } else { %>
+        <a href="${pageContext.request.contextPath}/login" class="px-4 py-2 rounded-md btn-primary transition-colors">LogIn</a>
+        <% } %>
+    </div>
 </nav>
 
 <script>
