@@ -44,7 +44,7 @@ public class LogInServlet extends HttpServlet {
             }
             Cookie myCookie = new Cookie("username", email);
             // Setting the maximum age of the cookie in seconds
-            myCookie.setMaxAge(120);
+            myCookie.setMaxAge(86400);
             myCookie.setPath("/");
             // Adding the cookie to the response
             response.addCookie(myCookie);
