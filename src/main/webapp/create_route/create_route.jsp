@@ -6,7 +6,8 @@
 <%@ page import="at.fhv.hike.data.CoordinateEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
-<%@ page import="java.util.Comparator" %><%--
+<%@ page import="java.util.Comparator" %>
+<%@ page import="at.fhv.hike.data.LodgeEntity" %><%--
   Created by IntelliJ IDEA.
   User: matth
   Date: 03/11/2023
@@ -165,13 +166,13 @@
                 });
 
                 let poiIcon = L.icon({
-                    iconUrl: '${pageContext.request.contextPath}/assets/icons/poi_pin.png', // TODO: change poi icon
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/poi_pin.png',
                     iconSize: [40, 40],
                     iconAnchor: [20, 41]
                 });
 
                 let huetteIcon = L.icon({
-                    iconUrl: '${pageContext.request.contextPath}/assets/icons/poi_pin.png', // TODO: get huetten icon
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/huette_pin.png',
                     iconSize: [40, 40],
                     iconAnchor: [20, 41]
                 });
@@ -263,7 +264,7 @@
                                 name: huetteName,
                                 description: huetteDescription
                             }
-                            addHuetteMarker(e.latlng.lat, e.latlng.lng, huetteMarkerData); // TODO: change to huette marker
+                            addHuetteMarker(e.latlng.lat, e.latlng.lng, huetteMarkerData);
                         }
                     }
                     else {
@@ -348,13 +349,34 @@
                         document.querySelector('form').appendChild(seqInput);
                     });
 
-                    // Point of Interest
+                    // Create inputs for Point of Interest
                     pois.forEach((marker, i) => {
                         const latInputPoi = createHiddenInput('poi_' + i + '_latitude', marker.getLatLng().lat);
                         const lngInputPoi = createHiddenInput('poi_' + i + '_longitude', marker.getLatLng().lng);
+                        const nameInputPoi = createHiddenInput('poi_' + i + '_name', marker.options.markerData.name);
+                        const descriptionInputPoi = createHiddenInput('poi_' + i + '_description', marker.options.markerData.description);
+
 
                         document.querySelector('form').appendChild(latInputPoi);
                         document.querySelector('form').appendChild(lngInputPoi);
+                        document.querySelector('form').appendChild(nameInputPoi);
+                        document.querySelector('form').appendChild(descriptionInputPoi);
+
+                    });
+
+                    // Create inputs for huette
+                    huetten.forEach((marker, j) => {
+                        const latInputHuette = createHiddenInput('huette_' + j + '_latitude', marker.getLatLng().lat);
+                        const lngInputHuette = createHiddenInput('huette_' + j + '_longitude', marker.getLatLng().lng);
+                        const nameInputHuette = createHiddenInput('huette_' + j + '_name', marker.options.markerData.name);
+                        const descriptionInputHuette = createHiddenInput('huette_' + j + '_description', marker.options.markerData.description);
+
+
+                        document.querySelector('form').appendChild(latInputHuette);
+                        document.querySelector('form').appendChild(lngInputHuette);
+                        document.querySelector('form').appendChild(nameInputHuette);
+                        document.querySelector('form').appendChild(descriptionInputHuette);
+
                     });
                 }
 
@@ -388,6 +410,15 @@
                 </div>
             </div>
             -->
+
+            <%
+                //List of huetten
+                System.out.println("TESTERS1");
+                List<LodgeEntity> allHuetten = (List<LodgeEntity>) request.getAttribute("allHuetten");
+                if (allHuetten == null) {
+                   System.out.println("TESTERS2");
+                }
+            %>
 
             <input type="hidden" name="routeId" value="<%= request.getParameter("routeId") %>">
 

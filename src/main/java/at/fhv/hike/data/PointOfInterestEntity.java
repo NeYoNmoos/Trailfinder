@@ -31,8 +31,8 @@ public class PointOfInterestEntity {
         return coordinateEntity;
     }
 
-    public void setCoordinatesId(Integer coordinatesId) {
-        this.coordinateEntity = coordinateEntity;
+    public void setCoordinateEntity(CoordinateEntity coordinate) {
+        this.coordinateEntity = coordinate;
     }
 
     public String getName() {

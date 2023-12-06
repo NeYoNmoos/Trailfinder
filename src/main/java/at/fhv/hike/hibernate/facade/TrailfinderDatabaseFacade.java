@@ -161,4 +161,12 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
     public RouteEntity getRouteById(String id) {
         return _routeBroker.getById(id);
     }
+
+    public List<LodgeEntity> getAllHuetten() {
+        return _lodgeBroker.getAll();
+    }
+
+    public List<PointOfInterestEntity> getAllPois() {
+        return _pointOfInterestBroker.getAll();
+    }
 }

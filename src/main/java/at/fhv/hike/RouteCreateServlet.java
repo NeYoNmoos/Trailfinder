@@ -1,10 +1,7 @@
 package at.fhv.hike;
 
 import at.fhv.hike.controllers.RouteController;
-import at.fhv.hike.data.AttributeEntity;
-import at.fhv.hike.data.Bitmask;
-import at.fhv.hike.data.CoordinateEntity;
-import at.fhv.hike.data.RouteEntity;
+import at.fhv.hike.data.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -12,6 +9,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.openqa.selenium.remote.http.Route;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,6 +71,14 @@ public class RouteCreateServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
             dispatcher.forward(request, response);
         }
+
+        // get all huetten
+        RouteController roco = new RouteController(getServletContext());
+        List<LodgeEntity> huetten = roco.getAllHuetten();
+        request.setAttribute("allHuetten", huetten);
+        //TODO: Test this and implement the other part in jsp page
+
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -187,12 +193,60 @@ public class RouteCreateServlet extends HttpServlet {
         int i = 0;
         while (request.getParameter("poi_" + i + "_latitude") != null &&
                 request.getParameter("poi_" + i + "_longitude") != null) {
-            System.out.println(("Vor Huette"));
-            double lat = Double.parseDouble(request.getParameter("poi_" + i + "_latitude"));
-            double lng = Double.parseDouble(request.getParameter("poi_" + i + "_longitude"));
-            System.out.println(lat + " " + lng);
-            System.out.println("Huette");
+            System.out.println(("Vor poi"));
+            double latPoi = Double.parseDouble(request.getParameter("poi_" + i + "_latitude"));
+            double lngPoi = Double.parseDouble(request.getParameter("poi_" + i + "_longitude"));
+            String namePoi = request.getParameter("poi_" + i + "_name");
+            String descriptionPoi = request.getParameter("poi_" + i + "_description");
+
+            System.out.println(latPoi + " " + lngPoi + " " + namePoi + " " + descriptionPoi);
+
+            CoordinateEntity coordPoi = new CoordinateEntity();
+            coordPoi.setLatitude(latPoi);
+            coordPoi.setLongitude(lngPoi);
+
+            PointOfInterestEntity poi = new PointOfInterestEntity();
+            poi.setName(namePoi);
+            poi.setDescription(descriptionPoi);
+            poi.setCoordinateEntity(coordPoi);
+
+            PoiOnRouteEntity poiOnRoute = new PoiOnRouteEntity();
+            poiOnRoute.setRouteId(newRoute);
+            poiOnRoute.setPointOfInterestId(poi);
+
+            //TODO: maybe make a list for POIs? not sure yet
+
+            System.out.println("poi");
             i++;
+        }
+
+        // Huette
+        int j = 0;
+        while (request.getParameter("huette_" + j + "_latitude") != null &&
+                request.getParameter("huette_" + j + "_longitude") != null) {
+            System.out.println(("Vor huette"));
+            double latHuette = Double.parseDouble(request.getParameter("huette_" + j + "_latitude"));
+            double lngHuette = Double.parseDouble(request.getParameter("huette_" + j + "_longitude"));
+            String nameHuette = request.getParameter("huette_" + j + "_name");
+            String descriptionHuette = request.getParameter("huette_" + j + "_description");
+
+            System.out.println(latHuette + " " + lngHuette + " " + nameHuette + " " + descriptionHuette);
+
+            CoordinateEntity coordHuette = new CoordinateEntity();
+            coordHuette.setLatitude(latHuette);
+            coordHuette.setLongitude(lngHuette);
+
+            LodgeEntity huette = new LodgeEntity();
+            huette.setName(nameHuette);
+            huette.setDescription(descriptionHuette);
+            huette.setCoordinateEntity(coordHuette);
+
+            LodgeOnRouteEntity huetteOnRoute = new LodgeOnRouteEntity();
+            huetteOnRoute.setRouteId(newRoute);
+            huetteOnRoute.setLodgeId(huette);
+
+            System.out.println("huette");
+            j++;
         }
 
         ServletContext context = request.getServletContext();

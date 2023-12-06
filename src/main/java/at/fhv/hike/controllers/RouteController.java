@@ -1,6 +1,8 @@
 package at.fhv.hike.controllers;
 
 import at.fhv.hike.data.AttributeEntity;
+import at.fhv.hike.data.LodgeEntity;
+import at.fhv.hike.data.PointOfInterestEntity;
 import at.fhv.hike.data.RouteEntity;
 //import at.fhv.hike.data.TimeOfYearEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
@@ -45,4 +47,14 @@ public class RouteController {
     public void saveObjectInDb(Object object) { _facade.save(object);}
 
     public TrailfinderDatabaseFacade getFacade() {return _facade;}
+
+    public List<LodgeEntity> getAllHuetten() {
+        List<LodgeEntity> huetten = _facade.getAllHuetten();
+        return huetten;
+    }
+
+    public List<PointOfInterestEntity> getAllPois() {
+        List<PointOfInterestEntity> pois = _facade.getAllPois();
+        return pois;
+    }
 }
