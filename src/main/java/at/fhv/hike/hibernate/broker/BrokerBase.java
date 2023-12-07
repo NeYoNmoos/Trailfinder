@@ -19,7 +19,8 @@ public abstract class BrokerBase<T> {
     public void insert(T value) {
         try (Session session = sessionFactory.openSession()) {
             Transaction tx = session.beginTransaction();
-            session.merge(value);
+            session.clear();
+            session.saveOrUpdate(value);
             tx.commit();
         }
     }

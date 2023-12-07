@@ -40,4 +40,15 @@ public class UserBroker extends BrokerBase<UserEntity> {
             return !users.isEmpty();
         }
     }
+
+    @Override
+    public UserEntity getById(String id) {
+        try (Session session = sessionFactory.openSession()) {
+            UserEntity user = session.get(UserEntity.class, id);
+            if (user != null) {
+                Hibernate.initialize(user.getFavorite_routes());
+            }
+            return user;
+        }
+    }
 }

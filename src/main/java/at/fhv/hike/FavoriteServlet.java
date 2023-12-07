@@ -2,7 +2,6 @@ package at.fhv.hike;
 
 import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.controllers.UserController;
-import at.fhv.hike.data.FavouriteRouteEntity;
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.data.UserEntity;
 import jakarta.servlet.RequestDispatcher;
@@ -32,14 +31,24 @@ public class FavoriteServlet  extends HttpServlet {
         RouteController rc = new RouteController(context);
         UserController uc = new UserController(context);
 
-        UserEntity user = uc.getUserById(userId);
         RouteEntity route = rc.getRouteById(routeId);
+        UserEntity user = uc.getUserById(userId);
 
 
         System.out.println("route id that is saved in user");
 
+        user.getFavorite_routes().add(route);
+
+        uc.saveUser(user);
 
         request.setAttribute("route", route);
+
+        System.out.println("should be saved here!");
+
+        for(RouteEntity r: uc.getUserById(userId).getFavorite_routes()){
+            System.out.println(r.getRouteId());
+            System.out.println(r.getName());
+        }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/route_detail/route_detail.jsp");
         dispatcher.forward(request, response);
