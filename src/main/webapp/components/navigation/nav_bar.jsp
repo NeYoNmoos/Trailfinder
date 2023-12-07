@@ -12,14 +12,62 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Global.css">
 </head>
 <body>
+<%
+    Cookie[] cookies = request.getCookies();
+    String sessionToken=null;
+    if (cookies != null) {
+        for (Cookie cookie : cookies) {
+            if ("username".equals(cookie.getName())) {
+                // Found the cookie, now do something with it
+                sessionToken = cookie.getValue();
+                System.out.println("USERNAME NAV:"+sessionToken);
+                // Validate the session token or perform other actions
+            }
+        }
+    }
+%>
+<script>
+    // Function to delete a cookie by name
+    function deleteCookie(name) {
+        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    }
+
+    // Function to clear all cookies
+    function clearAllCookies() {
+        var cookies = document.cookie.split("; ");
+
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].split("=");
+            var name = cookie[0];
+            deleteCookie(name);
+        }
+    }
+    function logoutAndRefresh() {
+        // Clear all cookies
+        clearAllCookies();
+        // Reload the page
+        location.reload();
+    }
+
+</script>
 <nav class="w-full sticky top-0 z-[1000] bg-white shadow py-2 px-4 flex justify-between items-center">
+    <!-- Left-aligned logo and title -->
     <a href="${pageContext.request.contextPath}/" class="flex items-center text-black">
         <img src="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png" alt="Logo" class="h-20 w-auto">
         <h2 class="font-bold">Trailfinder</h2>
     </a>
-    <a href="${pageContext.request.contextPath}/route-create" class="px-4 py-2 rounded-md btn-primary transition-colors">
-        Create Route
-    </a>
+
+    <!-- Right-aligned elements -->
+    <div class="flex items-center space-x-4">
+        <a href="${pageContext.request.contextPath}/route-create" class="px-4 py-2 rounded-md btn-primary transition-colors">Create Route</a>
+
+        <% if (sessionToken != null) { %>
+        <button onclick="logoutAndRefresh()" class="px-4 py-2 rounded-md btn-primary transition-colors">LogOut</button>
+        <a href="${pageContext.request.contextPath}/profile" class="px-4 py-2 rounded-md btn-primary transition-colors">Profile</a>
+        <% } else { %>
+        <a href="${pageContext.request.contextPath}/login" class="px-4 py-2 rounded-md btn-primary transition-colors">LogIn</a>
+        <% } %>
+    </div>
 </nav>
 
 <script>

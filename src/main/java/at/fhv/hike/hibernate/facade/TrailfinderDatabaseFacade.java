@@ -7,6 +7,7 @@ import at.fhv.hike.hibernate.broker.*;
 import jakarta.servlet.ServletContext;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 
@@ -160,5 +161,25 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
     @Override
     public RouteEntity getRouteById(String id) {
         return _routeBroker.getById(id);
+    }
+
+    @Override
+    public List<UserEntity> getAllUsers() {
+        return _userBroker.getAll();
+    }
+
+
+    public Boolean authenticateUser(String email, String password) {
+        // Retrieve hashed password from the database
+        String storedHashedPassword = _userBroker.getStoredPasswordHash(email);
+
+        if(storedHashedPassword==null)
+            return false;
+        // Check if the entered password matches the stored hash
+        return BCrypt.checkpw(password, storedHashedPassword);
+    }
+    public Boolean userAlreadyExists(String email){
+
+        return _userBroker.userAlreadyExists(email);
     }
 }
