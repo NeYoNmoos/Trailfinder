@@ -2,6 +2,7 @@ package at.fhv.hike.hibernate.broker;
 
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.data.UserEntity;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

@@ -34,4 +34,12 @@ public class UserController {
         }
         return null;
     }
+
+    public UserEntity getUserById(String id){
+        return _facade.getUserById(id);
+    }
+
+    public void saveUser(UserEntity user){
+        _facade.save(user);
+    }
 }
