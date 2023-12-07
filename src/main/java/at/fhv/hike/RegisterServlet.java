@@ -35,9 +35,9 @@ public class RegisterServlet extends HttpServlet {
         UserEntity newUser=new UserEntity();
         ServletContext context = request.getServletContext();
         UserController uc = new UserController(context);
-        boolean isRegistrationSuccessful =uc.registerUser(username, email, password);
+        Integer userId =uc.registerUser(username, email, password);
 
-        if (isRegistrationSuccessful) {
+        if (userId!=null) {
             // Redirect to a success page or perform further actions
             Cookie[] cookies = request.getCookies();
 
@@ -48,7 +48,7 @@ public class RegisterServlet extends HttpServlet {
                     response.addCookie(cookie);
                 }
             }
-            Cookie myCookie = new Cookie("username", email);
+            Cookie myCookie = new Cookie("userId", userId.toString());
             // Setting the maximum age of the cookie in seconds
             myCookie.setMaxAge(86400);
             myCookie.setPath("/");

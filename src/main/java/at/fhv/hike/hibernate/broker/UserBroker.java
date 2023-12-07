@@ -14,7 +14,7 @@ public class UserBroker extends BrokerBase<UserEntity> {
         super(sessionFactory, UserEntity.class);
     }
 
-    public String getStoredPasswordHash(String email){
+    public UserEntity getUserByEmail(String email){
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM UserEntity AS u " +
                     "WHERE (u.email = :email) ";
@@ -24,7 +24,7 @@ public class UserBroker extends BrokerBase<UserEntity> {
             List<UserEntity> users = query.getResultList();
             if(users.isEmpty())
                 return null;
-            return users.get(0).getPassword();
+            return users.get(0);
         }
     }
 

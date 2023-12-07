@@ -18,10 +18,10 @@ public class UserController {
     public List<UserEntity> getAllUsers() {
         return _facade.getAllUsers();
     }
-    public Boolean checkPassword(String email, String password){
+    public Integer checkPassword(String email, String password){
         return _facade.authenticateUser(email, password);
     }
-    public Boolean registerUser(String username, String email, String password){
+    public Integer registerUser(String username, String email, String password){
         if(!_facade.userAlreadyExists(email))
         {
             UserEntity newUser=new UserEntity();
@@ -29,8 +29,9 @@ public class UserController {
             newUser.setEmail(email);
             newUser.setPassword( BCrypt.hashpw(password, BCrypt.gensalt()));
             _facade.save(newUser);
-            return true;
+            Integer userId=_facade.authenticateUser(email,password);
+            return userId;
         }
-        return false;
+        return null;
     }
 }

@@ -3,6 +3,7 @@ package at.fhv.hike;
 import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.controllers.UserController;
 import at.fhv.hike.data.RouteEntity;
+import at.fhv.hike.data.UserEntity;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -33,9 +34,9 @@ public class LogInServlet extends HttpServlet {
         // Replace this with your actual login logic
         ServletContext context = request.getServletContext();
         UserController uc = new UserController(context);
-        boolean isValidUser = uc.checkPassword(email, password);
+        Integer userId = uc.checkPassword(email, password);
 
-        if (isValidUser) {
+        if (userId!=null) {
             Cookie[] cookies = request.getCookies();
 
             if (cookies != null) {
@@ -45,7 +46,7 @@ public class LogInServlet extends HttpServlet {
                     response.addCookie(cookie);
                 }
             }
-            Cookie myCookie = new Cookie("username", email);
+            Cookie myCookie = new Cookie("userId", userId.toString());
             // Setting the maximum age of the cookie in seconds
             myCookie.setMaxAge(86400);
             myCookie.setPath("/");

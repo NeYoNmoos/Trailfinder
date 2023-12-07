@@ -17,7 +17,7 @@
     String sessionToken=null;
     if (cookies != null) {
         for (Cookie cookie : cookies) {
-            if ("username".equals(cookie.getName())) {
+            if ("userId".equals(cookie.getName())) {
                 // Found the cookie, now do something with it
                 sessionToken = cookie.getValue();
                 System.out.println("USERNAME NAV:"+sessionToken);
