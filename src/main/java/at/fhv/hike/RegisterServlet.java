@@ -1,7 +1,9 @@
 package at.fhv.hike;
 
 import at.fhv.hike.controllers.RouteController;
+import at.fhv.hike.controllers.UserController;
 import at.fhv.hike.data.RouteEntity;
+import at.fhv.hike.data.UserEntity;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -30,7 +32,10 @@ public class RegisterServlet extends HttpServlet {
 
         // Perform registration logic
         // Replace this with your actual registration logic
-        boolean isRegistrationSuccessful =false;// registerUser(username, email, password);
+        UserEntity newUser=new UserEntity();
+        ServletContext context = request.getServletContext();
+        UserController uc = new UserController(context);
+        boolean isRegistrationSuccessful =uc.registerUser(username, email, password);
 
         if (isRegistrationSuccessful) {
             // Redirect to a success page or perform further actions

@@ -37,7 +37,7 @@
             <label for="password" class="block text-sm font-medium text-gray-600">Password</label>
             <input type="password" id="password" name="password" placeholder="Your password"
                    class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-                   minlength="8" required>
+                   required>
         </div>
 
         <% if (request.getAttribute("loginError") != null) { %>

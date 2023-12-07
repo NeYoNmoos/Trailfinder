@@ -1,6 +1,7 @@
 package at.fhv.hike;
 
 import at.fhv.hike.controllers.RouteController;
+import at.fhv.hike.controllers.UserController;
 import at.fhv.hike.data.RouteEntity;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -30,7 +31,9 @@ public class LogInServlet extends HttpServlet {
 
         // Perform login validation and authentication logic
         // Replace this with your actual login logic
-        boolean isValidUser = true;//validateUser(email, password);
+        ServletContext context = request.getServletContext();
+        UserController uc = new UserController(context);
+        boolean isValidUser = uc.checkPassword(email, password);
 
         if (isValidUser) {
             Cookie[] cookies = request.getCookies();
