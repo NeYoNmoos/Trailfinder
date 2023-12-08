@@ -166,6 +166,8 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         return _lodgeBroker.getAll();
     }
 
+    public LodgeEntity getHuetteById(String id) {return _lodgeBroker.getById(id);}
+
     public List<PointOfInterestEntity> getAllPois() {
         return _pointOfInterestBroker.getAll();
     }

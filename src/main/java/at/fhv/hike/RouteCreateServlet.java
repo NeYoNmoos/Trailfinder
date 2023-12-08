@@ -23,6 +23,12 @@ import java.util.regex.Pattern;
 public class RouteCreateServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // get all huetten
+        RouteController roco = new RouteController(getServletContext());
+        List<LodgeEntity> huetten = roco.getAllHuetten();
+        request.setAttribute("allHuetten", huetten);
+
         String routeId = request.getParameter("routeId");
         if (routeId != null) {
             ServletContext context = request.getServletContext();
@@ -71,12 +77,6 @@ public class RouteCreateServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
             dispatcher.forward(request, response);
         }
-
-        // get all huetten
-        RouteController roco = new RouteController(getServletContext());
-        List<LodgeEntity> huetten = roco.getAllHuetten();
-        request.setAttribute("allHuetten", huetten);
-        //TODO: Test this and implement the other part in jsp page
 
 
     }
@@ -189,6 +189,10 @@ public class RouteCreateServlet extends HttpServlet {
             }
         }
 
+        ServletContext context = request.getServletContext();
+        RouteController rc = new RouteController(context);
+        rc.createRoute(newRoute);
+
         // Point of Interest
         int i = 0;
         while (request.getParameter("poi_" + i + "_latitude") != null &&
@@ -245,13 +249,29 @@ public class RouteCreateServlet extends HttpServlet {
             huetteOnRoute.setRouteId(newRoute);
             huetteOnRoute.setLodgeId(huette);
 
+            rc.createHuette(huette);
+            //rc.createHuetteOnRoute(huetteOnRoute);
+            //TODO: fix HuetteOnRoute
+
             System.out.println("huette");
             j++;
         }
 
-        ServletContext context = request.getServletContext();
-        RouteController rc = new RouteController(context);
-        rc.createRoute(newRoute);
+        // Existing Huetten through multiselect
+        String[] existingHuetten = request.getParameterValues("existingHuetten");
+        List<LodgeEntity> existingHuettenEntities = new ArrayList();
+
+        int l = 1;
+        while (l < existingHuetten.length) {
+            if(existingHuetten[l] != null) {
+                LodgeEntity existingHuette = rc.getHuetteById(existingHuetten[l]);
+                existingHuettenEntities.add(existingHuette);
+            }
+            l++;
+        }
+        //TODO: make database save for lodgeOnRoute for existing huetten
+
+
 
         request.getRequestDispatcher("/create_route/create_confirmation.jsp").forward(request, response);
     }

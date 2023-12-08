@@ -1,9 +1,6 @@
 package at.fhv.hike.controllers;
 
-import at.fhv.hike.data.AttributeEntity;
-import at.fhv.hike.data.LodgeEntity;
-import at.fhv.hike.data.PointOfInterestEntity;
-import at.fhv.hike.data.RouteEntity;
+import at.fhv.hike.data.*;
 //import at.fhv.hike.data.TimeOfYearEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.ServletContext;
@@ -48,9 +45,17 @@ public class RouteController {
 
     public TrailfinderDatabaseFacade getFacade() {return _facade;}
 
+    public void createHuetteOnRoute(LodgeOnRouteEntity huetteOnRoute) {_facade.save(huetteOnRoute);}
+
+    public void createHuette(LodgeEntity huette) {_facade.save(huette);}
+
     public List<LodgeEntity> getAllHuetten() {
         List<LodgeEntity> huetten = _facade.getAllHuetten();
         return huetten;
+    }
+
+    public LodgeEntity getHuetteById(String huetteId) {
+        return _facade.getHuetteById(huetteId);
     }
 
     public List<PointOfInterestEntity> getAllPois() {

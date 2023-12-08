@@ -413,12 +413,26 @@
 
             <%
                 //List of huetten
-                System.out.println("TESTERS1");
                 List<LodgeEntity> allHuetten = (List<LodgeEntity>) request.getAttribute("allHuetten");
-                if (allHuetten == null) {
-                   System.out.println("TESTERS2");
+                if (allHuetten != null) {
+                    int k = 0;
+            %>
+            <label for="existingHuetten">Choose already existing huts (hold 'Ctrl' or 'Command' while clicking to select multiple)</label>
+            <select name="existingHuetten" id="existingHuetten" multiple size="<%=allHuetten.size()%>">
+
+            <%
+                    while(k < allHuetten.size()) {
+
+
+
+            %>
+                <option value="<%=allHuetten.get(k).getLodgeId()%>"}><%=allHuetten.get(k).getName()%></option>
+            <%
+                    k++;
+                    }
                 }
             %>
+            </select>
 
             <input type="hidden" name="routeId" value="<%= request.getParameter("routeId") %>">
 

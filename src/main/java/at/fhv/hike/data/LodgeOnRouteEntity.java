@@ -9,10 +9,10 @@ public class LodgeOnRouteEntity {
     @Id
     @Column(name = "lodge_on_route_id")
     private int id;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id", referencedColumnName = "route_id")
     private RouteEntity routeEntity;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "lodge_id", referencedColumnName = "lodge_id")
     private LodgeEntity lodgeEntity;
 
