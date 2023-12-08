@@ -1,7 +1,10 @@
 package at.fhv.hike;
 
+import at.fhv.hike.controllers.CookieController;
 import at.fhv.hike.controllers.RouteController;
+import at.fhv.hike.controllers.UserController;
 import at.fhv.hike.data.RouteEntity;
+import at.fhv.hike.data.UserEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -27,6 +30,31 @@ public class RouteDetailServlet extends HttpServlet {
         RouteEntity route = rc.getRouteById(routeId);
 
         request.setAttribute("route", route);
+
+        String loggedInUserId= CookieController.getLogedInUserId(request.getCookies());
+
+        if(loggedInUserId!=null){
+            UserController uc = new UserController(context);
+            UserEntity loggedInUser = uc.getUserById(loggedInUserId);
+
+            Boolean isAdmin=loggedInUser.getUserType();
+            UserEntity author=route.getAuthor();
+            if(author!=null){
+                Boolean isRoutCreator=(author.getUserId().toString().equals(loggedInUserId));
+                if(isAdmin || isRoutCreator){
+                    request.setAttribute("canEdit", true);
+                }
+                else {
+                    request.setAttribute("canEdit", false);
+                }
+            }
+            else
+                request.setAttribute("canEdit", false);
+
+        }
+        else
+            request.setAttribute("canEdit", false);
+
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/route_detail/route_detail.jsp");
         dispatcher.forward(request, response);
