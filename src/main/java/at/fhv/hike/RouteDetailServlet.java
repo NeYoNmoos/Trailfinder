@@ -38,19 +38,23 @@ public class RouteDetailServlet extends HttpServlet {
             UserEntity loggedInUser = uc.getUserById(loggedInUserId);
 
             Boolean isAdmin=loggedInUser.getUserType();
+            if(isAdmin==null)
+                isAdmin=false;
             UserEntity author=route.getAuthor();
-            if(author!=null){
-                Boolean isRoutCreator=(author.getUserId().toString().equals(loggedInUserId));
-                if(isAdmin || isRoutCreator){
+            Boolean isRoutCreator;
+            if(author!=null)
+                 isRoutCreator=false;
+
+            else
+                isRoutCreator=(author.getUserId().toString().equals(loggedInUserId));
+
+
+            if(isAdmin || isRoutCreator){
                     request.setAttribute("canEdit", true);
                 }
                 else {
                     request.setAttribute("canEdit", false);
                 }
-            }
-            else
-                request.setAttribute("canEdit", false);
-
         }
         else
             request.setAttribute("canEdit", false);
