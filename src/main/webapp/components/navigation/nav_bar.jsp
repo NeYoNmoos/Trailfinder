@@ -1,4 +1,4 @@
-<%--
+<%@ page import="at.fhv.hike.controllers.CookieController" %><%--
   Created by IntelliJ IDEA.
   User: matth
   Date: 03/11/2023
@@ -13,18 +13,7 @@
 </head>
 <body>
 <%
-    Cookie[] cookies = request.getCookies();
-    String sessionToken=null;
-    if (cookies != null) {
-        for (Cookie cookie : cookies) {
-            if ("userId".equals(cookie.getName())) {
-                // Found the cookie, now do something with it
-                sessionToken = cookie.getValue();
-                System.out.println("USERNAME NAV:"+sessionToken);
-                // Validate the session token or perform other actions
-            }
-        }
-    }
+    String sessionToken= CookieController.getLogedInUserId(request.getCookies());
 %>
 <script>
     // Function to delete a cookie by name
