@@ -47,6 +47,8 @@ public class RouteController {
 
     public void createHuetteOnRoute(LodgeOnRouteEntity huetteOnRoute) {_facade.save(huetteOnRoute);}
 
+    public void createPoiOnRoute(PoiOnRouteEntity poiOnRoute) {_facade.save(poiOnRoute);}
+
     public void createHuette(LodgeEntity huette) {_facade.save(huette);}
 
     public List<LodgeEntity> getAllHuetten() {

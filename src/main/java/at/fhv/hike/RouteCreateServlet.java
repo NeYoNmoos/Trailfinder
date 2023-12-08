@@ -218,7 +218,8 @@ public class RouteCreateServlet extends HttpServlet {
             poiOnRoute.setRouteId(newRoute);
             poiOnRoute.setPointOfInterestId(poi);
 
-            //TODO: maybe make a list for POIs? not sure yet
+            //rc.createPoiOnRoute(poiOnRoute);
+            //TODO: fix PoiOnRoute
 
             System.out.println("poi");
             i++;
@@ -259,15 +260,17 @@ public class RouteCreateServlet extends HttpServlet {
 
         // Existing Huetten through multiselect
         String[] existingHuetten = request.getParameterValues("existingHuetten");
-        List<LodgeEntity> existingHuettenEntities = new ArrayList();
+        if (existingHuetten != null) {
+            List<LodgeEntity> existingHuettenEntities = new ArrayList();
 
-        int l = 1;
-        while (l < existingHuetten.length) {
-            if(existingHuetten[l] != null) {
-                LodgeEntity existingHuette = rc.getHuetteById(existingHuetten[l]);
-                existingHuettenEntities.add(existingHuette);
+            int l = 1;
+            while (l < existingHuetten.length) {
+                if(existingHuetten[l] != null) {
+                    LodgeEntity existingHuette = rc.getHuetteById(existingHuetten[l]);
+                    existingHuettenEntities.add(existingHuette);
+                }
+                l++;
             }
-            l++;
         }
         //TODO: make database save for lodgeOnRoute for existing huetten
 
