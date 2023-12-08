@@ -42,7 +42,7 @@ public class RouteDetailServlet extends HttpServlet {
                 isAdmin=false;
             UserEntity author=route.getAuthor();
             Boolean isRoutCreator;
-            if(author!=null)
+            if(author==null)
                  isRoutCreator=false;
 
             else
