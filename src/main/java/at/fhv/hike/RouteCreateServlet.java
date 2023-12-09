@@ -250,7 +250,7 @@ public class RouteCreateServlet extends HttpServlet {
             huetteOnRoute.setRouteId(newRoute);
             huetteOnRoute.setLodgeId(huette);
 
-            rc.createHuette(huette);
+            //rc.createHuette(huette);
             //rc.createHuetteOnRoute(huetteOnRoute);
             //TODO: fix HuetteOnRoute
 
