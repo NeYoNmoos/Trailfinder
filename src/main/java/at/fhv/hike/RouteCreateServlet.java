@@ -9,15 +9,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.openqa.selenium.remote.http.Route;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @WebServlet(name = "RouteCreateServlet", urlPatterns = {"/route-create"})
 public class RouteCreateServlet extends HttpServlet {
@@ -191,7 +186,7 @@ public class RouteCreateServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
-        rc.createRoute(newRoute);
+        //rc.createRoute(newRoute);
 
         // Point of Interest
         int i = 0;
@@ -215,10 +210,10 @@ public class RouteCreateServlet extends HttpServlet {
             poi.setCoordinateEntity(coordPoi);
 
             PoiOnRouteEntity poiOnRoute = new PoiOnRouteEntity();
-            poiOnRoute.setRouteId(newRoute);
-            poiOnRoute.setPointOfInterestId(poi);
+            poiOnRoute.setRoute(newRoute);
+            poiOnRoute.setPointOfInterest(poi);
 
-            //rc.createPoiOnRoute(poiOnRoute);
+            rc.createPoiOnRoute(poiOnRoute);
             //TODO: fix PoiOnRoute
 
             System.out.println("poi");
@@ -247,11 +242,11 @@ public class RouteCreateServlet extends HttpServlet {
             huette.setCoordinateEntity(coordHuette);
 
             LodgeOnRouteEntity huetteOnRoute = new LodgeOnRouteEntity();
-            huetteOnRoute.setRouteId(newRoute);
-            huetteOnRoute.setLodgeId(huette);
+            huetteOnRoute.setRoute(newRoute);
+            huetteOnRoute.setLodge(huette);
 
             //rc.createHuette(huette);
-            //rc.createHuetteOnRoute(huetteOnRoute);
+            rc.createHuetteOnRoute(huetteOnRoute);
             //TODO: fix HuetteOnRoute
 
             System.out.println("huette");

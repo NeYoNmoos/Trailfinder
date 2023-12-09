@@ -2,7 +2,6 @@ package at.fhv.hike;
 
 import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.data.*;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -57,7 +56,7 @@ public class TestServlet extends HttpServlet {
         DoneRouteEntity dre = new DoneRouteEntity();
         ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
-        dre.setRouteId(rc.getRouteById("30"));
+        dre.setRoute(rc.getRouteById("30"));
         rc.saveObjectInDb(dre);
         System.out.println("dre saved");
 

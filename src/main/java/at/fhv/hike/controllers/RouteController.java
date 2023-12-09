@@ -1,7 +1,6 @@
 package at.fhv.hike.controllers;
 
 import at.fhv.hike.data.*;
-//import at.fhv.hike.data.TimeOfYearEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.ServletContext;
 

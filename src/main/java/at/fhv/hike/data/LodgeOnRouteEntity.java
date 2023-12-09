@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class LodgeOnRouteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "lodge_on_route_id")
+    @Column(name = "id")
     private int id;
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id", referencedColumnName = "route_id")
@@ -16,11 +16,11 @@ public class LodgeOnRouteEntity {
     @JoinColumn(name = "lodge_id", referencedColumnName = "lodge_id")
     private LodgeEntity lodgeEntity;
 
-    public int getLodgeOnRouteId() {
+    public int getLodgeOnRoute() {
         return id;
     }
 
-    public void setLodgeOnRouteId(int id) {
+    public void setLodgeOnRoute(int id) {
         this.id = id;
     }
 
@@ -28,15 +28,15 @@ public class LodgeOnRouteEntity {
         return routeEntity;
     }
 
-    public void setRouteId(RouteEntity routeEntity) {
+    public void setRoute(RouteEntity routeEntity) {
         this.routeEntity = routeEntity;
     }
 
-    public LodgeEntity getLodgeId() {
+    public LodgeEntity getLodge() {
         return lodgeEntity;
     }
 
-    public void setLodgeId(LodgeEntity lodgeEntity) {
+    public void setLodge(LodgeEntity lodgeEntity) {
         this.lodgeEntity = lodgeEntity;
     }
 

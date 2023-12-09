@@ -10,7 +10,7 @@ public class PointOfInterestEntity {
     @Column(name = "point_of_interest_id")
     private int pointOfInterestId;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "coordinates_id", referencedColumnName = "coordinates_id")
+    @JoinColumn(name = "coordinate_id", referencedColumnName = "coordinate_id")
     private CoordinateEntity coordinateEntity;
     @Basic
     @Column(name = "name")
@@ -19,11 +19,11 @@ public class PointOfInterestEntity {
     @Column(name = "description")
     private String description;
 
-    public int getPointOfInterestId() {
+    public int getPointOfInterest() {
         return pointOfInterestId;
     }
 
-    public void setPointOfInterestId(int pointOfInterestId) {
+    public void setPointOfInterest(int pointOfInterestId) {
         this.pointOfInterestId = pointOfInterestId;
     }
 
