@@ -186,7 +186,7 @@ public class RouteCreateServlet extends HttpServlet {
 
         ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
-        //rc.createRoute(newRoute);
+
 
         // Point of Interest
         int i = 0;
@@ -268,6 +268,10 @@ public class RouteCreateServlet extends HttpServlet {
             }
         }
         //TODO: make database save for lodgeOnRoute for existing huetten
+
+        if((j == 0) && (i == 0)){
+            rc.createRoute(newRoute);
+        }
 
 
 
