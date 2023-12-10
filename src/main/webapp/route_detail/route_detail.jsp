@@ -3,7 +3,8 @@
 <%@ page import="java.util.Comparator" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="at.fhv.hike.data.*" %><%--
+<%@ page import="at.fhv.hike.data.*" %>
+<%@ page import="java.util.ArrayList" %><%--
 <%@ page import="java.util.List" %>
 <%@ page import="java.net.URI" %>
 <%@ page import="java.net.URL" %>
@@ -29,6 +30,10 @@
     List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;
 
     Collections.sort(coordinates, Comparator.comparingInt(CoordinateEntity::getSequence));
+
+    List<LodgeEntity> huetten = (List<LodgeEntity>) request.getAttribute("huetten");
+
+    List<PointOfInterestEntity> pois = (List<PointOfInterestEntity>) request.getAttribute("pois");
 %>
 
 <html>
@@ -358,7 +363,9 @@
             <script>
                 let firstLat = <%= coordinates.get(0).getLatitude() %>;
                 let firstLon = <%= coordinates.get(0).getLongitude() %>;
-                let map = L.map('map').setView([firstLat, firstLon], 13);
+                let map = L.map
+
+                ('map').setView([firstLat, firstLon], 13);
 
                 /* // default map style
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -383,6 +390,18 @@
                     iconUrl: '${pageContext.request.contextPath}/assets/icons/goal_pin.png',
                     iconSize: [40, 40],
                     iconAnchor: [5, 41]
+                });
+
+                let poiIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/poi_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 41]
+                });
+
+                let huetteIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/huette_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 41]
                 });
 
                 let waypoints = [];
@@ -428,6 +447,45 @@
 
                 let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
 
+                // add huetten to map
+
+                function addHuetteMarker(lat, lng, name) {
+                    let marker = L.marker([lat, lng], {
+                        draggable: true,
+                        icon: huetteIcon
+                    }).addTo(map).bindPopup(name);
+                }
+
+                <%
+                int i = 0;
+                while (i < huetten.size()) {
+                %>
+                addHuetteMarker(<%=huetten.get(i).getCoordinateEntity().getLatitude()%>,<%=huetten.get(i).getCoordinateEntity().getLongitude()%>, "<%=huetten.get(i).getName()%>");
+                <%
+                    i++;
+                }
+                %>
+
+                // add Pois to map
+
+                function addPoiMarker(lat, lng, name) {
+                    let marker = L.marker([lat, lng], {
+                        draggable: true,
+                        icon: poiIcon
+                    }).addTo(map).bindPopup(name);;
+                }
+
+                <%
+                int j = 0;
+                while (j < pois.size()) {
+
+                %>
+                addPoiMarker(<%=pois.get(j).getCoordinates().getLatitude()%>,<%=pois.get(j).getCoordinates().getLongitude()%>, "<%=pois.get(j).getName()%>");
+                <%
+                    j++;
+                }
+                %>
+
                 /*
                 // leaflet routing machine
                 L.Routing.control({
@@ -450,6 +508,47 @@
             </script>
 
             <div class="px-4 py-5 sm:p-6">
+
+                <%if (huetten.size() > 0) {%>
+                <h2 class="text-xl font-bold text-gray-900">Huts</h2>
+                <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <% for(LodgeEntity huette : huetten) { %>
+                    <li class="col-span-2 bg-white rounded-lg shadow">
+                        <div class="w-full flex items-center justify-between p-6 space-x-6">
+                            <div class="flex-1 truncate">
+                                <div class="flex items-center space-x-3">
+                                    <h3 class="text-gray-900 text-sm leading-5 font-medium truncate"><%=huette.getName()%></h3>
+                                </div>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Latitude: <%= huette.getCoordinateEntity().getLatitude() %></p>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Longitude: <%= huette.getCoordinateEntity().getLongitude() %></p>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Description: <%= huette.getDescription() %></p>
+                            </div>
+                        </div>
+                    </li>
+                    <% } %>
+                </ul>
+                <%}%>
+
+                <%if (pois.size() > 0) {%>
+                <h2 class="text-xl font-bold text-gray-900">Points of Interest</h2>
+                <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <% for(PointOfInterestEntity poi : pois) { %>
+                    <li class="col-span-2 bg-white rounded-lg shadow">
+                        <div class="w-full flex items-center justify-between p-6 space-x-6">
+                            <div class="flex-1 truncate">
+                                <div class="flex items-center space-x-3">
+                                    <h3 class="text-gray-900 text-sm leading-5 font-medium truncate"><%=poi.getName()%></h3>
+                                </div>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Latitude: <%= poi.getCoordinates().getLatitude() %></p>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Longitude: <%= poi.getCoordinates().getLongitude() %></p>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Description: <%= poi.getDescription() %></p>
+                            </div>
+                        </div>
+                    </li>
+                    <% } %>
+                </ul>
+                <%}%>
+
                 <h2 class="text-xl font-bold text-gray-900">Coordinates</h2>
                 <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     <% for(CoordinateEntity coord : coordinates) { %>

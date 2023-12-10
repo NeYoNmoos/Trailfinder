@@ -14,16 +14,18 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @WebServlet(name = "RouteCreateServlet", urlPatterns = {"/route-create"})
 public class RouteCreateServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // get all huetten
+        RouteController roco = new RouteController(getServletContext());
+        List<LodgeEntity> huetten = roco.getAllHuetten();
+        request.setAttribute("allHuetten", huetten);
+
         String routeId = request.getParameter("routeId");
         if (routeId != null) {
             ServletContext context = request.getServletContext();
@@ -72,6 +74,8 @@ public class RouteCreateServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
             dispatcher.forward(request, response);
         }
+
+
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -106,7 +110,6 @@ public class RouteCreateServlet extends HttpServlet {
 
         if (months != null) {
             for (int i = 0; i < months.length; i++) {
-                System.out.println("FOR LOOP");
                 switch (months[i]) {
                     case "january":
                         bm.addJan();
@@ -192,7 +195,84 @@ public class RouteCreateServlet extends HttpServlet {
         }
 
         RouteController rc = new RouteController(context);
-        rc.createRoute(newRoute);
+
+
+        // Point of Interest
+        int i = 0;
+        while (request.getParameter("poi_" + i + "_latitude") != null &&
+                request.getParameter("poi_" + i + "_longitude") != null) {
+            double latPoi = Double.parseDouble(request.getParameter("poi_" + i + "_latitude"));
+            double lngPoi = Double.parseDouble(request.getParameter("poi_" + i + "_longitude"));
+            String namePoi = request.getParameter("poi_" + i + "_name");
+            String descriptionPoi = request.getParameter("poi_" + i + "_description");
+
+            CoordinateEntity coordPoi = new CoordinateEntity();
+            coordPoi.setLatitude(latPoi);
+            coordPoi.setLongitude(lngPoi);
+
+            PointOfInterestEntity poi = new PointOfInterestEntity();
+            poi.setName(namePoi);
+            poi.setDescription(descriptionPoi);
+            poi.setCoordinateEntity(coordPoi);
+
+            PoiOnRouteEntity poiOnRoute = new PoiOnRouteEntity();
+            poiOnRoute.setRoute(newRoute);
+            poiOnRoute.setPointOfInterest(poi);
+
+            rc.createPoiOnRoute(poiOnRoute);
+
+            i++;
+        }
+
+        // Huette
+        int j = 0;
+        while (request.getParameter("huette_" + j + "_latitude") != null &&
+                request.getParameter("huette_" + j + "_longitude") != null) {
+            double latHuette = Double.parseDouble(request.getParameter("huette_" + j + "_latitude"));
+            double lngHuette = Double.parseDouble(request.getParameter("huette_" + j + "_longitude"));
+            String nameHuette = request.getParameter("huette_" + j + "_name");
+            String descriptionHuette = request.getParameter("huette_" + j + "_description");
+
+            CoordinateEntity coordHuette = new CoordinateEntity();
+            coordHuette.setLatitude(latHuette);
+            coordHuette.setLongitude(lngHuette);
+
+            LodgeEntity huette = new LodgeEntity();
+            huette.setName(nameHuette);
+            huette.setDescription(descriptionHuette);
+            huette.setCoordinateEntity(coordHuette);
+
+            LodgeOnRouteEntity huetteOnRoute = new LodgeOnRouteEntity();
+            huetteOnRoute.setRoute(newRoute);
+            huetteOnRoute.setLodge(huette);
+
+            rc.createHuetteOnRoute(huetteOnRoute);
+
+            j++;
+        }
+
+        // Existing Huetten through multiselect
+        String[] existingHuetten = request.getParameterValues("existingHuetten");
+        if (existingHuetten != null) {
+
+            int l = 0;
+            while (l < existingHuetten.length) {
+                if(existingHuetten[l] != null) {
+                    LodgeEntity existingHuette = rc.getHuetteById(existingHuetten[l]);
+                    LodgeOnRouteEntity existingHuetteOnRoute = new LodgeOnRouteEntity();
+                    existingHuetteOnRoute.setRoute(newRoute);
+                    existingHuetteOnRoute.setLodge(existingHuette);
+                    rc.createHuetteOnRoute(existingHuetteOnRoute);
+                }
+                l++;
+            }
+        }
+
+        if((j == 0) && (i == 0)){
+            rc.createRoute(newRoute);
+        }
+
+
 
         request.getRequestDispatcher("/create_route/create_confirmation.jsp").forward(request, response);
     }

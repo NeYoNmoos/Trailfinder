@@ -2,9 +2,8 @@ package at.fhv.hike;
 
 import at.fhv.hike.controllers.CookieController;
 import at.fhv.hike.controllers.RouteController;
+import at.fhv.hike.data.*;
 import at.fhv.hike.controllers.UserController;
-import at.fhv.hike.data.RouteEntity;
-import at.fhv.hike.data.UserEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -14,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "RouteDetailServlet", urlPatterns = {"/route-detail"})
@@ -30,6 +30,18 @@ public class RouteDetailServlet extends HttpServlet {
         RouteEntity route = rc.getRouteById(routeId);
 
         request.setAttribute("route", route);
+
+        // Huetten
+        List<LodgeEntity> huetten = new ArrayList<>();
+        huetten = rc.getAllHuettenForRoute(routeId);
+
+        request.setAttribute("huetten", huetten);
+
+        // Pois
+        List<PointOfInterestEntity> pois = new ArrayList<>();
+        pois = rc.getAllPoisForRoute(routeId);
+
+        request.setAttribute("pois", pois);
 
         String loggedInUserId= CookieController.getLogedInUserId(request.getCookies());
 
@@ -58,7 +70,6 @@ public class RouteDetailServlet extends HttpServlet {
         }
         else
             request.setAttribute("canEdit", false);
-
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/route_detail/route_detail.jsp");
         dispatcher.forward(request, response);

@@ -163,6 +163,20 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         return _routeBroker.getById(id);
     }
 
+    public List<LodgeEntity> getAllHuetten() {
+        return _lodgeBroker.getAll();
+    }
+
+    public LodgeEntity getHuetteById(String id) {return _lodgeBroker.getById(id);}
+
+    public List<PointOfInterestEntity> getAllPois() {
+        return _pointOfInterestBroker.getAll();
+    }
+
+    public List<LodgeOnRouteEntity> getHuettenOnRouteByRouteId(String routeId) {return _lodgeOnRouteBroker.getHuettenOnRouteByRouteId(routeId);}
+
+    public List<PoiOnRouteEntity> getPoisOnRouteByRouteId(String routeId) {return _poiOnRouteBroker.getPoisOnRouteByRouteId(routeId);}
+
     @Override
     public List<UserEntity> getAllUsers() {
         return _userBroker.getAll();
@@ -190,3 +204,4 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         return _userBroker.userAlreadyExists(email);
     }
 }
+
