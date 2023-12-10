@@ -35,7 +35,7 @@
         // Clear all cookies
         clearAllCookies();
         // Reload the page
-        location.reload();
+        window.location.href = "${pageContext.request.contextPath}/";
     }
 
 </script>
