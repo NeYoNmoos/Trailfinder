@@ -423,8 +423,6 @@
             <%
                     while(k < allHuetten.size()) {
 
-
-
             %>
                 <option value="<%=allHuetten.get(k).getLodgeId()%>"}><%=allHuetten.get(k).getName()%></option>
             <%

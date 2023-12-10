@@ -98,7 +98,6 @@ public class RouteCreateServlet extends HttpServlet {
 
         if (months != null) {
             for (int i = 0; i < months.length; i++) {
-                System.out.println("FOR LOOP");
                 switch (months[i]) {
                     case "january":
                         bm.addJan();
@@ -192,13 +191,10 @@ public class RouteCreateServlet extends HttpServlet {
         int i = 0;
         while (request.getParameter("poi_" + i + "_latitude") != null &&
                 request.getParameter("poi_" + i + "_longitude") != null) {
-            System.out.println(("Vor poi"));
             double latPoi = Double.parseDouble(request.getParameter("poi_" + i + "_latitude"));
             double lngPoi = Double.parseDouble(request.getParameter("poi_" + i + "_longitude"));
             String namePoi = request.getParameter("poi_" + i + "_name");
             String descriptionPoi = request.getParameter("poi_" + i + "_description");
-
-            System.out.println(latPoi + " " + lngPoi + " " + namePoi + " " + descriptionPoi);
 
             CoordinateEntity coordPoi = new CoordinateEntity();
             coordPoi.setLatitude(latPoi);
@@ -214,9 +210,7 @@ public class RouteCreateServlet extends HttpServlet {
             poiOnRoute.setPointOfInterest(poi);
 
             rc.createPoiOnRoute(poiOnRoute);
-            //TODO: fix PoiOnRoute
 
-            System.out.println("poi");
             i++;
         }
 
@@ -224,13 +218,10 @@ public class RouteCreateServlet extends HttpServlet {
         int j = 0;
         while (request.getParameter("huette_" + j + "_latitude") != null &&
                 request.getParameter("huette_" + j + "_longitude") != null) {
-            System.out.println(("Vor huette"));
             double latHuette = Double.parseDouble(request.getParameter("huette_" + j + "_latitude"));
             double lngHuette = Double.parseDouble(request.getParameter("huette_" + j + "_longitude"));
             String nameHuette = request.getParameter("huette_" + j + "_name");
             String descriptionHuette = request.getParameter("huette_" + j + "_description");
-
-            System.out.println(latHuette + " " + lngHuette + " " + nameHuette + " " + descriptionHuette);
 
             CoordinateEntity coordHuette = new CoordinateEntity();
             coordHuette.setLatitude(latHuette);
@@ -245,29 +236,27 @@ public class RouteCreateServlet extends HttpServlet {
             huetteOnRoute.setRoute(newRoute);
             huetteOnRoute.setLodge(huette);
 
-            //rc.createHuette(huette);
             rc.createHuetteOnRoute(huetteOnRoute);
-            //TODO: fix HuetteOnRoute
 
-            System.out.println("huette");
             j++;
         }
 
         // Existing Huetten through multiselect
         String[] existingHuetten = request.getParameterValues("existingHuetten");
         if (existingHuetten != null) {
-            List<LodgeEntity> existingHuettenEntities = new ArrayList();
 
-            int l = 1;
+            int l = 0;
             while (l < existingHuetten.length) {
                 if(existingHuetten[l] != null) {
                     LodgeEntity existingHuette = rc.getHuetteById(existingHuetten[l]);
-                    existingHuettenEntities.add(existingHuette);
+                    LodgeOnRouteEntity existingHuetteOnRoute = new LodgeOnRouteEntity();
+                    existingHuetteOnRoute.setRoute(newRoute);
+                    existingHuetteOnRoute.setLodge(existingHuette);
+                    rc.createHuetteOnRoute(existingHuetteOnRoute);
                 }
                 l++;
             }
         }
-        //TODO: make database save for lodgeOnRoute for existing huetten
 
         if((j == 0) && (i == 0)){
             rc.createRoute(newRoute);
