@@ -7,6 +7,7 @@ import at.fhv.hike.hibernate.broker.*;
 import jakarta.servlet.ServletContext;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 
@@ -29,6 +30,21 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         this._routeBroker = new RouteBroker(sessionFactory);
         this._attributeBroker = new AttributeBroker(sessionFactory);
        // this._timeOfYearBroker = new TimeOfYearBroker(sessionFactory);
+        this._coordinateBroker = new CoordinateBroker(sessionFactory);
+        this._commentBroker = new CommentBroker(sessionFactory);
+        this._doneRouteBroker = new DoneRouteBroker(sessionFactory);
+        this._galleryBroker = new GalleryBroker(sessionFactory);
+        this._lodgeBroker = new LodgeBroker(sessionFactory);
+        this._lodgeOnRouteBroker = new LodgeOnRouteBroker(sessionFactory);
+        this._pointOfInterestBroker = new PointOfInterestBroker(sessionFactory);
+        this._poiOnRouteBroker = new PoiOnRouteBroker(sessionFactory);
+        this._userBroker = new UserBroker(sessionFactory);
+    }
+
+    public TrailfinderDatabaseFacade(SessionFactory sessionFactory) {
+        this._routeBroker = new RouteBroker(sessionFactory);
+        this._attributeBroker = new AttributeBroker(sessionFactory);
+        // this._timeOfYearBroker = new TimeOfYearBroker(sessionFactory);
         this._coordinateBroker = new CoordinateBroker(sessionFactory);
         this._commentBroker = new CommentBroker(sessionFactory);
         this._doneRouteBroker = new DoneRouteBroker(sessionFactory);
@@ -136,5 +152,32 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
     @Override
     public RouteEntity getRouteById(String id) {
         return _routeBroker.getById(id);
+    }
+
+    @Override
+    public List<UserEntity> getAllUsers() {
+        return _userBroker.getAll();
+    }
+
+    public UserEntity getUserById(String id){
+        return _userBroker.getById(id);
+    }
+
+    public Integer authenticateUser(String email, String password) {
+        // Retrieve hashed password from the database
+        UserEntity user= _userBroker.getUserByEmail(email);
+        String storedHashedPassword =user.getPassword();
+
+        if(storedHashedPassword==null)
+            return null;
+        // Check if the entered password matches the stored hash
+        if (BCrypt.checkpw(password, storedHashedPassword)){
+            return user.getUserId();
+        }
+        return null;
+    }
+    public Boolean userAlreadyExists(String email){
+
+        return _userBroker.userAlreadyExists(email);
     }
 }

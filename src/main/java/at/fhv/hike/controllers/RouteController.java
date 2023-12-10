@@ -15,6 +15,10 @@ public class RouteController {
         _facade = new TrailfinderDatabaseFacade(context);
     }
 
+    public RouteController(TrailfinderDatabaseFacade facade) {
+        _facade = facade;
+    }
+
     public List<RouteEntity> getAllRoutes() {
         List<RouteEntity> allRoutes = _facade.getAllRoutes();
         return allRoutes;

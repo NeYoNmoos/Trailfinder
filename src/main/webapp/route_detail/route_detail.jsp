@@ -24,6 +24,7 @@
 
 <%
     RouteEntity route = (RouteEntity) request.getAttribute("route");
+    Boolean canEdit=(Boolean)request.getAttribute("canEdit");
     AttributeEntity attributes = route != null ? route.getAttributeEntity() : null;
     List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;
 
@@ -49,6 +50,7 @@
         <!-- Route Title -->
         <div class="mb-8 flex flex-row justify-between">
             <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
+            <%if(canEdit){%>
             <% String editPageUrl = "/route-create?routeId=" + route.getRouteId(); %>
             <div class="flex flex-row">
             <a href="${pageContext.request.contextPath}<%= editPageUrl %>"
@@ -75,6 +77,7 @@
                 Delete
             </button>
             </div>
+            <%}%>
         </div>
     </div>
 

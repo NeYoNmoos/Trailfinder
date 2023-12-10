@@ -1,6 +1,9 @@
 package at.fhv.hike;
 
+import at.fhv.hike.controllers.CookieController;
 import at.fhv.hike.controllers.RouteController;
+import at.fhv.hike.controllers.UserController;
+import at.fhv.hike.data.*;
 import at.fhv.hike.data.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -86,8 +89,15 @@ public class RouteCreateServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String loggedInUserId= CookieController.getLogedInUserId(request.getCookies());
+        ServletContext context = request.getServletContext();
+        RouteEntity newRoute = new RouteEntity();
 
-
+        if(loggedInUserId!=null){
+            UserController uc = new UserController(context);
+            UserEntity author = uc.getUserById(loggedInUserId);
+            newRoute.setAuthor(author);
+        }
 
         String name = request.getParameter("name");
         double length = Double.parseDouble(request.getParameter("length"));
@@ -156,7 +166,6 @@ public class RouteCreateServlet extends HttpServlet {
         newAttributes.setExperience(experience);
         newAttributes.setCondition(condition);
 
-        RouteEntity newRoute = new RouteEntity();
 
         String routeId = request.getParameter("routeId");
 
@@ -215,7 +224,6 @@ public class RouteCreateServlet extends HttpServlet {
             }
         }
 
-        ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
         rc.createRoute(newRoute);
 
