@@ -4,6 +4,7 @@ import at.fhv.hike.data.*;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.ServletContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RouteController {
@@ -61,6 +62,38 @@ public class RouteController {
 
     public List<PointOfInterestEntity> getAllPois() {
         List<PointOfInterestEntity> pois = _facade.getAllPois();
+        return pois;
+    }
+
+    public List<LodgeOnRouteEntity> getHuettenOnRouteByRouteId(String RouteId) {return _facade.getHuettenOnRouteByRouteId(RouteId);}
+
+    public List<LodgeEntity> getAllHuettenForRoute(String routeId) {
+        List<LodgeEntity> huetten = new ArrayList<>();
+        List<LodgeOnRouteEntity> huettenOnRoute = new ArrayList<>();
+        huettenOnRoute = getHuettenOnRouteByRouteId(routeId);
+        int i = 0;
+        while (i < huettenOnRoute.size()) {
+            LodgeEntity huette = huettenOnRoute.get(i).getLodge();
+            huetten.add(huette);
+            i++;
+        }
+
+        return huetten;
+    }
+
+    public List<PoiOnRouteEntity> getPoisOnRouteByRouteId(String RouteId) {return _facade.getPoisOnRouteByRouteId(RouteId);}
+
+    public List<PointOfInterestEntity> getAllPoisForRoute(String routeId) {
+        List<PointOfInterestEntity> pois = new ArrayList<>();
+        List<PoiOnRouteEntity> poisOnRoute = new ArrayList<>();
+        poisOnRoute = getPoisOnRouteByRouteId(routeId);
+        int i = 0;
+        while (i < poisOnRoute.size()) {
+            PointOfInterestEntity poi = poisOnRoute.get(i).getPointOfInterest();
+            pois.add(poi);
+            i++;
+        }
+
         return pois;
     }
 }
