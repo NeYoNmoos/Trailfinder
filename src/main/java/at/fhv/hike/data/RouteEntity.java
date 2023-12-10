@@ -50,6 +50,11 @@ public class RouteEntity {
     private AttributeEntity attributeEntity;
 
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "routeEntity", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<GalleryEntity> gallery = new ArrayList<>();
+
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<CoordinateEntity> coordinates = new ArrayList<>();
 
     public List<CoordinateEntity> getCoordinates() {
@@ -70,9 +75,6 @@ public class RouteEntity {
         coordinate.setRoute(null);
     }
 
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<GalleryEntity> gallery = new ArrayList<>();
-
     public List<GalleryEntity> getGallery() {
         return gallery;
     }
@@ -90,9 +92,6 @@ public class RouteEntity {
         gallery.remove(_gallery);
         _gallery.setRoute(null);
     }
-
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private List<CommentEntity> comments = new ArrayList<>();
 
     public List<CommentEntity> getComments() {
         return comments;
@@ -113,7 +112,9 @@ public class RouteEntity {
     }
 
     public RouteEntity(){
-
+        this.comments = new ArrayList<>();
+        this.gallery = new ArrayList<>();
+        this.coordinates = new ArrayList<>();
     }
 
     public RouteEntity(Integer routeId, UserEntity author, String name, Double length, Double altitude, String location, String description, Double duration) {

@@ -62,6 +62,17 @@ public class RouteCreateServlet extends HttpServlet {
             request.setAttribute("endLongitude", route.getCoordinates().get(1).getLongitude());
             request.setAttribute("endLatitude", route.getCoordinates().get(1).getLatitude());
 
+
+            List<GalleryEntity> gallery = route.getGallery();
+            List<String> base64Gallery = new LinkedList<>();
+            int i = 0;
+            for (GalleryEntity imageEntity : gallery) {
+                i++;
+                byte[] imageBytes = imageEntity.getPicture();
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                base64Gallery.add(base64Image);
+            }
+            request.setAttribute("images", base64Gallery);
             request.setAttribute("route", route);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");

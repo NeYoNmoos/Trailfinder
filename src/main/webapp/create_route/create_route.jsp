@@ -117,7 +117,7 @@
 
             <h2>Add images</h2>
             <label for="images">Upload Images:</label>
-            <input type="file" id="images" name="images" accept="image/*" multiple>
+            <input type="file" id="images" value="${images}" name="images" accept="image/*" multiple>
 
             <!-- route creation via map -->
             <h2>Define Route:</h2>

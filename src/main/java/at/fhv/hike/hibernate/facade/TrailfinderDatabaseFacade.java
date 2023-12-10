@@ -17,7 +17,6 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
     private CoordinateBroker _coordinateBroker;
     private CommentBroker _commentBroker;
     private DoneRouteBroker _doneRouteBroker;
-    private FavouriteRouteBroker _favouriteRouteBroker;
     private GalleryBroker _galleryBroker;
     private LodgeBroker _lodgeBroker;
     private LodgeOnRouteBroker _lodgeOnRouteBroker;
@@ -33,7 +32,6 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         this._coordinateBroker = new CoordinateBroker(sessionFactory);
         this._commentBroker = new CommentBroker(sessionFactory);
         this._doneRouteBroker = new DoneRouteBroker(sessionFactory);
-        this._favouriteRouteBroker = new FavouriteRouteBroker(sessionFactory);
         this._galleryBroker = new GalleryBroker(sessionFactory);
         this._lodgeBroker = new LodgeBroker(sessionFactory);
         this._lodgeOnRouteBroker = new LodgeOnRouteBroker(sessionFactory);
@@ -61,9 +59,6 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         }
         else if (value instanceof DoneRouteEntity) {
             _doneRouteBroker.insert((DoneRouteEntity) value);
-        }
-        else if (value instanceof FavouriteRouteEntity) {
-            _favouriteRouteBroker.insert((FavouriteRouteEntity) value);
         }
         else if (value instanceof GalleryEntity) {
             _galleryBroker.insert((GalleryEntity) value);
@@ -105,9 +100,6 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         }
         else if (value instanceof DoneRouteEntity) {
             _doneRouteBroker.delete((DoneRouteEntity) value);
-        }
-        else if (value instanceof FavouriteRouteEntity) {
-            _favouriteRouteBroker.delete((FavouriteRouteEntity) value);
         }
         else if (value instanceof GalleryEntity) {
             _galleryBroker.delete((GalleryEntity) value);
