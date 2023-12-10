@@ -124,6 +124,9 @@
                     <li><strong>Creating Waypoints:</strong> Click on the map to create a new waypoint. The route will automatically update to include the new point.</li>
                     <li><strong>Dragging Waypoints:</strong> Drag any waypoint to a new location to modify the route.</li>
                     <li><strong>Removing Waypoints:</strong> Click on an existing waypoint to remove it from the route.</li>
+                    <li><strong>Creating Points of Interest:</strong> Right click on the map to create a new point of interest.</li>
+                    <li><strong>Creating Huts:</strong> Hold 'Ctrl' or 'Command' and then right click on the map to create a new hut.</li>
+                    <li><strong>Removing Points of Interest or Huts:</strong> Right click on an existing point of interest or hut to remove it.</li>
                 </ul>
             </div>
             <div class="map-container">
@@ -417,7 +420,7 @@
                 if (allHuetten != null) {
                     int k = 0;
             %>
-            <label for="existingHuetten">Choose already existing huts (hold 'Ctrl' or 'Command' while clicking to select multiple)</label>
+            <label for="existingHuetten">Choose from already existing huts (hold 'Ctrl' or 'Command' while clicking to select multiple)</label>
             <select name="existingHuetten" id="existingHuetten" multiple size="<%=allHuetten.size()%>">
 
             <%
