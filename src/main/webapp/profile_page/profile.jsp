@@ -15,8 +15,8 @@
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
 <div class="container">
         <div class="sidenav">
-            <h3 style="align-content: center"><%= request.getAttribute("user")%></h3>
-            <h3 style="align-content: center"><%= request.getAttribute("email")%></h3>
+            <h3 style="padding: 6px 8px 6px 16px"><%= request.getAttribute("user")%></h3>
+            <h3 style="padding: 6px 8px 6px 16px"><%= request.getAttribute("email")%></h3>
             <a href="#"><h3>Favourite Routes</h3></a>
             <a href="#"><h3>Done Routes</h3></a>
             <a href="#"><h3>ToDo Routes</h3></a>
