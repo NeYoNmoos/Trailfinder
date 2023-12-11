@@ -22,7 +22,12 @@
         <mapping class="at.fhv.hike.data.GalleryEntity"/>
         <mapping class="at.fhv.hike.data.LodgeEntity"/>
         <mapping class="at.fhv.hike.data.RouteEntity"/>
-        <mapping class="at.fhv.hike.data.UserEntity"/> <!-- Show SQL formatted -->
+        <mapping class="at.fhv.hike.data.UserEntity"/>
+        <mapping class="at.fhv.hike.data.PointOfInterestEntity"/>
+        <mapping class="at.fhv.hike.data.PoiOnRouteEntity"/>
+        <mapping class="at.fhv.hike.data.DoneRouteEntity"/>
+        <mapping class="at.fhv.hike.data.LodgeOnRouteEntity"/>
+        <!-- Show SQL formatted -->
 
     </session-factory>
 </hibernate-configuration>

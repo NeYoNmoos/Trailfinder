@@ -6,7 +6,8 @@
 <%@ page import="at.fhv.hike.data.CoordinateEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Collections" %>
-<%@ page import="java.util.Comparator" %><%--
+<%@ page import="java.util.Comparator" %>
+<%@ page import="at.fhv.hike.data.LodgeEntity" %><%--
   Created by IntelliJ IDEA.
   User: matth
   Date: 03/11/2023
@@ -127,6 +128,9 @@
                     <li><strong>Creating Waypoints:</strong> Click on the map to create a new waypoint. The route will automatically update to include the new point.</li>
                     <li><strong>Dragging Waypoints:</strong> Drag any waypoint to a new location to modify the route.</li>
                     <li><strong>Removing Waypoints:</strong> Click on an existing waypoint to remove it from the route.</li>
+                    <li><strong>Creating Points of Interest:</strong> Right click on the map to create a new point of interest.</li>
+                    <li><strong>Creating Huts:</strong> Hold 'Ctrl' or 'Command' and then right click on the map to create a new hut.</li>
+                    <li><strong>Removing Points of Interest or Huts:</strong> Right click on an existing point of interest or hut to remove it.</li>
                 </ul>
             </div>
             <div class="map-container">
@@ -168,11 +172,29 @@
                     iconAnchor: [12, 25] // Anchor point of the icon
                 });
 
+                let poiIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/poi_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 41]
+                });
+
+                let huetteIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/huette_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 41]
+                });
+
                 // route layer
                 let currentRouteLayer = null;
 
                 // Array to store waypoints
                 let waypoints = [];
+
+                // Array to store huetten
+                let huetten = [];
+
+                // Array to store points of interest
+                let pois = [];
 
                 // parse waypoints from existing route for editing
                 <% if (coordinates != null){ %>
@@ -204,9 +226,65 @@
                     updateRoute();
                 }
 
+                //Function to add point of interest marker
+                function addPoiMarker(lat, lng, poiMarkerData) {
+                    let marker = L.marker([lat, lng], {
+                        markerData: poiMarkerData,
+                        draggable: true,
+                        icon: poiIcon
+                    }).addTo(map);
+
+                    marker.on('contextmenu', function() {
+                        pois = pois.filter(poi => poi !== marker);
+                        map.removeLayer(marker);
+                    });
+                    pois.push(marker);
+                }
+
+                //Function to add huette marker
+                function addHuetteMarker(lat, lng, huetteMarkerData) {
+                    let marker = L.marker([lat, lng], {
+                        markerData: huetteMarkerData,
+                        draggable: true,
+                        icon: huetteIcon
+                    }).addTo(map);
+
+                    marker.on('contextmenu', function() {
+                        huetten = huetten.filter(huette => huette !== marker);
+                        map.removeLayer(marker);
+                    });
+                    huetten.push(marker);
+                }
+
                 // Map click event to add markers
                 map.on('click', function(e) {
                     addMarker(e.latlng.lat, e.latlng.lng);
+                });
+
+                // Map click event to add point of interest or huette
+                map.on('contextmenu', function(e) {
+                    if (e.originalEvent.ctrlKey && e.originalEvent.button === 2) {
+                        let huetteName = prompt("Please enter the name of your hut:", "");
+                        let huetteDescription = prompt("Please enter a description for your hut:", "");
+                        if ((huetteName != null) && (huetteName != "") && (huetteDescription != null) && (huetteDescription != "")) {
+                            var huetteMarkerData = {
+                                name: huetteName,
+                                description: huetteDescription
+                            }
+                            addHuetteMarker(e.latlng.lat, e.latlng.lng, huetteMarkerData);
+                        }
+                    }
+                    else {
+                        let poiName = prompt("Please enter the name of your point of interest:", "");
+                        let poiDescription = prompt("Please enter a description for your point of interest:", "");
+                        if ((poiName != null) && (poiName != "") && (poiDescription != null) && (poiDescription != "")) {
+                            var poiMarkerData = {
+                                name: poiName,
+                                description: poiDescription
+                            }
+                            addPoiMarker(e.latlng.lat, e.latlng.lng, poiMarkerData);
+                        }
+                    }
                 });
 
                 let geoJsonWaypoints = [];
@@ -277,6 +355,36 @@
                         document.querySelector('form').appendChild(lngInput);
                         document.querySelector('form').appendChild(seqInput);
                     });
+
+                    // Create inputs for Point of Interest
+                    pois.forEach((marker, i) => {
+                        const latInputPoi = createHiddenInput('poi_' + i + '_latitude', marker.getLatLng().lat);
+                        const lngInputPoi = createHiddenInput('poi_' + i + '_longitude', marker.getLatLng().lng);
+                        const nameInputPoi = createHiddenInput('poi_' + i + '_name', marker.options.markerData.name);
+                        const descriptionInputPoi = createHiddenInput('poi_' + i + '_description', marker.options.markerData.description);
+
+
+                        document.querySelector('form').appendChild(latInputPoi);
+                        document.querySelector('form').appendChild(lngInputPoi);
+                        document.querySelector('form').appendChild(nameInputPoi);
+                        document.querySelector('form').appendChild(descriptionInputPoi);
+
+                    });
+
+                    // Create inputs for huette
+                    huetten.forEach((marker, j) => {
+                        const latInputHuette = createHiddenInput('huette_' + j + '_latitude', marker.getLatLng().lat);
+                        const lngInputHuette = createHiddenInput('huette_' + j + '_longitude', marker.getLatLng().lng);
+                        const nameInputHuette = createHiddenInput('huette_' + j + '_name', marker.options.markerData.name);
+                        const descriptionInputHuette = createHiddenInput('huette_' + j + '_description', marker.options.markerData.description);
+
+
+                        document.querySelector('form').appendChild(latInputHuette);
+                        document.querySelector('form').appendChild(lngInputHuette);
+                        document.querySelector('form').appendChild(nameInputHuette);
+                        document.querySelector('form').appendChild(descriptionInputHuette);
+
+                    });
                 }
 
                 function createHiddenInput(name, value) {
@@ -309,6 +417,27 @@
                 </div>
             </div>
             -->
+
+            <%
+                //List of huetten
+                List<LodgeEntity> allHuetten = (List<LodgeEntity>) request.getAttribute("allHuetten");
+                if (allHuetten != null) {
+                    int k = 0;
+            %>
+            <label for="existingHuetten">Choose from already existing huts (hold 'Ctrl' or 'Command' while clicking to select multiple)</label>
+            <select name="existingHuetten" id="existingHuetten" multiple size="<%=allHuetten.size()%>">
+
+            <%
+                    while(k < allHuetten.size()) {
+
+            %>
+                <option value="<%=allHuetten.get(k).getLodgeId()%>"}><%=allHuetten.get(k).getName()%></option>
+            <%
+                    k++;
+                    }
+                }
+            %>
+            </select>
 
             <input type="hidden" name="routeId" value="<%= request.getParameter("routeId") %>">
 

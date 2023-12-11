@@ -31,7 +31,7 @@ public class DoneRouteEntity {
         return routeEntity;
     }
 
-    public void setRouteId(RouteEntity routeEntity) {
+    public void setRoute(RouteEntity routeEntity) {
         this.routeEntity = routeEntity;
     }
 
@@ -39,7 +39,7 @@ public class DoneRouteEntity {
         return userEntity;
     }
 
-    public void setUserId(UserEntity userEntity) {
+    public void setUser(UserEntity userEntity) {
         this.userEntity = userEntity;
     }
 

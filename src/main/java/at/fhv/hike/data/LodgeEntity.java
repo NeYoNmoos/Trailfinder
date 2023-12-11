@@ -2,6 +2,8 @@ package at.fhv.hike.data;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "lodge", schema = "trailfinder_dev", catalog = "ftb_inv_2023_vz_3_a")
 public class LodgeEntity {
