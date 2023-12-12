@@ -9,6 +9,8 @@
 <html>
 <head>
     <title>Password Changed</title>
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
+
 </head>
 <body>
 <jsp:include page="/components/navigation/nav_bar.jsp"/>

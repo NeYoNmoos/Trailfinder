@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
     <title>Account Deletion</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/profile_page/profile.css">
 </head>

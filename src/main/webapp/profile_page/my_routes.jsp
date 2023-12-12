@@ -13,6 +13,7 @@
 <html>
 <head>
   <title>Profile</title>
+  <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/profile_page/profile.css">
 </head>
 <body>

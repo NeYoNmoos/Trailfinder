@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
 </head>
 <%
     String numberStr = request.getParameter("value");
