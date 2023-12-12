@@ -15,15 +15,10 @@
 </head>
 <body>
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
-<div class="confirm">
-
-</div>
-<div class="create-confirmation">
-    <h1>Route has been successfully deleted :)</h1>
-    <button class="btn-primary">
-        <a href="${pageContext.request.contextPath}/">Back to list of routes</a>
-    </button>
-</div>
-
+<jsp:include page="/components/confirmation/confirmation_component.jsp" >
+    <jsp:param name="message" value="Route has been successfully deleted :)" />
+    <jsp:param name="link" value="${pageContext.request.contextPath}/" />
+    <jsp:param name="buttontext" value="Back to list of routes" />
+</jsp:include>
 </body>
 </html>

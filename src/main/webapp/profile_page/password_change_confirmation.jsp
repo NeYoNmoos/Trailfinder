@@ -15,11 +15,10 @@
 </head>
 <body>
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
-<div class="confirmation">
-    <h1>Password has been successfully changed :)</h1>
-    <button class="btn-primary">
-        <a href="${pageContext.request.contextPath}/profile">Back to your profile.</a>
-    </button>
-</div>
+<jsp:include page="/components/confirmation/confirmation_component.jsp" >
+    <jsp:param name="message" value="Successfully deleted :)" />
+    <jsp:param name="link" value="${pageContext.request.contextPath}/profile" />
+    <jsp:param name="buttontext" value="Back to your profile" />
+</jsp:include>
 </body>
 </html>
