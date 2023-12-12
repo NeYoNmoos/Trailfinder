@@ -32,13 +32,11 @@
             </div>
         </div>
         <div class="main">
-            <h2>Sidebar</h2>
-            <p>This sidebar is of full height (100%) and always shown.</p>
-            <p>Scroll down the page to see the result.</p>
-            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-            <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
+            <h3 style="padding: 6px 8px 6px 16px"><%= request.getAttribute("user")%></h3>
+            <h3 style="padding: 6px 8px 6px 16px"><%= request.getAttribute("email")%></h3>
+            <div class="create-route-section">
+                <a href="${pageContext.request.contextPath}/route-create" class="px-4 py-2 rounded-md btn-primary transition-colors">Create Route</a>
+            </div>
         </div>
 </div>
 
