@@ -1,30 +1,40 @@
 package at.fhv.hike;
 
+import at.fhv.hike.controllers.CookieController;
 import at.fhv.hike.controllers.RouteController;
-import at.fhv.hike.data.AttributeEntity;
-import at.fhv.hike.data.Bitmask;
-import at.fhv.hike.data.CoordinateEntity;
-import at.fhv.hike.data.RouteEntity;
+import at.fhv.hike.controllers.UserController;
+import at.fhv.hike.data.*;
+import at.fhv.hike.data.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
-import java.util.UUID;
+
+import java.io.InputStream;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+@MultipartConfig
 @WebServlet(name = "RouteCreateServlet", urlPatterns = {"/route-create"})
 public class RouteCreateServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        // get all huetten
+        RouteController roco = new RouteController(getServletContext());
+        List<LodgeEntity> huetten = roco.getAllHuetten();
+        request.setAttribute("allHuetten", huetten);
+
         String routeId = request.getParameter("routeId");
         if (routeId != null) {
             ServletContext context = request.getServletContext();
@@ -64,6 +74,17 @@ public class RouteCreateServlet extends HttpServlet {
             request.setAttribute("endLongitude", route.getCoordinates().get(1).getLongitude());
             request.setAttribute("endLatitude", route.getCoordinates().get(1).getLatitude());
 
+
+            List<GalleryEntity> gallery = route.getGallery();
+            List<String> base64Gallery = new LinkedList<>();
+            int i = 0;
+            for (GalleryEntity imageEntity : gallery) {
+                i++;
+                byte[] imageBytes = imageEntity.getPicture();
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                base64Gallery.add(base64Image);
+            }
+            request.setAttribute("images", base64Gallery);
             request.setAttribute("route", route);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
@@ -76,6 +97,16 @@ public class RouteCreateServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String loggedInUserId= CookieController.getLogedInUserId(request.getCookies());
+        ServletContext context = request.getServletContext();
+        RouteEntity newRoute = new RouteEntity();
+
+        if(loggedInUserId!=null){
+            UserController uc = new UserController(context);
+            UserEntity author = uc.getUserById(loggedInUserId);
+            newRoute.setAuthor(author);
+        }
 
         String name = request.getParameter("name");
         double length = Double.parseDouble(request.getParameter("length"));
@@ -97,7 +128,6 @@ public class RouteCreateServlet extends HttpServlet {
 
         if (months != null) {
             for (int i = 0; i < months.length; i++) {
-                System.out.println("FOR LOOP");
                 switch (months[i]) {
                     case "january":
                         bm.addJan();
@@ -144,7 +174,6 @@ public class RouteCreateServlet extends HttpServlet {
         newAttributes.setExperience(experience);
         newAttributes.setCondition(condition);
 
-        RouteEntity newRoute = new RouteEntity();
 
         String routeId = request.getParameter("routeId");
 
@@ -183,10 +212,119 @@ public class RouteCreateServlet extends HttpServlet {
             }
         }
 
-        ServletContext context = request.getServletContext();
+        Collection<Part> parts = request.getParts();
+
+        for (Part part : parts) {
+            if (part.getName().equals("images") && part.getSize() > 0) {
+                // Process the file part
+                InputStream inputStream = part.getInputStream();
+                byte[] imageBytes = inputStreamToByteArray(inputStream);
+
+                // Create and populate GalleryEntity
+                GalleryEntity galleryEntity = new GalleryEntity();
+                galleryEntity.setPicture(imageBytes);
+                // Associate with RouteEntity and other required operations
+
+                newRoute.addGallery(galleryEntity);
+
+                // Remember to close the inputStream
+                inputStream.close();
+            }
+        }
+
         RouteController rc = new RouteController(context);
-        rc.createRoute(newRoute);
+
+
+        // Point of Interest
+        int i = 0;
+        while (request.getParameter("poi_" + i + "_latitude") != null &&
+                request.getParameter("poi_" + i + "_longitude") != null) {
+            double latPoi = Double.parseDouble(request.getParameter("poi_" + i + "_latitude"));
+            double lngPoi = Double.parseDouble(request.getParameter("poi_" + i + "_longitude"));
+            String namePoi = request.getParameter("poi_" + i + "_name");
+            String descriptionPoi = request.getParameter("poi_" + i + "_description");
+
+            CoordinateEntity coordPoi = new CoordinateEntity();
+            coordPoi.setLatitude(latPoi);
+            coordPoi.setLongitude(lngPoi);
+
+            PointOfInterestEntity poi = new PointOfInterestEntity();
+            poi.setName(namePoi);
+            poi.setDescription(descriptionPoi);
+            poi.setCoordinateEntity(coordPoi);
+
+            PoiOnRouteEntity poiOnRoute = new PoiOnRouteEntity();
+            poiOnRoute.setRoute(newRoute);
+            poiOnRoute.setPointOfInterest(poi);
+
+            rc.createPoiOnRoute(poiOnRoute);
+
+            i++;
+        }
+
+        // Huette
+        int j = 0;
+        while (request.getParameter("huette_" + j + "_latitude") != null &&
+                request.getParameter("huette_" + j + "_longitude") != null) {
+            double latHuette = Double.parseDouble(request.getParameter("huette_" + j + "_latitude"));
+            double lngHuette = Double.parseDouble(request.getParameter("huette_" + j + "_longitude"));
+            String nameHuette = request.getParameter("huette_" + j + "_name");
+            String descriptionHuette = request.getParameter("huette_" + j + "_description");
+
+            CoordinateEntity coordHuette = new CoordinateEntity();
+            coordHuette.setLatitude(latHuette);
+            coordHuette.setLongitude(lngHuette);
+
+            LodgeEntity huette = new LodgeEntity();
+            huette.setName(nameHuette);
+            huette.setDescription(descriptionHuette);
+            huette.setCoordinateEntity(coordHuette);
+
+            LodgeOnRouteEntity huetteOnRoute = new LodgeOnRouteEntity();
+            huetteOnRoute.setRoute(newRoute);
+            huetteOnRoute.setLodge(huette);
+
+            rc.createHuetteOnRoute(huetteOnRoute);
+
+            j++;
+        }
+
+        // Existing Huetten through multiselect
+        String[] existingHuetten = request.getParameterValues("existingHuetten");
+        if (existingHuetten != null) {
+
+            int l = 0;
+            while (l < existingHuetten.length) {
+                if(existingHuetten[l] != null) {
+                    LodgeEntity existingHuette = rc.getHuetteById(existingHuetten[l]);
+                    LodgeOnRouteEntity existingHuetteOnRoute = new LodgeOnRouteEntity();
+                    existingHuetteOnRoute.setRoute(newRoute);
+                    existingHuetteOnRoute.setLodge(existingHuette);
+                    rc.createHuetteOnRoute(existingHuetteOnRoute);
+                }
+                l++;
+            }
+        }
+
+        if((j == 0) && (i == 0)){
+            rc.createRoute(newRoute);
+        }
+
+
 
         request.getRequestDispatcher("/create_route/create_confirmation.jsp").forward(request, response);
+    }
+
+    private byte[] inputStreamToByteArray(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int nRead;
+        byte[] data = new byte[16384]; // Adjust if necessary
+
+        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+
+        buffer.flush();
+        return buffer.toByteArray();
     }
 }

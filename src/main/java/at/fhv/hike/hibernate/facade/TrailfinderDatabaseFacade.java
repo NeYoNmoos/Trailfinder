@@ -154,27 +154,42 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         return _routeBroker.getById(id);
     }
 
-
-    public UserEntity getUserById(String id) {
-        return _userBroker.getById(id);
+    public List<LodgeEntity> getAllHuetten() {
+        return _lodgeBroker.getAll();
     }
+
+    public LodgeEntity getHuetteById(String id) {return _lodgeBroker.getById(id);}
+
+    public List<PointOfInterestEntity> getAllPois() {
+        return _pointOfInterestBroker.getAll();
+    }
+
+    public List<LodgeOnRouteEntity> getHuettenOnRouteByRouteId(String routeId) {return _lodgeOnRouteBroker.getHuettenOnRouteByRouteId(routeId);}
+
+    public List<PoiOnRouteEntity> getPoisOnRouteByRouteId(String routeId) {return _poiOnRouteBroker.getPoisOnRouteByRouteId(routeId);}
 
     @Override
     public List<UserEntity> getAllUsers() {
         return _userBroker.getAll();
     }
 
+    public UserEntity getUserById(String id){
+        return _userBroker.getById(id);
+    }
 
     public Integer authenticateUser(String email, String password) {
         // Retrieve hashed password from the database
         UserEntity user= _userBroker.getUserByEmail(email);
-        String storedHashedPassword =user.getPassword();
+        if(user!=null){
+            String storedHashedPassword =user.getPassword();
 
-        if(storedHashedPassword==null)
+            if(storedHashedPassword==null)
+                return null;
+            // Check if the entered password matches the stored hash
+            if (BCrypt.checkpw(password, storedHashedPassword)){
+                return user.getUserId();
+            }
             return null;
-        // Check if the entered password matches the stored hash
-        if (BCrypt.checkpw(password, storedHashedPassword)){
-            return user.getUserId();
         }
         return null;
     }
@@ -183,3 +198,4 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         return _userBroker.userAlreadyExists(email);
     }
 }
+

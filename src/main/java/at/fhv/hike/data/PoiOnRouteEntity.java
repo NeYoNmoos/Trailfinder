@@ -9,10 +9,10 @@ public class PoiOnRouteEntity {
     @Id
     @Column(name = "id")
     private int id;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "point_of_interest_id", referencedColumnName = "point_of_interest_id")
     private PointOfInterestEntity pointOfInterestEntity;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id", referencedColumnName = "route_id")
     private RouteEntity routeEntity;
 
@@ -24,11 +24,11 @@ public class PoiOnRouteEntity {
         this.id = id;
     }
 
-    public PointOfInterestEntity getPointOfInterestId() {
+    public PointOfInterestEntity getPointOfInterest() {
         return pointOfInterestEntity;
     }
 
-    public void setPointOfInterestId(PointOfInterestEntity pointOfInterestEntity) {
+    public void setPointOfInterest(PointOfInterestEntity pointOfInterestEntity) {
         this.pointOfInterestEntity = pointOfInterestEntity;
     }
 
@@ -36,7 +36,7 @@ public class PoiOnRouteEntity {
         return routeEntity;
     }
 
-    public void setRouteId(RouteEntity routeEntity) {
+    public void setRoute(RouteEntity routeEntity) {
         this.routeEntity = routeEntity;
     }
 

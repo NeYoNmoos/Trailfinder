@@ -1,9 +1,11 @@
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Collections" %>
-<%@ page import="java.util.Comparator" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="at.fhv.hike.data.*" %>
+<%@ page import="java.util.*" %><%--
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="at.fhv.hike.data.*" %><%--
+<%@ page import="at.fhv.hike.data.*" %>
+<%@ page import="java.util.ArrayList" %><%--
 <%@ page import="java.util.List" %>
 <%@ page import="java.net.URI" %>
 <%@ page import="java.net.URL" %>
@@ -24,10 +26,15 @@
 
 <%
     RouteEntity route = (RouteEntity) request.getAttribute("route");
+    Boolean canEdit=(Boolean)request.getAttribute("canEdit");
     AttributeEntity attributes = route != null ? route.getAttributeEntity() : null;
     List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;
 
     Collections.sort(coordinates, Comparator.comparingInt(CoordinateEntity::getSequence));
+
+    List<LodgeEntity> huetten = (List<LodgeEntity>) request.getAttribute("huetten");
+
+    List<PointOfInterestEntity> pois = (List<PointOfInterestEntity>) request.getAttribute("pois");
 %>
 
 <html>
@@ -63,6 +70,7 @@
         <!-- Route Title -->
         <div class="mb-8 flex flex-row justify-between">
             <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
+            <%if(canEdit){%>
             <% String editPageUrl = "/route-create?routeId=" + route.getRouteId(); %>
             <div class="flex flex-row">
                 <% if (sessionToken != null) { %>
@@ -99,6 +107,7 @@
                 Delete
             </button>
             </div>
+            <%}%>
         </div>
     </div>
 
@@ -187,6 +196,67 @@
                     }
                 %>
                 </div>
+                <!--Images slide show-->
+                <div class="container mx-auto p-4">
+                    <%
+                        List<GalleryEntity> gallery = (List<GalleryEntity>) request.getAttribute("gallery");
+                        if (gallery != null && !gallery.isEmpty()) {
+                    %>
+                    <!-- Slideshow Container -->
+                    <div id="slideshow" class="max-w-screen-md mx-auto relative">
+                        <%
+                            int i = 0;
+                            for (GalleryEntity imageEntity : gallery) {
+                                i++;
+                                byte[] imageBytes = imageEntity.getPicture();
+                                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                        %>
+                        <div class="mySlides fade">
+                            <div class="text-white absolute top-0 left-0 p-2"><%= i %> / <%= gallery.size() %></div>
+                            <img src="data:image/jpeg;base64,<%= base64Image %>" class="w-full h-auto">
+                        </div>
+                        <%
+                            }
+                        %>
+                        <!-- Next and previous buttons -->
+                        <a class="prev absolute top-1/2 left-0 transform -translate-y-1/2 cursor-pointer p-4 text-white font-bold text-xl transition duration-500 ease-in-out bg-black bg-opacity-50 border-r-4 border-gray-800" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next absolute top-1/2 right-0 transform -translate-y-1/2 cursor-pointer p-4 text-white font-bold text-xl transition duration-500 ease-in-out bg-black bg-opacity-50 border-l-4 border-gray-800" onclick="plusSlides(1)">&#10095;</a>
+                    </div>
+                    <%
+                        }
+                    %>
+
+
+                    <!-- JavaScript for Slideshow -->
+                    <script>
+                        let slideIndex = 1;
+                        showSlides(slideIndex);
+
+                        function plusSlides(n) {
+                            showSlides(slideIndex += n);
+                        }
+
+                        function currentSlide(n) {
+                            showSlides(slideIndex = n);
+                        }
+
+                        function showSlides(n) {
+                            let i;
+                            let slides = document.getElementsByClassName("mySlides");
+                            let dots = document.getElementsByClassName("dot");
+                            if (n > slides.length) {slideIndex = 1}
+                            if (n < 1) {slideIndex = slides.length}
+                            for (i = 0; i < slides.length; i++) {
+                                slides[i].style.display = "none";
+                            }
+                            for (i = 0; i < dots.length; i++) {
+                                dots[i].className = dots[i].className.replace(" active", "");
+                            }
+                            slides[slideIndex-1].style.display = "block";
+                            dots[slideIndex-1].className += " active";
+                        }
+                    </script>
+                </div>
             </div>
     </div>
     <div class="flex mb-6">
@@ -240,10 +310,12 @@
             </div>
             <% } %>
         </div>
+        <% if (coordinates != null && !coordinates.isEmpty()) { %>
 
         <!-- Right side -->
         <div class="w-1/2">
             <!-- Weather -->
+
             <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6 flex flex-col items-center text-center">
                     <h2 class="text-xl font-bold text-gray-900">Weather</h2>
@@ -289,6 +361,8 @@
                 </div>
             </div>
         </div>
+        <% } %>
+
     </div>
 
 
@@ -366,7 +440,9 @@
 
             // Initial request with constants
             // Replace with your actual longitude
-            requestApi(<%=coordinates.getLast().getLatitude()%>, <%=coordinates.getLast().getLongitude()%>);
+            <% if (coordinates != null && !coordinates.isEmpty()) { %>
+            requestApi(<%=coordinates.get(coordinates.size() - 1).getLatitude()%>, <%=coordinates.get(coordinates.size() - 1).getLongitude()%>);
+            <% } %>
 
         </script>
 
@@ -379,7 +455,9 @@
             <script>
                 let firstLat = <%= coordinates.get(0).getLatitude() %>;
                 let firstLon = <%= coordinates.get(0).getLongitude() %>;
-                let map = L.map('map').setView([firstLat, firstLon], 13);
+                let map = L.map
+
+                ('map').setView([firstLat, firstLon], 13);
 
                 /* // default map style
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -404,6 +482,18 @@
                     iconUrl: '${pageContext.request.contextPath}/assets/icons/goal_pin.png',
                     iconSize: [40, 40],
                     iconAnchor: [5, 41]
+                });
+
+                let poiIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/poi_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 41]
+                });
+
+                let huetteIcon = L.icon({
+                    iconUrl: '${pageContext.request.contextPath}/assets/icons/huette_pin.png',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 41]
                 });
 
                 let waypoints = [];
@@ -449,6 +539,45 @@
 
                 let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
 
+                // add huetten to map
+
+                function addHuetteMarker(lat, lng, name) {
+                    let marker = L.marker([lat, lng], {
+                        draggable: true,
+                        icon: huetteIcon
+                    }).addTo(map).bindPopup(name);
+                }
+
+                <%
+                int i = 0;
+                while (i < huetten.size()) {
+                %>
+                addHuetteMarker(<%=huetten.get(i).getCoordinateEntity().getLatitude()%>,<%=huetten.get(i).getCoordinateEntity().getLongitude()%>, "<%=huetten.get(i).getName()%>");
+                <%
+                    i++;
+                }
+                %>
+
+                // add Pois to map
+
+                function addPoiMarker(lat, lng, name) {
+                    let marker = L.marker([lat, lng], {
+                        draggable: true,
+                        icon: poiIcon
+                    }).addTo(map).bindPopup(name);;
+                }
+
+                <%
+                int j = 0;
+                while (j < pois.size()) {
+
+                %>
+                addPoiMarker(<%=pois.get(j).getCoordinates().getLatitude()%>,<%=pois.get(j).getCoordinates().getLongitude()%>, "<%=pois.get(j).getName()%>");
+                <%
+                    j++;
+                }
+                %>
+
                 /*
                 // leaflet routing machine
                 L.Routing.control({
@@ -471,6 +600,47 @@
             </script>
 
             <div class="px-4 py-5 sm:p-6">
+
+                <%if (huetten.size() > 0) {%>
+                <h2 class="text-xl font-bold text-gray-900">Huts</h2>
+                <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <% for(LodgeEntity huette : huetten) { %>
+                    <li class="col-span-2 bg-white rounded-lg shadow">
+                        <div class="w-full flex items-center justify-between p-6 space-x-6">
+                            <div class="flex-1 truncate">
+                                <div class="flex items-center space-x-3">
+                                    <h3 class="text-gray-900 text-sm leading-5 font-medium truncate"><%=huette.getName()%></h3>
+                                </div>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Latitude: <%= huette.getCoordinateEntity().getLatitude() %></p>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Longitude: <%= huette.getCoordinateEntity().getLongitude() %></p>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Description: <%= huette.getDescription() %></p>
+                            </div>
+                        </div>
+                    </li>
+                    <% } %>
+                </ul>
+                <%}%>
+
+                <%if (pois.size() > 0) {%>
+                <h2 class="text-xl font-bold text-gray-900">Points of Interest</h2>
+                <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <% for(PointOfInterestEntity poi : pois) { %>
+                    <li class="col-span-2 bg-white rounded-lg shadow">
+                        <div class="w-full flex items-center justify-between p-6 space-x-6">
+                            <div class="flex-1 truncate">
+                                <div class="flex items-center space-x-3">
+                                    <h3 class="text-gray-900 text-sm leading-5 font-medium truncate"><%=poi.getName()%></h3>
+                                </div>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Latitude: <%= poi.getCoordinates().getLatitude() %></p>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Longitude: <%= poi.getCoordinates().getLongitude() %></p>
+                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Description: <%= poi.getDescription() %></p>
+                            </div>
+                        </div>
+                    </li>
+                    <% } %>
+                </ul>
+                <%}%>
+
                 <h2 class="text-xl font-bold text-gray-900">Coordinates</h2>
                 <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     <% for(CoordinateEntity coord : coordinates) { %>

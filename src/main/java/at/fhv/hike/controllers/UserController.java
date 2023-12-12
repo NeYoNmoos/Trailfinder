@@ -21,6 +21,9 @@ public class UserController {
     public Integer checkPassword(String email, String password){
         return _facade.authenticateUser(email, password);
     }
+    public UserEntity getUserById(String id){
+        return _facade.getUserById(id);
+    }
     public Integer registerUser(String username, String email, String password){
         if(!_facade.userAlreadyExists(email))
         {
@@ -34,11 +37,6 @@ public class UserController {
         }
         return null;
     }
-
-    public UserEntity getUserById(String id){
-        return _facade.getUserById(id);
-    }
-
     public void saveUser(UserEntity user){
         _facade.save(user);
     }
