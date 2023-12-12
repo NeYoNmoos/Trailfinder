@@ -4,18 +4,27 @@ import at.fhv.hike.controllers.CookieController;
 import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.controllers.UserController;
 import at.fhv.hike.data.*;
+import at.fhv.hike.data.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.InputStream;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+@MultipartConfig
 @WebServlet(name = "RouteCreateServlet", urlPatterns = {"/route-create"})
 public class RouteCreateServlet extends HttpServlet {
 
@@ -65,6 +74,17 @@ public class RouteCreateServlet extends HttpServlet {
             request.setAttribute("endLongitude", route.getCoordinates().get(1).getLongitude());
             request.setAttribute("endLatitude", route.getCoordinates().get(1).getLatitude());
 
+
+            List<GalleryEntity> gallery = route.getGallery();
+            List<String> base64Gallery = new LinkedList<>();
+            int i = 0;
+            for (GalleryEntity imageEntity : gallery) {
+                i++;
+                byte[] imageBytes = imageEntity.getPicture();
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                base64Gallery.add(base64Image);
+            }
+            request.setAttribute("images", base64Gallery);
             request.setAttribute("route", route);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
@@ -74,8 +94,6 @@ public class RouteCreateServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/create_route/create_route.jsp");
             dispatcher.forward(request, response);
         }
-
-
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -194,6 +212,26 @@ public class RouteCreateServlet extends HttpServlet {
             }
         }
 
+        Collection<Part> parts = request.getParts();
+
+        for (Part part : parts) {
+            if (part.getName().equals("images") && part.getSize() > 0) {
+                // Process the file part
+                InputStream inputStream = part.getInputStream();
+                byte[] imageBytes = inputStreamToByteArray(inputStream);
+
+                // Create and populate GalleryEntity
+                GalleryEntity galleryEntity = new GalleryEntity();
+                galleryEntity.setPicture(imageBytes);
+                // Associate with RouteEntity and other required operations
+
+                newRoute.addGallery(galleryEntity);
+
+                // Remember to close the inputStream
+                inputStream.close();
+            }
+        }
+
         RouteController rc = new RouteController(context);
 
 
@@ -275,5 +313,18 @@ public class RouteCreateServlet extends HttpServlet {
 
 
         request.getRequestDispatcher("/create_route/create_confirmation.jsp").forward(request, response);
+    }
+
+    private byte[] inputStreamToByteArray(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int nRead;
+        byte[] data = new byte[16384]; // Adjust if necessary
+
+        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+
+        buffer.flush();
+        return buffer.toByteArray();
     }
 }

@@ -1,8 +1,9 @@
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Collections" %>
-<%@ page import="java.util.Comparator" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="at.fhv.hike.data.*" %>
+<%@ page import="java.util.*" %><%--
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="at.fhv.hike.data.*" %><%--
 <%@ page import="at.fhv.hike.data.*" %>
 <%@ page import="java.util.ArrayList" %><%--
 <%@ page import="java.util.List" %>
@@ -171,6 +172,67 @@
                     }
                 %>
                 </div>
+                <!--Images slide show-->
+                <div class="container mx-auto p-4">
+                    <%
+                        List<GalleryEntity> gallery = (List<GalleryEntity>) request.getAttribute("gallery");
+                        if (gallery != null && !gallery.isEmpty()) {
+                    %>
+                    <!-- Slideshow Container -->
+                    <div id="slideshow" class="max-w-screen-md mx-auto relative">
+                        <%
+                            int i = 0;
+                            for (GalleryEntity imageEntity : gallery) {
+                                i++;
+                                byte[] imageBytes = imageEntity.getPicture();
+                                String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+                        %>
+                        <div class="mySlides fade">
+                            <div class="text-white absolute top-0 left-0 p-2"><%= i %> / <%= gallery.size() %></div>
+                            <img src="data:image/jpeg;base64,<%= base64Image %>" class="w-full h-auto">
+                        </div>
+                        <%
+                            }
+                        %>
+                        <!-- Next and previous buttons -->
+                        <a class="prev absolute top-1/2 left-0 transform -translate-y-1/2 cursor-pointer p-4 text-white font-bold text-xl transition duration-500 ease-in-out bg-black bg-opacity-50 border-r-4 border-gray-800" onclick="plusSlides(-1)">&#10094;</a>
+                        <a class="next absolute top-1/2 right-0 transform -translate-y-1/2 cursor-pointer p-4 text-white font-bold text-xl transition duration-500 ease-in-out bg-black bg-opacity-50 border-l-4 border-gray-800" onclick="plusSlides(1)">&#10095;</a>
+                    </div>
+                    <%
+                        }
+                    %>
+
+
+                    <!-- JavaScript for Slideshow -->
+                    <script>
+                        let slideIndex = 1;
+                        showSlides(slideIndex);
+
+                        function plusSlides(n) {
+                            showSlides(slideIndex += n);
+                        }
+
+                        function currentSlide(n) {
+                            showSlides(slideIndex = n);
+                        }
+
+                        function showSlides(n) {
+                            let i;
+                            let slides = document.getElementsByClassName("mySlides");
+                            let dots = document.getElementsByClassName("dot");
+                            if (n > slides.length) {slideIndex = 1}
+                            if (n < 1) {slideIndex = slides.length}
+                            for (i = 0; i < slides.length; i++) {
+                                slides[i].style.display = "none";
+                            }
+                            for (i = 0; i < dots.length; i++) {
+                                dots[i].className = dots[i].className.replace(" active", "");
+                            }
+                            slides[slideIndex-1].style.display = "block";
+                            dots[slideIndex-1].className += " active";
+                        }
+                    </script>
+                </div>
             </div>
     </div>
     <div class="flex mb-6">
@@ -224,10 +286,12 @@
             </div>
             <% } %>
         </div>
+        <% if (coordinates != null && !coordinates.isEmpty()) { %>
 
         <!-- Right side -->
         <div class="w-1/2">
             <!-- Weather -->
+
             <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                 <div class="px-4 py-5 sm:p-6 flex flex-col items-center text-center">
                     <h2 class="text-xl font-bold text-gray-900">Weather</h2>
@@ -273,6 +337,8 @@
                 </div>
             </div>
         </div>
+        <% } %>
+
     </div>
 
 
@@ -350,7 +416,9 @@
 
             // Initial request with constants
             // Replace with your actual longitude
-            requestApi(<%=coordinates.getLast().getLatitude()%>, <%=coordinates.getLast().getLongitude()%>);
+            <% if (coordinates != null && !coordinates.isEmpty()) { %>
+            requestApi(<%=coordinates.get(coordinates.size() - 1).getLatitude()%>, <%=coordinates.get(coordinates.size() - 1).getLongitude()%>);
+            <% } %>
 
         </script>
 

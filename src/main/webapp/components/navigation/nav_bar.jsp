@@ -35,7 +35,7 @@
         // Clear all cookies
         clearAllCookies();
         // Reload the page
-        location.reload();
+        window.location.href = "${pageContext.request.contextPath}/";
     }
 
 </script>
@@ -48,9 +48,9 @@
 
     <!-- Right-aligned elements -->
     <div class="flex items-center space-x-4">
-        <a href="${pageContext.request.contextPath}/route-create" class="px-4 py-2 rounded-md btn-primary transition-colors">Create Route</a>
 
         <% if (sessionToken != null) { %>
+        <a href="${pageContext.request.contextPath}/route-create" class="px-4 py-2 rounded-md btn-primary transition-colors">Create Route</a>
         <button onclick="logoutAndRefresh()" class="px-4 py-2 rounded-md btn-primary transition-colors">LogOut</button>
         <a href="${pageContext.request.contextPath}/profile" class="px-4 py-2 rounded-md btn-primary transition-colors">Profile</a>
         <% } else { %>

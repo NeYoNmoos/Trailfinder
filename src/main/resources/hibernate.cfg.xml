@@ -25,7 +25,6 @@
         <mapping class="at.fhv.hike.data.UserEntity"/>
         <mapping class="at.fhv.hike.data.PointOfInterestEntity"/>
         <mapping class="at.fhv.hike.data.PoiOnRouteEntity"/>
-        <mapping class="at.fhv.hike.data.FavouriteRouteEntity"/>
         <mapping class="at.fhv.hike.data.DoneRouteEntity"/>
         <mapping class="at.fhv.hike.data.LodgeOnRouteEntity"/>
         <!-- Show SQL formatted -->

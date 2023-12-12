@@ -42,7 +42,7 @@
         <div class="loading-overlay" id="loadingOverlay">
             <div class="loader"></div>
         </div>
-        <form id="createform" action="${pageContext.request.contextPath}/route-create" method="post">
+        <form id="createform" action="${pageContext.request.contextPath}/route-create" method="post" enctype="multipart/form-data">
             <h1>Create a new Route</h1>
             <h2>General Information:</h2>
             <label for="name">Route Name:</label>
@@ -115,6 +115,10 @@
                 <option value="4" ${condition == 4 ? 'selected' : ''}>4</option>
                 <option value="5" ${condition == 5 ? 'selected' : ''}>5</option>
             </select>
+
+            <h2>Add images</h2>
+            <label for="images">Upload Images:</label>
+            <input type="file" id="images" value="${images}" name="images" accept="image/*" multiple>
 
             <!-- route creation via map -->
             <h2>Define Route:</h2>

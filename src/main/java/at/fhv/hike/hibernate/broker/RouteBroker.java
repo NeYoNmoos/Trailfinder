@@ -25,6 +25,7 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
             for (RouteEntity route : routes) {
                 if (route != null) {
                     Hibernate.initialize(route.getCoordinates());
+                    Hibernate.initialize(route.getGallery());
                 }
             }
 
@@ -90,6 +91,7 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
             RouteEntity route = session.get(RouteEntity.class, id);
             if (route != null) {
                 Hibernate.initialize(route.getCoordinates());
+                Hibernate.initialize(route.getGallery());
             }
             return route;
         }
