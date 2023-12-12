@@ -9,15 +9,13 @@
 <html>
 <head>
     <title>Password Changed</title>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Global.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/create_route/create_route.css">
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/icons/Trailfinder_logo.png">
-
 </head>
 <body>
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
-<div class="change_confirmation">
-
-</div>
-<div class="change-confirmation">
+<div class="confirmation">
     <h1>Password has been successfully changed :)</h1>
     <button class="btn-primary">
         <a href="${pageContext.request.contextPath}/profile">Back to your profile.</a>
