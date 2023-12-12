@@ -29,16 +29,16 @@ public class ChangePasswordServlet extends HttpServlet {
        String newPW = request.getParameter("newPassword");
 
        System.out.println("old " + oldPW + " new " + newPW);
-       if(BCrypt.checkpw(oldPW, user.getPassword())) {
-           user.setPassword(BCrypt.hashpw((String) request.getAttribute("newPassword"), BCrypt.gensalt()));
-           user.setPassword(BCrypt.hashpw(newPW, BCrypt.gensalt()));
-           uc.changePassword(user);
-           System.out.println("Saved user");
+       if( uc.checkPassword(user.getEmail(), oldPW)!=null) {
+           user.setPassword( BCrypt.hashpw(newPW, BCrypt.gensalt()));
+           uc.saveUser(user);
+           System.out.println("New psw saved");
            RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/password_change_confirmation.jsp");
            dispatcher.forward(request, response);
        }
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/password_change_denial.jsp");
-        dispatcher.forward(request, response);
-
+       else {
+           request.setAttribute("changePSWError", "Wrong password");
+           request.getRequestDispatcher("/profile_page/password_change.jsp").forward(request, response);
+       }
     }
 }

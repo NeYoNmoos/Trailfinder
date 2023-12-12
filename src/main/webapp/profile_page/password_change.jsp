@@ -14,7 +14,7 @@
 <body>
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
 <h1>Change your password</h1>
-<form action="changePassword" method="post">
+<form action="${pageContext.request.contextPath}/changepassword" method="post">
     <label for="oldPassword">Old Password:</label>
     <input type="password" id="oldPassword" name="oldPassword" />
 
