@@ -180,13 +180,16 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
     public Integer authenticateUser(String email, String password) {
         // Retrieve hashed password from the database
         UserEntity user= _userBroker.getUserByEmail(email);
-        String storedHashedPassword =user.getPassword();
+        if(user!=null){
+            String storedHashedPassword =user.getPassword();
 
-        if(storedHashedPassword==null)
+            if(storedHashedPassword==null)
+                return null;
+            // Check if the entered password matches the stored hash
+            if (BCrypt.checkpw(password, storedHashedPassword)){
+                return user.getUserId();
+            }
             return null;
-        // Check if the entered password matches the stored hash
-        if (BCrypt.checkpw(password, storedHashedPassword)){
-            return user.getUserId();
         }
         return null;
     }
