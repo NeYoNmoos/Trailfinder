@@ -37,6 +37,9 @@ public class UserController {
         }
         return null;
     }
+    public void saveUser(UserEntity user){
+        _facade.save(user);
+    }
 
     public void changePassword(UserEntity user){
         _facade.save(user);

@@ -2,6 +2,7 @@ package at.fhv.hike.hibernate.broker;
 
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.data.UserEntity;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -37,6 +38,17 @@ public class UserBroker extends BrokerBase<UserEntity> {
             List<UserEntity> users = query.getResultList();
 
             return !users.isEmpty();
+        }
+    }
+
+    @Override
+    public UserEntity getById(String id) {
+        try (Session session = sessionFactory.openSession()) {
+            UserEntity user = session.get(UserEntity.class, id);
+            if (user != null) {
+                Hibernate.initialize(user.getFavorite_routes());
+            }
+            return user;
         }
     }
 }

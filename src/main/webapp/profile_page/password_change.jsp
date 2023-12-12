@@ -16,12 +16,17 @@
 <h1>Change your password</h1>
 <form action="changePassword" method="post">
     <label for="oldPassword">Old Password:</label>
-    <input type="password" id="oldPassword" name="oldPassword" required />
+    <input type="password" id="oldPassword" name="oldPassword" />
 
     <label for="newPassword">New Password:</label>
-    <input type="password" id="newPassword" name="newPassword" required />
+    <input type="password" id="newPassword" name="newPassword" />
 
-    <button type="submit">Change Password</button>
+    <div class="flex">
+        <a href="${pageContext.request.contextPath}/profile">
+            <button type="button" class="px-4 py-2 rounded-md btn-primary transition-colors">Cansel</button>
+        </a>
+        <button type="submit" class="px-4 py-2 rounded-md btn-primary transition-colors">Change Password</button>
+    </div>
 </form>
 </body>
 </html>
