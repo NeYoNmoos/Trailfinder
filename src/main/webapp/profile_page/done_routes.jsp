@@ -14,14 +14,7 @@
 <body>
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
 <div class="container">
-    <div class="sidenav">
-        <h3 style="padding: 6px 8px 6px 16px"><%= request.getAttribute("user")%></h3>
-        <h3 style="padding: 6px 8px 6px 16px"><%= request.getAttribute("email")%></h3>
-        <a href="${pageContext.request.contextPath}/profile_page/favourite_routes.jsp">Favourite Routes</a>
-        <a href="${pageContext.request.contextPath}/profile_page/done_routes.jsp">Done Routes</a>
-        <a href="${pageContext.request.contextPath}/profile_page/todo_routes.jsp">ToDo Routes</a>
-        <a href="${pageContext.request.contextPath}/profile_page/my_routes.jsp">My Routes</a>
-    </div>
+    <jsp:include page="/components/profile_menu/profile_menu.jsp"/>
     <div class="main">
         <h2>Sidebar</h2>
         <p>This sidebar is of full height (100%) and always shown.</p>
