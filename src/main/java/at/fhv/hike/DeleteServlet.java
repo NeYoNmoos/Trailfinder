@@ -2,7 +2,6 @@ package at.fhv.hike;
 
 import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.data.RouteEntity;
-import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -12,8 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
-
 @WebServlet(name = "DeleteServlet", urlPatterns = {"/delete"})
 public class DeleteServlet extends HttpServlet {
 

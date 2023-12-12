@@ -8,10 +8,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-@WebServlet(name = "FavoriteServlet", urlPatterns = {"/favorite"})
-public class FavoriteServlet extends HttpServlet {
+@WebServlet(name = "ToDoServlet", urlPatterns = {"/todo"})
+public class ToDoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/favorite_routes.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/todo_routes.jsp");
         dispatcher.forward(request, response);
     }
 }

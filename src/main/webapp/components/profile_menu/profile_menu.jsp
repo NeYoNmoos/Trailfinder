@@ -18,7 +18,7 @@
 
     <div class="flex-1 flex flex-col justify-center items-center">
         <a href="${pageContext.request.contextPath}/profile" class="text-lg font-semibold mb-4"><%= request.getAttribute("user") %></a>
-        <a href="${pageContext.request.contextPath}/favourite" class="block py-2">Favourite Routes</a>
+        <a href="${pageContext.request.contextPath}/favorite" class="block py-2">Favourite Routes</a>
         <a href="${pageContext.request.contextPath}/done" class="block py-2">Done Routes</a>
         <a href="${pageContext.request.contextPath}/todo" class="block py-2">ToDo Routes</a>
         <a href="${pageContext.request.contextPath}/my_routes" class="block py-2">My Routes</a>

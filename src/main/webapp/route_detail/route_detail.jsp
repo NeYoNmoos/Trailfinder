@@ -1,7 +1,8 @@
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="at.fhv.hike.data.*" %>
-<%@ page import="java.util.*" %><%--
+<%@ page import="java.util.*" %>
+<%@ page import="at.fhv.hike.controllers.CookieController" %><%--
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="at.fhv.hike.data.*" %><%--
 <%@ page import="at.fhv.hike.data.*" %>
@@ -51,18 +52,7 @@
 <body class="bg-gray-100">
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
 <%
-    Cookie[] cookies = request.getCookies();
-    String sessionToken=null;
-    if (cookies != null) {
-        for (Cookie cookie : cookies) {
-            if ("userId".equals(cookie.getName())) {
-                // Found the cookie, now do something with it
-                sessionToken = cookie.getValue();
-                System.out.println("USERNAME NAV:"+sessionToken);
-                // Validate the session token or perform other actions
-            }
-        }
-    }
+    String sessionToken= CookieController.getLogedInUserId(request.getCookies());
 %>
 
 <main class="py-10">
@@ -72,7 +62,7 @@
             <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
             <div class="flex flex-row">
             <% if (sessionToken != null) { %>
-            <% String favoritePageUrl = "/favorite?routeId=" + route.getRouteId() + "&userId=" + sessionToken; %>
+            <% String favoritePageUrl = "/add_favorite?routeId=" + route.getRouteId(); %>
             <a href="${pageContext.request.contextPath}<%= favoritePageUrl %>"
                class="inline-flex items-center ml-2 text-white bg-blue-500 rounded-lg px-3 py-1 hover:bg-blue-700 transition duration-300" style="float:right">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
