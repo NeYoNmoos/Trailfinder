@@ -33,7 +33,13 @@ body {
     background-color: var(--primary) !important;
     color: var(--text) !important;
 }
-
+.btn-secondary {
+    background-color: var(--secondary) !important;
+    color: var(--text) !important;
+}
+.btn-secondary:hover {
+    background-color: var(--primary-dark) !important;
+ }
 .btn-primary:hover {
     background-color: var(--primary-dark) !important;
 }
