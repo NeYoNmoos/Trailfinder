@@ -17,10 +17,11 @@
         <div class="sidenav">
             <h3 style="padding: 6px 8px 6px 16px"><%= request.getAttribute("user")%></h3>
             <h3 style="padding: 6px 8px 6px 16px"><%= request.getAttribute("email")%></h3>
-            <a href="#"><h3>Favourite Routes</h3></a>
-            <a href="#"><h3>Done Routes</h3></a>
-            <a href="#"><h3>ToDo Routes</h3></a>
-            <a href="#"><h3>My Routes</h3></a>
+            <a href="${pageContext.request.contextPath}/profile_page/favourite_routes.jsp">Favourite Routes</a>
+            <a href="${pageContext.request.contextPath}/profile_page/done_routes.jsp">Done Routes</a>
+            <a href="${pageContext.request.contextPath}/profile_page/todo_routes.jsp">ToDo Routes</a>
+            <a href="${pageContext.request.contextPath}/profile_page/my_routes.jsp">My Routes</a>
+
             <div class="button-container">
                 <button type="submit" name="changepw" value="changepw" class="w-48 btn-primary rounded-md px-3 py-2" style="color: #ffffff !important;">
                     <a href="${pageContext.request.contextPath}/changepassword">Change Password</a>
