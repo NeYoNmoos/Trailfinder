@@ -197,5 +197,7 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
 
         return _userBroker.userAlreadyExists(email);
     }
+
+    public List<DoneRouteEntity> getDoneRoutes(String userId) {return _doneRouteBroker.getDoneRoutes(userId);}
 }
 

@@ -96,4 +96,21 @@ public class RouteController {
 
         return pois;
     }
+
+    public List<RouteEntity> getDoneRoutes(String userId) {
+        List<DoneRouteEntity> doneRoutes = _facade.getDoneRoutes(userId);
+        List<RouteEntity> routes = new ArrayList<>();
+        int i = 0;
+        while (i < doneRoutes.size()) {
+            RouteEntity route = _facade.getRouteById(String.valueOf(doneRoutes.get(i).getRoute().getRouteId()));
+            routes.add(route);
+            i++;
+        }
+        return routes;
+    }
+
+    public List<RouteEntity> getFavouriteRoutes(String userId) {
+        // TODO: after pojo is a thing, do it like getDoneRoutes
+        return null;
+    }
 }

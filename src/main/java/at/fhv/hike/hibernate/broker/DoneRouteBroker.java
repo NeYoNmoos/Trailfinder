@@ -2,9 +2,13 @@ package at.fhv.hike.hibernate.broker;
 
 import at.fhv.hike.data.DoneRouteEntity;
 import at.fhv.hike.data.LodgeOnRouteEntity;
+import at.fhv.hike.data.RouteEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+
+import java.util.*;
 
 public class DoneRouteBroker extends BrokerBase<DoneRouteEntity> {
 
@@ -25,5 +29,18 @@ public class DoneRouteBroker extends BrokerBase<DoneRouteEntity> {
             e.printStackTrace();
         }
 
+    }
+
+    public List<DoneRouteEntity> getDoneRoutes(String userId) {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "FROM DoneRouteEntity AS d " +
+                    "WHERE d.userEntity.userId = :userId";
+
+            Query<DoneRouteEntity> query = session.createQuery(hql, DoneRouteEntity.class)
+                    .setParameter("userId", userId);
+
+            List<DoneRouteEntity> doneRoutes = query.getResultList();
+            return doneRoutes;
+        }
     }
 }

@@ -56,6 +56,14 @@
         <% } else { %>
         <a href="${pageContext.request.contextPath}/login" class="px-4 py-2 rounded-md btn-primary transition-colors">LogIn</a>
         <% } %>
+
+
+        <!-- Testing for personal lists -->
+        <form action="personal-list">
+            <input type="hidden" id="list" name="list" value="2">
+            <input type="submit" value="Done Routes" class="px-4 py-2 rounded-md btn-primary transition-colors">
+        </form>
+
     </div>
 </nav>
 
