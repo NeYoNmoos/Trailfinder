@@ -38,6 +38,9 @@ public class UserEntity {
         comment.setAuthor(null);
     }
 
+    public UserEntity(){
+        routes=new ArrayList<>();
+    }
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<RouteEntity> routes = new ArrayList<>();
 

@@ -19,8 +19,7 @@ public class RouteController {
     }
 
     public List<RouteEntity> getAllRoutes() {
-        List<RouteEntity> allRoutes = _facade.getAllRoutes();
-        return allRoutes;
+        return _facade.getAllRoutes();
     }
     public List<RouteEntity>getRoutesCreatedByUser(UserEntity user) {
         List<RouteEntity> allRoutes = _facade.getRoutesCreatedByUser(user);

@@ -47,6 +47,11 @@ public class UserBroker extends BrokerBase<UserEntity> {
             UserEntity user = session.get(UserEntity.class, id);
             if (user != null) {
                 Hibernate.initialize(user.getFavorite_routes());
+                Hibernate.initialize(user.getRoutes());
+                for (RouteEntity route : user.getRoutes()) {
+                    Hibernate.initialize(route.getCoordinates());
+                    Hibernate.initialize(route.getGallery());
+                }
             }
             return user;
         }
