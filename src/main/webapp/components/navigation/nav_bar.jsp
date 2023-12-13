@@ -16,19 +16,13 @@
     String sessionToken= CookieController.getLogedInUserId(request.getCookies());
 %>
 <script>
-    // Function to delete a cookie by name
-    function deleteCookie(name) {
-        document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    }
-
-    // Function to clear all cookies
     function clearAllCookies() {
         var cookies = document.cookie.split("; ");
 
         for (var i = 0; i < cookies.length; i++) {
             var cookie = cookies[i].split("=");
             var name = cookie[0];
-            deleteCookie(name);
+            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         }
     }
     function logoutAndRefresh() {

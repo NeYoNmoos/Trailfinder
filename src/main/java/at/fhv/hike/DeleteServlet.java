@@ -29,7 +29,7 @@ public class DeleteServlet extends HttpServlet {
         RouteEntity route = rc.getRouteById(routeId);
         route.setActive(false);
 
-        rc.createRoute(route);
+        rc.createOrUpdateRoute(route);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/route_detail/delete_confirmation.jsp");
         dispatcher.forward(request, response);
     }

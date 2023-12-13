@@ -38,7 +38,7 @@ public class RouteController {
         return _facade.getRouteById(routeId);
     }
 
-    public void createRoute(RouteEntity route) {
+    public void createOrUpdateRoute(RouteEntity route) {
         _facade.save(route);
     }
 

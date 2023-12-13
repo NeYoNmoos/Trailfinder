@@ -46,7 +46,7 @@ public class RouteControllerTest {
         RouteEntity newRoute = new RouteEntity();
         newRoute.setName("New Route");
 
-        routeService.createRoute(newRoute);
+        routeService.createOrUpdateRoute(newRoute);
 
         verify(facade).save(newRoute);
     }
@@ -60,7 +60,7 @@ public class RouteControllerTest {
         when(facade.getRouteById("1")).thenReturn(existingRoute);
 
         existingRoute.setName("Updated Route");
-        routeService.createRoute(existingRoute);
+        routeService.createOrUpdateRoute(existingRoute);
 
         verify(facade).save(existingRoute);
         assertEquals("Updated Route", existingRoute.getName());
@@ -75,7 +75,7 @@ public class RouteControllerTest {
         when(facade.getRouteById("1")).thenReturn(existingRoute);
 
         existingRoute.setActive(false);
-        routeService.createRoute(existingRoute);
+        routeService.createOrUpdateRoute(existingRoute);
 
         verify(facade).save(existingRoute);
         assertFalse(existingRoute.getActive());

@@ -4,7 +4,6 @@ import at.fhv.hike.controllers.CookieController;
 import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.controllers.UserController;
 import at.fhv.hike.data.*;
-import at.fhv.hike.data.*;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -22,8 +21,7 @@ import java.util.List;
 
 import java.io.InputStream;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 @MultipartConfig
 @WebServlet(name = "RouteCreateServlet", urlPatterns = {"/route-create"})
 public class RouteCreateServlet extends HttpServlet {
@@ -307,7 +305,7 @@ public class RouteCreateServlet extends HttpServlet {
         }
 
         if((j == 0) && (i == 0)){
-            rc.createRoute(newRoute);
+            rc.createOrUpdateRoute(newRoute);
         }
 
 

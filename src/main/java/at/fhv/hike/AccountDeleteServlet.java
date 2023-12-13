@@ -1,16 +1,17 @@
 package at.fhv.hike;
 
 import at.fhv.hike.controllers.CookieController;
+import at.fhv.hike.controllers.RouteController;
 import at.fhv.hike.controllers.UserController;
+import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.data.UserEntity;
 import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 
@@ -27,9 +28,15 @@ public class AccountDeleteServlet extends HttpServlet {
         String password = request.getParameter("Password");
 
         if( uc.checkPassword(user.getEmail(), password)!=null) {
-            //Log out by deleting cookies
-            //set all routes user made to author null or fix db
-
+            ServletContext context = request.getServletContext();
+            RouteController rc = new RouteController(context);
+            //set author to null to routes user created
+            for (RouteEntity route:user.getRoutes()) {
+                route.setAuthor(null);
+                System.out.println(route.getName());
+                rc.createOrUpdateRoute(route);
+            }
+            user.setRoutes(null);
             //Delete account
             uc.deleteUser(user);
 
