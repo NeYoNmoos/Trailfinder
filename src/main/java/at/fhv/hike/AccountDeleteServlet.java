@@ -16,7 +16,7 @@ import java.io.IOException;
 @WebServlet(name="AccountDeleteServlet", urlPatterns = {"/accountdeletion"})
 public class AccountDeleteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/deleteAccountConfirmation.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/delete_account.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -31,7 +31,7 @@ public class AccountDeleteServlet extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/home_page/home_page.css");
             dispatcher.forward(request, response);
         } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/deleteAccountConfirmation.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/delete_account.jsp");
         }
     }
 }
