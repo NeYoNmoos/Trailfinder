@@ -21,10 +21,7 @@ public class RouteController {
     public List<RouteEntity> getAllRoutes() {
         return _facade.getAllRoutes();
     }
-    public List<RouteEntity>getRoutesCreatedByUser(UserEntity user) {
-        List<RouteEntity> allRoutes = _facade.getRoutesCreatedByUser(user);
-        return allRoutes;
-    }
+
     public List<RouteEntity> getFilteredRoutes(String routename, Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery,Integer experience, Integer condition, Integer selectedMonth) {
         routename = routename.toLowerCase();
         List<RouteEntity> filteredRoutes = _facade.getFilteredRoutes(routename, lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition,selectedMonth);

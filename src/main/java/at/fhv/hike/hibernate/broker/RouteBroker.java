@@ -33,21 +33,6 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
             return routes;
         }
     }
-    public List<RouteEntity> getRoutesCreatedByUser(UserEntity user) {
-        try (Session session = sessionFactory.openSession()) {
-            String hql = "FROM " + RouteEntity.class.getName() + " r WHERE r.active = true AND r.author= :user";
-            Query<RouteEntity> query = session.createQuery(hql, RouteEntity.class).setParameter("user", user);
-            List<RouteEntity> routes = query.getResultList();
-
-            for (RouteEntity route : routes) {
-                if (route != null) {
-                    Hibernate.initialize(route.getCoordinates());
-                    Hibernate.initialize(route.getGallery());
-                }
-            }
-            return routes;
-        }
-    }
 
     public List<RouteEntity> getFiltered(String routename, Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery, Integer experience, Integer condition, Integer selectedMonth) {
 

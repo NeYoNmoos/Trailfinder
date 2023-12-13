@@ -142,9 +142,6 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
     public List<RouteEntity> getAllRoutes() {
         return _routeBroker.getAll();
     }
-    public List<RouteEntity> getRoutesCreatedByUser(UserEntity user) {
-        return _routeBroker.getRoutesCreatedByUser(user);
-    }
 
     public List<RouteEntity>getFilteredRoutes(String routename, Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery, Integer experience, Integer condition, Integer selectedMonth)
     {

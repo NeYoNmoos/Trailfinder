@@ -35,8 +35,6 @@ public class MyRoutesServlet  extends HttpServlet {
             RouteController rc = new RouteController(context);
 
             List<RouteEntity>myRoutes=user.getRoutes();
-           // List<RouteEntity> myRoutes = rc.getRoutesCreatedByUser(user);
-
             request.setAttribute("myRoutes", myRoutes);
         }
 
