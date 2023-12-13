@@ -28,11 +28,9 @@ public class ChangePasswordServlet extends HttpServlet {
        String oldPW = request.getParameter("oldPassword");
        String newPW = request.getParameter("newPassword");
 
-       System.out.println("old " + oldPW + " new " + newPW);
        if( uc.checkPassword(user.getEmail(), oldPW)!=null) {
            user.setPassword( BCrypt.hashpw(newPW, BCrypt.gensalt()));
            uc.saveUser(user);
-           System.out.println("New psw saved");
            RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/password_change_confirmation.jsp");
            dispatcher.forward(request, response);
        }

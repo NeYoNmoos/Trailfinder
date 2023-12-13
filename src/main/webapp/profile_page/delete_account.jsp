@@ -19,22 +19,22 @@
     <div class="bg-white p-8 rounded shadow-md w-96">
         <h1>Delete Account</h1>
         <p class="mb-4">Confirm your identity: type in your password.</p>
-        <form action="${pageContext.request.contextPath}/changepassword" method="post">
+        <form action="${pageContext.request.contextPath}/deleteaccount" method="post">
 
-            <!-- Old Password Input -->
+            <!-- Password Input -->
             <div class="mb-4">
-                <label for="oldPassword" class="block text-sm font-medium text-gray-600">Old Password</label>
-                <input type="password" id="oldPassword" name="oldPassword" placeholder="Old password"
+                <label for="Password" class="block text-sm font-medium text-gray-600">Password</label>
+                <input type="password" id="Password" name="Password" placeholder="password"
                        class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
             </div>
 
-            <% if (request.getAttribute("changePSWError") != null) { %>
+            <% if (request.getAttribute("deleteAccError") != null) { %>
             <div class="text-red-500 text-sm mb-4">
-                <%= request.getAttribute("changePSWError") %>
+                <%= request.getAttribute("deleteAccError") %>
             </div>
             <% } %>
             <!-- Change Password Button -->
-            <button type="submit" class="btn-primary text-white p-2 rounded-md w-full focus:outline-none focus:ring">Change Password</button>
+            <button type="submit" class="btn-primary text-white p-2 rounded-md w-full focus:outline-none focus:ring">Delete Account</button>
         </form>
         <!-- Register Link -->
         <p class="mt-4 text-sm text-gray-600 text-center">

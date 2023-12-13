@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.hibernate.Hibernate;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,11 +32,12 @@ public class MyRoutesServlet  extends HttpServlet {
             ServletContext context = request.getServletContext();
             RouteController rc = new RouteController(context);
 
-            List<RouteEntity> myRoutes = rc.getRoutesCreatedByUser(user);
+            Hibernate.initialize(user.getRoutes());
+
+            List<RouteEntity>myRoutes=user.getRoutes();
+           // List<RouteEntity> myRoutes = rc.getRoutesCreatedByUser(user);
 
             request.setAttribute("myRoutes", myRoutes);
-            System.out.println(myRoutes.size());
-
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/my_routes.jsp");

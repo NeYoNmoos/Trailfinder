@@ -29,7 +29,7 @@
             <a href="${pageContext.request.contextPath}/changepassword" class="text-white">Change Password</a>
         </button>
         <button type="submit" name="accountdelete" value="accountdelete" class="flex-1 btn-primary rounded-md px-3 py-2" style="background-color: #ff0000;">
-            <a href="${pageContext.request.contextPath}/accountdeletion" class="text-white" style="text-decoration: none;">Delete Account</a>
+            <a href="${pageContext.request.contextPath}/deleteaccount" class="text-white" style="text-decoration: none;">Delete Account</a>
         </button>
     </div>
 </div>
