@@ -444,9 +444,7 @@
 
             <input class="btn-primary" type="submit" value="Save">
             </br>
-            <button class="btn-primary" type="button">
-                <a href="${pageContext.request.contextPath}/profile">Cansel</a>
-            </button>
+            <a class="btn-primary py-2 px-2 rounded-md text-center" type="button" href="${pageContext.request.contextPath}/profile">Cancel</a>
 
         </form>
     </div>
