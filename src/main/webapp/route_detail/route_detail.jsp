@@ -533,7 +533,6 @@
 
                 function addHuetteMarker(lat, lng, name) {
                     let marker = L.marker([lat, lng], {
-                        draggable: true,
                         icon: huetteIcon
                     }).addTo(map).bindPopup(name);
                 }
@@ -552,7 +551,6 @@
 
                 function addPoiMarker(lat, lng, name) {
                     let marker = L.marker([lat, lng], {
-                        draggable: true,
                         icon: poiIcon
                     }).addTo(map).bindPopup(name);;
                 }
