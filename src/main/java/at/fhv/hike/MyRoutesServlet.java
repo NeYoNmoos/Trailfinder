@@ -35,7 +35,7 @@ public class MyRoutesServlet  extends HttpServlet {
             RouteController rc = new RouteController(context);
 
             List<RouteEntity>myRoutes=user.getRoutes();
-            request.setAttribute("myRoutes", myRoutes);
+            request.setAttribute("routes", myRoutes);
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/my_routes.jsp");

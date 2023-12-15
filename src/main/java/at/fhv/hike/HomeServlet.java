@@ -81,7 +81,7 @@ public class HomeServlet extends HttpServlet {
         //else
            // allRoutes = rc.getAllRoutes();
 
-        request.setAttribute("allRoutes", allRoutes);
+        request.setAttribute("routes", allRoutes);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/home_page/home_page.jsp");
         dispatcher.forward(request, response);
@@ -95,7 +95,7 @@ public class HomeServlet extends HttpServlet {
 
         List<RouteEntity> allRoutes = rc.getAllRoutes();
 
-        request.setAttribute("allRoutes", allRoutes);
+        request.setAttribute("routes", allRoutes);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/home_page/home_page.jsp");
         dispatcher.forward(request, response);
