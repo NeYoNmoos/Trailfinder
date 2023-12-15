@@ -264,6 +264,7 @@
                 // Map click event to add point of interest or huette
                 map.on('contextmenu', function(e) {
                     if (e.originalEvent.ctrlKey && e.originalEvent.button === 2) {
+                        openPopup();
                         let huetteName = prompt("Please enter the name of your hut:", "");
                         let huetteDescription = prompt("Please enter a description for your hut:", "");
                         if ((huetteName != null) && (huetteName != "") && (huetteDescription != null) && (huetteDescription != "")) {
@@ -417,6 +418,54 @@
                 </div>
             </div>
             -->
+
+
+            <!-- TODO: huetten popup -->
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h2>Hut</h2>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please enter the name of your hut:</p>
+                        <input type="text" id="test1" name="test1">
+                        <p>Please enter the name of your hut:</p>
+                        <input type="text" id="test2" name="test2">
+                        <button type="button">Save</button>
+                    </div>
+                </div>
+
+            </div>
+
+            <script>
+                // Get the modal
+                var modal = document.getElementById("myModal");
+
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
+
+                // When the user clicks the button, open the modal
+                function openPopup() {
+                    modal.style.display = "block";
+                }
+
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            </script>
+
 
             <%
                 //List of huetten
