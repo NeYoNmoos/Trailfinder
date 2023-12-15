@@ -3,6 +3,7 @@ package at.fhv.hike.data;
 import jakarta.persistence.*;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "comment", schema = "trailfinder_dev", catalog = "ftb_inv_2023_vz_3_a")
@@ -24,8 +25,8 @@ public class CommentEntity {
     @JoinColumn(name = "attribute_id", referencedColumnName = "attribute_id")
     private AttributeEntity attributeId;
     @Basic
-    @Column(name = "date_comment")
-    private Date dateComment;
+    @Column(name = "created_at")
+    private LocalDateTime dateComment;
 
     public Integer getCommentId() {
         return commentId;
@@ -67,11 +68,11 @@ public class CommentEntity {
         this.attributeId = attributeId;
     }
 
-    public Date getDateComment() {
+    public LocalDateTime getDateComment() {
         return dateComment;
     }
 
-    public void setDateComment(Date dateComment) {
+    public void setDateComment(LocalDateTime dateComment) {
         this.dateComment = dateComment;
     }
 

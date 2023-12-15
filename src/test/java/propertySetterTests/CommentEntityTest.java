@@ -5,6 +5,7 @@ import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.data.UserEntity;
 import at.fhv.hike.data.AttributeEntity;
 import java.sql.Date;
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -59,7 +60,7 @@ class CommentEntityTest {
 
     @Test
     void testDateComment() {
-        Date expectedDate = Date.valueOf("2023-03-01");
+        LocalDateTime expectedDate = LocalDateTime.of(2023,3,1,14,30);
         commentEntity.setDateComment(expectedDate);
         assertEquals(expectedDate, commentEntity.getDateComment());
     }
