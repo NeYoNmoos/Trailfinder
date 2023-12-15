@@ -99,11 +99,18 @@ public class RouteCreateServlet extends HttpServlet {
         String loggedInUserId= CookieController.getLogedInUserId(request.getCookies());
         ServletContext context = request.getServletContext();
         RouteEntity newRoute = new RouteEntity();
+        String routeId = request.getParameter("routeId");
 
-        if(loggedInUserId!=null){
+        if(routeId==null){
             UserController uc = new UserController(context);
             UserEntity author = uc.getUserById(loggedInUserId);
             newRoute.setAuthor(author);
+        }
+        else {
+            newRoute.setRouteId(Integer.parseInt(routeId));
+            RouteController rc =new RouteController(context);
+            RouteEntity oldRoute=rc.getRouteById(routeId);
+            newRoute.setAuthor(oldRoute.getAuthor());
         }
 
         String name = request.getParameter("name");
@@ -173,11 +180,7 @@ public class RouteCreateServlet extends HttpServlet {
         newAttributes.setCondition(condition);
 
 
-        String routeId = request.getParameter("routeId");
 
-        if(!routeId.equals("null")) {
-            newRoute.setRouteId(Integer.parseInt(routeId));
-        }
 
         newRoute.setName(name);
         newRoute.setLength(length);
