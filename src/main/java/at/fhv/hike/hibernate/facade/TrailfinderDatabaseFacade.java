@@ -173,10 +173,12 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
         return _userBroker.getAll();
     }
 
+    public UserEntity getUserByIdSimple(String id){
+        return _userBroker.getByIdSimple(id);
+    }
     public UserEntity getUserById(String id){
         return _userBroker.getById(id);
     }
-
     public Integer authenticateUser(String email, String password) {
         // Retrieve hashed password from the database
         UserEntity user= _userBroker.getUserByEmail(email);

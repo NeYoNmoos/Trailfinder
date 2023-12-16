@@ -56,4 +56,9 @@ public class UserBroker extends BrokerBase<UserEntity> {
             return user;
         }
     }
+    public UserEntity getByIdSimple(String id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(UserEntity.class, id);
+        }
+    }
 }

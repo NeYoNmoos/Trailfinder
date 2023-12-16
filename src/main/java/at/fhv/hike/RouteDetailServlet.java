@@ -56,7 +56,7 @@ public class RouteDetailServlet extends HttpServlet {
 
         if(loggedInUserId!=null){
             UserController uc = new UserController(context);
-            UserEntity loggedInUser = uc.getUserById(loggedInUserId);
+            UserEntity loggedInUser = uc.getUserByIdSimple(loggedInUserId);
 
             Boolean isAdmin=loggedInUser.getUserType();
             if(isAdmin==null)

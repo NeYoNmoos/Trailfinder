@@ -668,12 +668,13 @@
             </div>
                     <!-- Comment Input Field (initially hidden) -->
             <div id="commentInput" class="hidden mt-4">
-                <form action="submitComment" method="post"> <!--need to define a servlet or endpoint to handle comment submission -->
-                    <textarea name="comment" rows="4" class="w-full p-2 border rounded"></textarea>
+                <%String link="comment-servlet?routeId=" + route.getRouteId();%>
+                <form action="${pageContext.request.contextPath}/<%=link%>" method="post"> <!--need to define a servlet or endpoint to handle comment submission -->
+                    <textarea name="comment"  id="comment" rows="4" class="w-full p-2 border rounded"></textarea>
                     <div class="mt-2 flex items-center space-x-2">
                         <i class="fas fa-bolt text-yellow-500" title="Power"></i>
-                        <p>Power</p>
-                        <select name="strenght" id="strenght">
+                        <label for="power">Power</label>
+                        <select name="power" id="power">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -682,6 +683,7 @@
                         </select>
                         <i class="fas fa-tree text-green-500" title="Scenery"></i>
                         <p> Scenery </p>
+                        <label for="scenery">Scenery</label>
                         <select name="scenery" id="scenery">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -691,6 +693,7 @@
                         </select>
                         <i class="fas fa-brain text-purple-500" title="Experience"></i>
                         <p> Experience </p>
+                        <label for="experience">>Experience</label>
                         <select name="experience" id="experience">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -700,13 +703,15 @@
                         </select>
                         <i class="fas fa-heartbeat text-red-500" title="Condition"></i>
                         <p> Condition </p>
+                        <label for="condition">Condition</label>
                         <select name="condition" id="condition">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
-                        </select>                    </div>
+                        </select>
+                    </div>
                     <button type="submit" class="btn-primary rounded-md px-4 py-2 mt-2">Post Comment</button>
                 </form>
             </div>

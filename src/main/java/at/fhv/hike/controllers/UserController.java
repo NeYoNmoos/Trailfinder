@@ -24,6 +24,9 @@ public class UserController {
     public UserEntity getUserById(String id){
         return _facade.getUserById(id);
     }
+    public UserEntity getUserByIdSimple(String id){
+        return _facade.getUserByIdSimple(id);
+    }
     public Integer registerUser(String username, String email, String password){
         if(!_facade.userAlreadyExists(email))
         {

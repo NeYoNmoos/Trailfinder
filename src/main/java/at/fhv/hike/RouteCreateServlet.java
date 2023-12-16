@@ -120,15 +120,20 @@ public class RouteCreateServlet extends HttpServlet {
         double duration = Double.parseDouble(request.getParameter("duration"));
         String description = request.getParameter("description");
 
-        String[] months = request.getParameterValues("months");
         Integer power = Integer.parseInt(request.getParameter("power"));
         Integer scenery = Integer.parseInt(request.getParameter("scenery"));
         Integer experience = Integer.parseInt(request.getParameter("experience"));
         Integer condition = Integer.parseInt(request.getParameter("condition"));
-
+        AttributeEntity newAttributes = new AttributeEntity();
+        newAttributes.setStrength(power);
+        newAttributes.setScenery(scenery);
+        newAttributes.setExperience(experience);
+        newAttributes.setCondition(condition);
+        newRoute.setAttributeEntity(newAttributes);
 
 
         Bitmask bm = new Bitmask();
+        String[] months = request.getParameterValues("months");
 
 
         if (months != null) {
@@ -173,11 +178,7 @@ public class RouteCreateServlet extends HttpServlet {
                 }
             }
         }
-        AttributeEntity newAttributes = new AttributeEntity();
-        newAttributes.setStrength(power);
-        newAttributes.setScenery(scenery);
-        newAttributes.setExperience(experience);
-        newAttributes.setCondition(condition);
+
 
 
 
@@ -188,7 +189,6 @@ public class RouteCreateServlet extends HttpServlet {
         newRoute.setLocation(location);
         newRoute.setDuration(duration);
         newRoute.setDescription(description);
-        newRoute.setAttributeEntity(newAttributes);
         newRoute.setMonths(bm.returnBitmask());
         newRoute.setActive(true);
 
