@@ -2,7 +2,6 @@ package at.fhv.hike.data;
 
 import jakarta.persistence.*;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,7 +22,7 @@ public class CommentEntity {
     private String comment;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "attribute_id", referencedColumnName = "attribute_id")
-    private AttributeEntity attributeId;
+    private AttributeEntity attributes;
     @Basic
     @Column(name = "created_at")
     private LocalDateTime dateComment;
@@ -60,12 +59,12 @@ public class CommentEntity {
         this.comment = comment;
     }
 
-    public AttributeEntity getAttributeId() {
-        return attributeId;
+    public AttributeEntity getAttributes() {
+        return attributes;
     }
 
-    public void setAttributeId(AttributeEntity attributeId) {
-        this.attributeId = attributeId;
+    public void setAttributes(AttributeEntity attributeId) {
+        this.attributes = attributeId;
     }
 
     public LocalDateTime getDateComment() {
@@ -87,7 +86,7 @@ public class CommentEntity {
         if (route != null ? !route.equals(that.route) : that.route != null) return false;
         if (author != null ? !author.equals(that.author) : that.author != null) return false;
         if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
-        if (attributeId != null ? !attributeId.equals(that.attributeId) : that.attributeId != null) return false;
+        if (attributes != null ? !attributes.equals(that.attributes) : that.attributes != null) return false;
         if (dateComment != null ? !dateComment.equals(that.dateComment) : that.dateComment != null) return false;
 
         return true;
@@ -99,7 +98,7 @@ public class CommentEntity {
         result = 31 * result + (route != null ? route.hashCode() : 0);
         result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
-        result = 31 * result + (attributeId != null ? attributeId.hashCode() : 0);
+        result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
         result = 31 * result + (dateComment != null ? dateComment.hashCode() : 0);
         return result;
     }

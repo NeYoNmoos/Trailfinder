@@ -45,6 +45,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
         <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
         <script src="https://unpkg.com/leaflet-routing-machine"></script>
         <script src="${pageContext.request.contextPath}/route_detail/fetch_hiking_route.js"></script>
         <title><%= route.getName() %></title>
@@ -669,6 +670,43 @@
             <div id="commentInput" class="hidden mt-4">
                 <form action="submitComment" method="post"> <!--need to define a servlet or endpoint to handle comment submission -->
                     <textarea name="comment" rows="4" class="w-full p-2 border rounded"></textarea>
+                    <div class="mt-2 flex items-center space-x-2">
+                        <i class="fas fa-bolt text-yellow-500" title="Power"></i>
+                        <p>Power</p>
+                        <select name="strenght" id="strenght">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <i class="fas fa-tree text-green-500" title="Scenery"></i>
+                        <p> Scenery </p>
+                        <select name="scenery" id="scenery">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <i class="fas fa-brain text-purple-500" title="Experience"></i>
+                        <p> Experience </p>
+                        <select name="experience" id="experience">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                        <i class="fas fa-heartbeat text-red-500" title="Condition"></i>
+                        <p> Condition </p>
+                        <select name="condition" id="condition">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>                    </div>
                     <button type="submit" class="btn-primary rounded-md px-4 py-2 mt-2">Post Comment</button>
                 </form>
             </div>
@@ -682,10 +720,23 @@
                 %>
                 <div class="bg-gray-100 rounded-md p-4 mb-2">
                     <div class="flex items-center space-x-2"> <!-- Use a flex container with space between items -->
-                        <p class="text-gray-900"><%= comment.getAuthor().getUsername() %> </p>
+                        <h4 class="text-gray-900"><%= comment.getAuthor().getUsername() %> </h4>
                         <p class="text-gray-500"><%= comment.getDateComment().format(DateTimeFormatter.ofPattern("HH:mm:ss' 'dd-MM-yyyy")) %></p>
                     </div>
                     <p class="mt-2 text-gray-800"><%= comment.getComment() %></p>
+                    <%AttributeEntity comAttributes=comment.getAttributes();
+                    if(comAttributes!=null){%>
+                    <div class="mt-2 flex items-center space-x-2">
+                        <i class="fas fa-bolt text-yellow-500" title="Power"></i>
+                        <span><%= comAttributes.getStrength() %></span>
+                        <i class="fas fa-tree text-green-500" title="Scenery"></i>
+                        <span><%= comAttributes.getScenery() %></span>
+                        <i class="fas fa-brain text-purple-500" title="Experience"></i>
+                        <span><%= comAttributes.getExperience() %></span>
+                        <i class="fas fa-heartbeat text-red-500" title="Condition"></i>
+                        <span><%= comAttributes.getCondition() %></span>
+                    </div>
+                    <%}%>
                 </div>
                 <%
                     }

@@ -4,7 +4,7 @@ import at.fhv.hike.data.CommentEntity;
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.data.UserEntity;
 import at.fhv.hike.data.AttributeEntity;
-import java.sql.Date;
+
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -54,8 +54,8 @@ class CommentEntityTest {
     void testAttributeId() {
         AttributeEntity attribute = new AttributeEntity();
         attribute.setAttributeId(1);
-        commentEntity.setAttributeId(attribute);
-        assertEquals(attribute, commentEntity.getAttributeId());
+        commentEntity.setAttributes(attribute);
+        assertEquals(attribute, commentEntity.getAttributes());
     }
 
     @Test
