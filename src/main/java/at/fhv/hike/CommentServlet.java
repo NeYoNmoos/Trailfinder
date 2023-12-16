@@ -30,6 +30,7 @@ public class CommentServlet extends HttpServlet {
         CommentEntity comment=new CommentEntity();
         comment.setComment(request.getParameter("comment"));
         comment.setRoute(route);
+        comment.setActive(true);
         AttributeEntity attribute=new AttributeEntity();
         attribute.setCondition(Integer.parseInt(request.getParameter("power")));
         attribute.setExperience(Integer.parseInt(request.getParameter("experience")));

@@ -26,7 +26,15 @@ public class CommentEntity {
     @Basic
     @Column(name = "created_at")
     private LocalDateTime dateComment;
-
+    @Basic
+    @Column(name = "active")
+    private Boolean active;
+    public Boolean getActive() {
+        return active;
+    }
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
     public Integer getCommentId() {
         return commentId;
     }

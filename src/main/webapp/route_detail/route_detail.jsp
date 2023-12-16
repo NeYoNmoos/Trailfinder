@@ -2,7 +2,8 @@
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="at.fhv.hike.data.*" %>
 <%@ page import="java.util.*" %>
-<%@ page import="at.fhv.hike.controllers.CookieController" %><%--
+<%@ page import="at.fhv.hike.controllers.CookieController" %>
+<%@ page import="at.fhv.hike.controllers.CommentController" %><%--
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="at.fhv.hike.data.*" %><%--
 <%@ page import="at.fhv.hike.data.*" %>
@@ -670,6 +671,7 @@
             <div id="commentInput" class="hidden mt-4">
                 <%String link="comment-servlet?routeId=" + route.getRouteId();%>
                 <form action="${pageContext.request.contextPath}/<%=link%>" method="post"> <!--need to define a servlet or endpoint to handle comment submission -->
+                    <label for="comment">What do you think about this route?</label>
                     <textarea name="comment"  id="comment" rows="4" class="w-full p-2 border rounded"></textarea>
                     <div class="mt-2 flex items-center space-x-2">
                         <i class="fas fa-bolt text-yellow-500" title="Power"></i>
@@ -682,7 +684,6 @@
                             <option value="5">5</option>
                         </select>
                         <i class="fas fa-tree text-green-500" title="Scenery"></i>
-                        <p> Scenery </p>
                         <label for="scenery">Scenery</label>
                         <select name="scenery" id="scenery">
                             <option value="1">1</option>
@@ -692,8 +693,7 @@
                             <option value="5">5</option>
                         </select>
                         <i class="fas fa-brain text-purple-500" title="Experience"></i>
-                        <p> Experience </p>
-                        <label for="experience">>Experience</label>
+                        <label for="experience">Experience</label>
                         <select name="experience" id="experience">
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -702,7 +702,6 @@
                             <option value="5">5</option>
                         </select>
                         <i class="fas fa-heartbeat text-red-500" title="Condition"></i>
-                        <p> Condition </p>
                         <label for="condition">Condition</label>
                         <select name="condition" id="condition">
                             <option value="1">1</option>
@@ -721,7 +720,9 @@
                 <%
                     List<CommentEntity> comments = route.getComments();
                     if (comments != null && !comments.isEmpty()) {
+                        CommentController.sortComments(comments);
                         for (CommentEntity comment : comments) {
+                            if(comment.getActive()){
                 %>
                 <div class="bg-gray-100 rounded-md p-4 mb-2">
                     <div class="flex items-center space-x-2"> <!-- Use a flex container with space between items -->
@@ -741,7 +742,8 @@
                         <i class="fas fa-heartbeat text-red-500" title="Condition"></i>
                         <span><%= comAttributes.getCondition() %></span>
                     </div>
-                    <%}%>
+                    <%}
+                    }%>
                 </div>
                 <%
                     }
@@ -769,7 +771,6 @@
                 document.getElementById('addCommentButton').textContent = 'Cancel';
         });
     </script>
-    </div>
 </main>
 </body>
 </html>
