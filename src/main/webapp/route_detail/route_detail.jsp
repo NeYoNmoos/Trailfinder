@@ -650,7 +650,6 @@
                     <% } %>
                 </ul>
             </div>
-        </div>
         <% } %>
 
 
@@ -725,9 +724,19 @@
                             if(comment.getActive()){
                 %>
                 <div class="bg-gray-100 rounded-md p-4 mb-2">
-                    <div class="flex items-center space-x-2"> <!-- Use a flex container with space between items -->
-                        <h4 class="text-gray-900"><%= comment.getAuthor().getUsername() %> </h4>
-                        <p class="text-gray-500"><%= comment.getDateComment().format(DateTimeFormatter.ofPattern("HH:mm:ss' 'dd-MM-yyyy")) %></p>
+                    <div class="flex items-center justify-between mb-2"> <!-- Use a flex container with space between items -->
+                        <div class="flex items-center space-x-2">
+                            <h4 class="text-gray-900"><%= comment.getAuthor().getUsername() %> </h4>
+                            <p class="text-gray-500"><%= comment.getDateComment().format(DateTimeFormatter.ofPattern("HH:mm:ss' 'dd-MM-yyyy")) %></p>
+                        </div>
+                        <%if(comment.getAuthor().getUserId().toString().equals(sessionToken)){%>
+                        <div class="flex items-center space-x-2">
+                            <!-- Edit button -->
+                            <button class="text-blue-500 hover:text-blue-700" onclick="editComment(<%= comment.getCommentId() %>)">Edit</button>
+                            <!-- Delete button -->
+                            <button class="text-red-500 hover:text-red-700" onclick="deleteComment(<%= comment.getCommentId() %>)">Delete</button>
+                        </div>
+                        <%}%>
                     </div>
                     <p class="mt-2 text-gray-800"><%= comment.getComment() %></p>
                     <%AttributeEntity comAttributes=comment.getAttributes();
@@ -771,6 +780,7 @@
                 document.getElementById('addCommentButton').textContent = 'Cancel';
         });
     </script>
+</div>
 </main>
 </body>
 </html>
