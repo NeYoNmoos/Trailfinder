@@ -91,11 +91,18 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
         try (Session session = sessionFactory.openSession()) {
             RouteEntity route = session.get(RouteEntity.class, id);
             if (route != null) {
+                Hibernate.initialize(route.getAuthor());
                 Hibernate.initialize(route.getCoordinates());
                 Hibernate.initialize(route.getComments());
                 Hibernate.initialize(route.getGallery());
             }
             return route;
+        }
+    }
+
+    public RouteEntity getByIdSimple(String id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.get(RouteEntity.class, id);
         }
     }
 

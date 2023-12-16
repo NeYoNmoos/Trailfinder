@@ -34,10 +34,12 @@ public class RouteController {
     }
 
 
+    public RouteEntity getByIdSimple(String routeId){
+        return _facade.getByIdSimple(routeId);
+    }
     public RouteEntity getRouteById(String routeId){
         return _facade.getRouteById(routeId);
     }
-
     public void createOrUpdateRoute(RouteEntity route) {
         _facade.save(route);
     }

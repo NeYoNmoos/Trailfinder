@@ -26,7 +26,7 @@ public class CommentServlet extends HttpServlet {
         System.out.println("ROUTE ID "+routeId);
         ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
-        RouteEntity route = rc.getRouteById(routeId);
+        RouteEntity route = rc.getByIdSimple(routeId);
         CommentEntity comment=new CommentEntity();
         comment.setComment(request.getParameter("comment"));
         comment.setRoute(route);

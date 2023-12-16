@@ -14,7 +14,7 @@ public class RouteEntity {
     @Id
     @Column(name = "route_id")
     private Integer routeId;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "author", referencedColumnName = "user_id")
     private UserEntity author;
     @Basic
