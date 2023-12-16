@@ -30,4 +30,9 @@ public class CommentController {
             }
         });
     }
+
+    public CommentEntity getCommentById(String routeId){
+        return _facade.getCommentById(routeId);
+    }
+
 }

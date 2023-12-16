@@ -669,7 +669,8 @@
                     <!-- Comment Input Field (initially hidden) -->
             <div id="commentInput" class="hidden mt-4">
                 <%String link="comment-servlet?routeId=" + route.getRouteId();%>
-                <form action="${pageContext.request.contextPath}/<%=link%>" method="post"> <!--need to define a servlet or endpoint to handle comment submission -->
+                <form action="${pageContext.request.contextPath}/<%=link%>" method="post">
+                    <input type="hidden" name="action" value="add">
                     <label for="comment">What do you think about this route?</label>
                     <textarea name="comment"  id="comment" rows="4" class="w-full p-2 border rounded"></textarea>
                     <div class="mt-2 flex items-center space-x-2">
@@ -724,7 +725,7 @@
                             if(comment.getActive()){
                 %>
                 <div class="bg-gray-100 rounded-md p-4 mb-2">
-                    <div class="flex items-center justify-between mb-2"> <!-- Use a flex container with space between items -->
+                    <div class="flex items-center justify-between mb-2">
                         <div class="flex items-center space-x-2">
                             <h4 class="text-gray-900"><%= comment.getAuthor().getUsername() %> </h4>
                             <p class="text-gray-500"><%= comment.getDateComment().format(DateTimeFormatter.ofPattern("HH:mm:ss' 'dd-MM-yyyy")) %></p>
@@ -734,7 +735,12 @@
                             <!-- Edit button -->
                             <button class="text-blue-500 hover:text-blue-700" onclick="editComment(<%= comment.getCommentId() %>)">Edit</button>
                             <!-- Delete button -->
-                            <button class="text-red-500 hover:text-red-700" onclick="deleteComment(<%= comment.getCommentId() %>)">Delete</button>
+                            <form action="${pageContext.request.contextPath}/comment-servlet" method="post">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="routeId" value="<%=route.getRouteId()%>">
+                                <input type="hidden" name="commentId" value="<%= comment.getCommentId() %>">
+                                <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
+                            </form>
                         </div>
                         <%}%>
                     </div>
@@ -763,13 +769,10 @@
                     }
                 %>
             </div>
-
-
-
         </div>
     </div>
 
-    <!-- JavaScript to toggle comment input visibility -->
+    <!-- JavaScript to toggle (show and UNshow) comment input visibility -->
     <script>
         document.getElementById('addCommentButton').addEventListener('click', function () {
             // Hide the comment input, change button text back to 'Add Comment'

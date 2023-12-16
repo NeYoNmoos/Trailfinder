@@ -180,6 +180,9 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
     public UserEntity getUserByIdSimple(String id){
         return _userBroker.getByIdSimple(id);
     }
+    public CommentEntity getCommentById(String id){
+        return _commentBroker.getById(id);
+    }
     public UserEntity getUserById(String id){
         return _userBroker.getById(id);
     }
