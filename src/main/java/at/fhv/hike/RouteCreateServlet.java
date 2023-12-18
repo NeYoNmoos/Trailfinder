@@ -111,6 +111,7 @@ public class RouteCreateServlet extends HttpServlet {
             RouteController rc =new RouteController(context);
             RouteEntity oldRoute=rc.getRouteById(routeId);
             newRoute.setAuthor(oldRoute.getAuthor());
+            newRoute.setCreated_at(oldRoute.getCreated_at());
         }
 
         String name = request.getParameter("name");

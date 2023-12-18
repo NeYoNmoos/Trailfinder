@@ -732,8 +732,8 @@
                         </div>
                         <%if(comment.getAuthor().getUserId().toString().equals(sessionToken)){%>
                         <div class="flex items-center space-x-2">
-                            <!-- Edit button -->
-                            <button class="text-blue-500 hover:text-blue-700" onclick="editComment(<%= comment.getCommentId() %>)">Edit</button>
+                            <!-- Edit button
+                            <button class="text-blue-500 hover:text-blue-700" onclick="editComment(<%= comment.getCommentId() %>)">Edit</button> -->
                             <!-- Delete button -->
                             <form action="${pageContext.request.contextPath}/comment-servlet" method="post">
                                 <input type="hidden" name="action" value="delete">

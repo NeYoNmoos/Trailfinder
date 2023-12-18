@@ -33,6 +33,10 @@ public class RouteEntity {
     @Column(name = "description")
     private String description;
 
+    public void setCreated_at(LocalDateTime created_at) {
+        this.created_at = created_at;
+    }
+
     @Basic
     @Column(name = "created_at")
     private LocalDateTime created_at;
