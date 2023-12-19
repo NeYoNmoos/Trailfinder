@@ -651,8 +651,7 @@
                 </ul>
             </div>
         <% } %>
-
-
+        </div>
     <!--Comments-->
     <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
         <div class="px-4 py-5 sm:p-6">
@@ -716,7 +715,6 @@
             </div>
 
             <!-- Display comments-->
-            <div>
                 <%
                     List<CommentEntity> comments = route.getComments();
                     if (comments != null && !comments.isEmpty()) {
@@ -724,7 +722,7 @@
                         for (CommentEntity comment : comments) {
                             if(comment.getActive()){
                 %>
-                <div class="bg-gray-100 rounded-md p-4 mb-2">
+                <div class="bg-gray-200 rounded-md p-4 mb-2">
                     <div class="flex items-center justify-between mb-2">
                         <div class="flex items-center space-x-2">
                             <h4 class="text-gray-900"><%= comment.getAuthor().getUsername() %> </h4>
@@ -821,9 +819,9 @@
                         </form>
 
                     </div>
+                </div>
 
                    <% }%>
-                </div>
                 <%
                     }
                 } else {
@@ -832,7 +830,6 @@
                 <%
                     }
                 %>
-            </div>
         </div>
     </div>
 
@@ -895,7 +892,6 @@
                 document.getElementById('addCommentButton').textContent = 'Cancel';
         });
     </script>
-</div>
 </main>
 </body>
 </html>
