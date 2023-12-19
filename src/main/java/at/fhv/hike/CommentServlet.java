@@ -51,6 +51,18 @@ public class CommentServlet extends HttpServlet {
             com.setActive(false);
             cc.createOrUpdateComment(com);
         }
+        else if("edit".equals(action)){
+            String commentId = request.getParameter("commentId");
+            CommentEntity com = cc.getCommentById(commentId);
+            com.setComment(request.getParameter("newComment"));
+            AttributeEntity newAttribute=new AttributeEntity();
+            newAttribute.setStrength(Integer.parseInt(request.getParameter("newPower")));
+            newAttribute.setScenery(Integer.parseInt(request.getParameter("newScenery")));
+            newAttribute.setCondition(Integer.parseInt(request.getParameter("newCondition")));
+            newAttribute.setExperience(Integer.parseInt(request.getParameter("newExperience")));
+            com.setAttributes(newAttribute);
+            cc.createOrUpdateComment(com);
+        }
         response.sendRedirect(request.getContextPath() + "/route-detail?routeId=" + routeId);
     }
 }

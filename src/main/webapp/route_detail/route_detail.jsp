@@ -816,7 +816,7 @@
                             <input type="hidden" name="action" value="edit">
                             <input type="hidden" name="routeId" value="<%=route.getRouteId()%>">
                             <input type="hidden" name="commentId" value="<%= comment.getCommentId() %>">
-                            <button type="submit" class="btn-primary rounded-md px-4 py-2 mt-4">Change</button>
+                            <button type="submit" class="btn-primary rounded-md px-4 py-2 mt-4">Save</button>
                         </div>
                         </form>
 
