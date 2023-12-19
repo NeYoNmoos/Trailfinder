@@ -732,33 +732,57 @@
                         </div>
                         <%if(comment.getAuthor().getUserId().toString().equals(sessionToken)){%>
                         <div class="flex items-center space-x-2">
-                            <!-- Edit button
-                            <button class="text-blue-500 hover:text-blue-700" onclick="editComment(<%= comment.getCommentId() %>)">Edit</button> -->
+                            <!-- Edit button-->
+                            <button class="text-blue-500 hover:text-blue-700" onclick="editComment('<%=comment.getCommentId()%>')">Edit</button>
                             <!-- Delete button -->
-                            <form action="${pageContext.request.contextPath}/comment-servlet" method="post">
-                                <input type="hidden" name="action" value="delete">
-                                <input type="hidden" name="routeId" value="<%=route.getRouteId()%>">
-                                <input type="hidden" name="commentId" value="<%= comment.getCommentId() %>">
-                                <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
-                            </form>
+                            <button class="text-red-500 hover:text-red-700" onclick="deleteComment('<%=comment.getCommentId()%>')">Delete</button>
                         </div>
                         <%}%>
                     </div>
-                    <p class="mt-2 text-gray-800"><%= comment.getComment() %></p>
-                    <%AttributeEntity comAttributes=comment.getAttributes();
-                    if(comAttributes!=null){%>
-                    <div class="mt-2 flex items-center space-x-2">
-                        <i class="fas fa-bolt text-yellow-500" title="Power"></i>
-                        <span><%= comAttributes.getStrength() %></span>
-                        <i class="fas fa-tree text-green-500" title="Scenery"></i>
-                        <span><%= comAttributes.getScenery() %></span>
-                        <i class="fas fa-brain text-purple-500" title="Experience"></i>
-                        <span><%= comAttributes.getExperience() %></span>
-                        <i class="fas fa-heartbeat text-red-500" title="Condition"></i>
-                        <span><%= comAttributes.getCondition() %></span>
+                    <div id='display<%=comment.getCommentId()%>'>
+                        <p class="mt-2 text-gray-800"><%= comment.getComment() %></p>
+                        <%AttributeEntity comAttributes=comment.getAttributes();
+                        if(comAttributes!=null){%>
+                        <div class="mt-2 flex items-center space-x-2">
+                            <i class="fas fa-bolt text-yellow-500" title="Power"></i>
+                            <span><%= comAttributes.getStrength() %></span>
+                            <i class="fas fa-tree text-green-500" title="Scenery"></i>
+                            <span><%= comAttributes.getScenery() %></span>
+                            <i class="fas fa-brain text-purple-500" title="Experience"></i>
+                            <span><%= comAttributes.getExperience() %></span>
+                            <i class="fas fa-heartbeat text-red-500" title="Condition"></i>
+                            <span><%= comAttributes.getCondition() %></span>
+                        </div>
+                       <%}%>
                     </div>
-                    <%}
-                    }%>
+                    <div id='delete<%=comment.getCommentId()%>' class="hidden mt-4">
+                        <p class="mt-2 text-gray-800"><%= comment.getComment() %></p>
+                        <p>Are you sure you want to delete this comment?</p>
+                        <div class="mt-2 flex items-center space-x-2">
+                            <form action="${pageContext.request.contextPath}/comment-servlet" method="post">
+                                <button type="button" onclick="displayComment('<%=comment.getCommentId()%>')" class="btn-primary rounded-md px-4 py-2 mt-4">NO</button>
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="routeId" value="<%=route.getRouteId()%>">
+                                <input type="hidden" name="commentId" value="<%= comment.getCommentId() %>">
+                                <button type="submit" class="btn-primary rounded-md px-4 py-2 mt-4">YES delete</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div id='edit<%=comment.getCommentId()%>' class="hidden mt-4">
+                        <label for="newComment">Edit comment:</label>
+                        <input type="text" id="newComment" value="<%=comment.getComment()%>" name="newComment" required>
+                        <div class="mt-2 flex items-center space-x-2">
+                            <form action="${pageContext.request.contextPath}/comment-servlet" method="post">
+                            <button type="button" onclick="displayComment('<%=comment.getCommentId()%>')" class="btn-primary rounded-md px-4 py-2 mt-4">Cancel</button>
+                            <input type="hidden" name="action" value="edit">
+                            <input type="hidden" name="routeId" value="<%=route.getRouteId()%>">
+                            <input type="hidden" name="commentId" value="<%= comment.getCommentId() %>">
+                            <button type="submit" class="btn-primary rounded-md px-4 py-2 mt-4">Change</button>
+                            </form>
+                        </div>
+                    </div>
+
+                   <% }%>
                 </div>
                 <%
                     }
@@ -774,6 +798,54 @@
 
     <!-- JavaScript to toggle (show and UNshow) comment input visibility -->
     <script>
+        function displayComment(_id) {
+            console.log("Displaying comment:", _id);
+            // Hide the edit and delete sections, show the display section
+            var displayElement = document.getElementById('display'+_id);
+            var editElement = document.getElementById('edit'+_id);
+            var deleteElement = document.getElementById('delete'+_id);
+
+            console.log("Display element:", displayElement);
+            console.log("Edit element:", editElement);
+            console.log("Delete element:", deleteElement);
+
+            if (displayElement) displayElement.style.display = 'block';
+            if (editElement) editElement.style.display = 'none';
+            if (deleteElement) deleteElement.style.display = 'none';
+        }
+
+        function editComment(_id) {
+            console.log("Editing comment:", _id);
+            // Hide the display and delete sections, show the edit section
+            var displayElement = document.getElementById('display'+_id);
+            var editElement = document.getElementById('edit'+_id);
+            var deleteElement = document.getElementById('delete'+_id);
+
+            console.log("Display element:", displayElement);
+            console.log("Edit element:", editElement);
+            console.log("Delete element:", deleteElement);
+
+            if (displayElement) displayElement.style.display = 'none';
+            if (editElement) editElement.style.display = 'block';
+            if (deleteElement) deleteElement.style.display = 'none';
+        }
+
+        function deleteComment(_id) {
+            console.log("Deleting comment:", _id);
+            // Hide the display and edit sections, show the delete section
+            var displayElement = document.getElementById('display'+_id);
+            var editElement = document.getElementById('edit'+_id);
+            var deleteElement = document.getElementById('delete'+_id);
+
+            console.log("Display element:", displayElement);
+            console.log("Edit element:", editElement);
+            console.log("Delete element:", deleteElement);
+
+            if (displayElement) displayElement.style.display = 'none';
+            if (editElement) editElement.style.display = 'none';
+            if (deleteElement) deleteElement.style.display = 'block';
+        }
+
         document.getElementById('addCommentButton').addEventListener('click', function () {
             // Hide the comment input, change button text back to 'Add Comment'
             document.getElementById('commentInput').classList.toggle('hidden');
