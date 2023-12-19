@@ -54,6 +54,12 @@ public class UserEntity {
             inverseJoinColumns = {@JoinColumn(name = "route_id")})
     private List<RouteEntity> favorite_routes;
 
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinTable(name = "done_route",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "route_id")})
+    private List<RouteEntity> done_routes;
+
     public void removeRoute(RouteEntity route) {
         routes.remove(route);
         route.setActive(false);
@@ -140,4 +146,14 @@ public class UserEntity {
     public void setFavorite_routes(List<RouteEntity> favorite_routes) {
         this.favorite_routes = favorite_routes;
     }
+
+    public List<RouteEntity> getDone_routes() {
+        return done_routes;
+    }
+
+    public void setDone_routes(List<RouteEntity> done_routes) {
+        this.done_routes = done_routes;
+    }
+
+
 }

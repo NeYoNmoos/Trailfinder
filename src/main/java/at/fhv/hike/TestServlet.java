@@ -53,11 +53,8 @@ public class TestServlet extends HttpServlet {
         CommentEntity ce = new CommentEntity();
         ce.setComment("TestingComment");
 
-        DoneRouteEntity dre = new DoneRouteEntity();
         ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
-        dre.setRoute(rc.getRouteById("30"));
-        rc.saveObjectInDb(dre);
         System.out.println("dre saved");
 
         request.getRequestDispatcher("/create_route/create_confirmation.jsp").forward(request, response);
