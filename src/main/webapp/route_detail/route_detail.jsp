@@ -591,6 +591,7 @@
                 }, 100);
             </script>
 
+            <!--
             <div class="px-4 py-5 sm:p-6">
 
                 <%if (huetten.size() > 0) {%>
@@ -632,41 +633,23 @@
                     <% } %>
                 </ul>
                 <%}%>
-
-                <h2 class="text-xl font-bold text-gray-900">Coordinates</h2>
-                <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    <% for(CoordinateEntity coord : coordinates) { %>
-                    <li class="col-span-1 bg-white rounded-lg shadow">
-                        <div class="w-full flex items-center justify-between p-6 space-x-6">
-                            <div class="flex-1 truncate">
-                                <div class="flex items-center space-x-3">
-                                    <h3 class="text-gray-900 text-sm leading-5 font-medium truncate">Point</h3>
-                                </div>
-                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Latitude: <%= coord.getLatitude() %></p>
-                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Longitude: <%= coord.getLongitude() %></p>
-                            </div>
-                        </div>
-                    </li>
-                    <% } %>
-                </ul>
             </div>
+            -->
         <% } %>
 
 
     <!--Comments-->
-    <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
         <div class="px-4 py-5 sm:p-6">
-            <div class="mb-8 flex flex-row justify-between">
-                <h1 class="text-3xl font-bold text-gray-900">Comments</h1>
+            <div class="mb-8 flex flex-row justify-between items-center">
+                <h1 class="text-3xl font-bold text-gray-900 mt-3">Comments</h1>
 
                 <%if(sessionToken!=null){%>
                 <div class="flex flex-row">
-                    <!-- Add Comment Button -->
-                    <button id="addCommentButton" class="btn-primary rounded-md px-4 py-2 mt-4">Add Comment</button>
+                    <button id="addCommentButton" class="btn-primary rounded-md px-4 py-2">Add Comment</button>
                 </div>
                 <%}%>
             </div>
-                    <!-- Comment Input Field (initially hidden) -->
             <div id="commentInput" class="hidden mt-4">
                 <%String link="comment-servlet?routeId=" + route.getRouteId();%>
                 <form action="${pageContext.request.contextPath}/<%=link%>" method="post">
@@ -724,11 +707,11 @@
                         for (CommentEntity comment : comments) {
                             if(comment.getActive()){
                 %>
-                <div class="bg-gray-100 rounded-md p-4 mb-2">
+                <div class="bg-gray-100 shadow rounded-md px-4 pb-4 mb-2">
                     <div class="flex items-center justify-between mb-2">
-                        <div class="flex items-center space-x-2">
-                            <h4 class="text-gray-900"><%= comment.getAuthor().getUsername() %> </h4>
-                            <p class="text-gray-500"><%= comment.getDateComment().format(DateTimeFormatter.ofPattern("HH:mm:ss' 'dd-MM-yyyy")) %></p>
+                        <div class="flex flex-row items-center space-x-2">
+                            <h4 class="text-gray-900"><%= comment.getAuthor().getUsername() %></h4>
+                            <p class="text-gray-500 pt-[10px]"><%= comment.getDateComment().format(DateTimeFormatter.ofPattern("dd.MM.yyyy' 'HH:mm")) %></p>
                         </div>
                         <%if(comment.getAuthor().getUserId().toString().equals(sessionToken)){%>
                         <div class="flex items-center space-x-2">
@@ -739,7 +722,11 @@
                                 <input type="hidden" name="action" value="delete">
                                 <input type="hidden" name="routeId" value="<%=route.getRouteId()%>">
                                 <input type="hidden" name="commentId" value="<%= comment.getCommentId() %>">
-                                <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
+                                <button type="submit" class="inline-flex items-center px-4 py-2 mt-4 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg>
+                                </button>
                             </form>
                         </div>
                         <%}%>
