@@ -265,6 +265,8 @@
                 map.on('contextmenu', function(e) {
                     if (e.originalEvent.ctrlKey && e.originalEvent.button === 2) {
                         openPopup();
+                        getHuetteName();
+
                         let huetteName = prompt("Please enter the name of your hut:", "");
                         let huetteDescription = prompt("Please enter a description for your hut:", "");
                         if ((huetteName != null) && (huetteName != "") && (huetteDescription != null) && (huetteDescription != "")) {
@@ -431,17 +433,26 @@
                         <h2>Hut</h2>
                     </div>
                     <div class="modal-body">
-                        <p>Please enter the name of your hut:</p>
-                        <input type="text" id="test1" name="test1">
-                        <p>Please enter the name of your hut:</p>
-                        <input type="text" id="test2" name="test2">
-                        <button type="button">Save</button>
+                            <p>Please enter the name of your hut:</p>
+                            <input type="text" id="test1" name="test1">
+                            <p>Please enter the name of your hut:</p>
+                            <input type="text" id="test2" name="test2">
+                            <input type="button" id="test3" value="Save">
                     </div>
                 </div>
 
             </div>
 
             <script>
+                function getPromiseFromEvent(item, event) {
+                    return new Promise(resolve => {const listener = () => {item.removeEventListener(event, listener); resolve();}; item.addEventListener(event, listener);})
+                }
+
+                async function getHuetteName() {
+                    await getPromiseFromEvent(test3, "click");
+                    alert("TEST");
+                }
+
                 // Get the modal
                 var modal = document.getElementById("myModal");
 
