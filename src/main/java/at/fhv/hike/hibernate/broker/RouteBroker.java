@@ -41,7 +41,8 @@ public class RouteBroker extends BrokerBase<RouteEntity> {
                     "WHERE (r.length >= :lengthMin) " +
                     "AND (r.active = true) " +
                     "AND (r.length <= :lengthMax) " +
-                    "AND (LOWER(r.name) LIKE '%' ||:routename|| '%') " +
+                    "AND ((LOWER(r.name) LIKE '%' ||:routename|| '%') " +
+                    "OR (LOWER(r.location) LIKE '%' ||:routename|| '%')) " +
                     "AND (r.duration >= :durationMin) " +
                     "AND (r.duration <= :durationMax) " +
                     "AND (r.altitude >= :altitudeMin) " +

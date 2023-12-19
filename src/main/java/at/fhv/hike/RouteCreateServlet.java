@@ -101,12 +101,15 @@ public class RouteCreateServlet extends HttpServlet {
         RouteEntity newRoute = new RouteEntity();
         String routeId = request.getParameter("routeId");
 
-        if(routeId==null){
+        System.out.println(routeId);
+        if(Objects.equals(routeId, "null")){
             UserController uc = new UserController(context);
+            System.out.println(loggedInUserId);
             UserEntity author = uc.getUserById(loggedInUserId);
             newRoute.setAuthor(author);
         }
         else {
+            System.out.println("Greska WTF");
             newRoute.setRouteId(Integer.parseInt(routeId));
             RouteController rc =new RouteController(context);
             RouteEntity oldRoute=rc.getRouteById(routeId);

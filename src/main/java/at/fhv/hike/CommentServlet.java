@@ -35,10 +35,10 @@ public class CommentServlet extends HttpServlet {
             comment.setRoute(route);
             comment.setActive(true);
             AttributeEntity attribute = new AttributeEntity();
-            attribute.setCondition(Integer.parseInt(request.getParameter("power")));
+            attribute.setStrength(Integer.parseInt(request.getParameter("power")));
             attribute.setExperience(Integer.parseInt(request.getParameter("experience")));
             attribute.setScenery(Integer.parseInt(request.getParameter("scenery")));
-            attribute.setStrength(Integer.parseInt(request.getParameter("condition")));
+            attribute.setCondition(Integer.parseInt(request.getParameter("condition")));
             comment.setAttributes(attribute);
             UserController uc = new UserController(context);
             UserEntity user = uc.getUserByIdSimple(CookieController.getLogedInUserId(request.getCookies()));
@@ -49,6 +49,18 @@ public class CommentServlet extends HttpServlet {
             String commentId = request.getParameter("commentId");
             CommentEntity com = cc.getCommentById(commentId);
             com.setActive(false);
+            cc.createOrUpdateComment(com);
+        }
+        else if("edit".equals(action)){
+            String commentId = request.getParameter("commentId");
+            CommentEntity com = cc.getCommentById(commentId);
+            com.setComment(request.getParameter("newComment"));
+            AttributeEntity newAttribute=new AttributeEntity();
+            newAttribute.setStrength(Integer.parseInt(request.getParameter("newPower")));
+            newAttribute.setScenery(Integer.parseInt(request.getParameter("newScenery")));
+            newAttribute.setCondition(Integer.parseInt(request.getParameter("newCondition")));
+            newAttribute.setExperience(Integer.parseInt(request.getParameter("newExperience")));
+            com.setAttributes(newAttribute);
             cc.createOrUpdateComment(com);
         }
         response.sendRedirect(request.getContextPath() + "/route-detail?routeId=" + routeId);
