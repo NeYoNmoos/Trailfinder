@@ -35,10 +35,10 @@ public class CommentServlet extends HttpServlet {
             comment.setRoute(route);
             comment.setActive(true);
             AttributeEntity attribute = new AttributeEntity();
-            attribute.setCondition(Integer.parseInt(request.getParameter("power")));
+            attribute.setStrength(Integer.parseInt(request.getParameter("power")));
             attribute.setExperience(Integer.parseInt(request.getParameter("experience")));
             attribute.setScenery(Integer.parseInt(request.getParameter("scenery")));
-            attribute.setStrength(Integer.parseInt(request.getParameter("condition")));
+            attribute.setCondition(Integer.parseInt(request.getParameter("condition")));
             comment.setAttributes(attribute);
             UserController uc = new UserController(context);
             UserEntity user = uc.getUserByIdSimple(CookieController.getLogedInUserId(request.getCookies()));

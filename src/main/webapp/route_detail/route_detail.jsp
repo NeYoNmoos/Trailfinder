@@ -769,17 +769,57 @@
                         </div>
                     </div>
                     <div id='edit<%=comment.getCommentId()%>' class="hidden mt-4">
+                        <form action="${pageContext.request.contextPath}/comment-servlet" method="post">
+
                         <label for="newComment">Edit comment:</label>
                         <input type="text" id="newComment" value="<%=comment.getComment()%>" name="newComment" required>
+                            <div class="mt-2 flex items-center space-x-2">
+                                <i class="fas fa-bolt text-yellow-500" title="Power"></i>
+                                <label for="newPower">Power</label>
+                                <select name="newPower" id="newPower">
+                                    <option value="1"  <%= ((Integer)comment.getAttributes().getStrength()) == 1 ? "selected" : "" %>>1</option>
+                                    <option value="2" <%= ((Integer)comment.getAttributes().getStrength()) == 2 ? "selected" : "" %>>2</option>
+                                    <option value="3"  <%= ((Integer)comment.getAttributes().getStrength()) ==3 ? "selected" : "" %>>3</option>
+                                    <option value="4" <%= ((Integer)comment.getAttributes().getStrength()) == 4 ? "selected" : "" %>>4</option>
+                                    <option value="5" <%= ((Integer)comment.getAttributes().getStrength()) == 5 ? "selected" : "" %>>5</option>
+                                </select>
+                                <i class="fas fa-tree text-green-500" title="Scenery"></i>
+                                <label for="newScenery">Scenery</label>
+                                <select name="newScenery" id="newScenery">
+                                    <option value="1" <%= ((Integer)comment.getAttributes().getScenery()) == 1 ? "selected" : "" %>>1</option>
+                                    <option value="2" <%= ((Integer)comment.getAttributes().getScenery()) == 2 ? "selected" : "" %>>2</option>
+                                    <option value="3" <%= ((Integer)comment.getAttributes().getScenery()) == 3 ? "selected" : "" %>>3</option>
+                                    <option value="4" <%= ((Integer)comment.getAttributes().getScenery()) == 4 ? "selected" : "" %>>4</option>
+                                    <option value="5" <%= ((Integer)comment.getAttributes().getScenery()) == 5 ? "selected" : "" %>>5</option>
+                                </select>
+                                <i class="fas fa-brain text-purple-500" title="Experience"></i>
+                                <label for="newExperience">Experience</label>
+                                <select name="newExperience" id="newExperience">
+                                    <option value="1"  <%= ((Integer)comment.getAttributes().getExperience()) == 1 ? "selected" : "" %> >1</option>
+                                    <option value="2" <%= ((Integer)comment.getAttributes().getExperience()) == 2 ? "selected" : "" %>>2</option>
+                                    <option value="3" <%= ((Integer)comment.getAttributes().getExperience()) == 3 ? "selected" : "" %>>3</option>
+                                    <option value="4"<%= ((Integer)comment.getAttributes().getExperience()) == 4? "selected" : "" %>>4</option>
+                                    <option value="5"<%= ((Integer)comment.getAttributes().getExperience()) == 5 ? "selected" : "" %>>5</option>
+                                </select>
+                                <i class="fas fa-heartbeat text-red-500" title="Condition"></i>
+                                <label for="newCondition">Condition</label>
+                                <select name="newCondition" id="newCondition">
+                                    <option value="1" <%= ((Integer)comment.getAttributes().getCondition()) == 1 ? "selected" : "" %>>1</option>
+                                    <option value="2"<%= ((Integer)comment.getAttributes().getCondition()) == 2 ? "selected" : "" %>>2</option>
+                                    <option value="3"<%= ((Integer)comment.getAttributes().getCondition()) == 3 ? "selected" : "" %>>3</option>
+                                    <option value="4"<%= ((Integer)comment.getAttributes().getCondition()) == 4 ? "selected" : "" %>>4</option>
+                                    <option value="5"<%= ((Integer)comment.getAttributes().getCondition()) == 5 ? "selected" : "" %>>5</option>
+                                </select>
+                            </div>
                         <div class="mt-2 flex items-center space-x-2">
-                            <form action="${pageContext.request.contextPath}/comment-servlet" method="post">
                             <button type="button" onclick="displayComment('<%=comment.getCommentId()%>')" class="btn-primary rounded-md px-4 py-2 mt-4">Cancel</button>
                             <input type="hidden" name="action" value="edit">
                             <input type="hidden" name="routeId" value="<%=route.getRouteId()%>">
                             <input type="hidden" name="commentId" value="<%= comment.getCommentId() %>">
                             <button type="submit" class="btn-primary rounded-md px-4 py-2 mt-4">Change</button>
-                            </form>
                         </div>
+                        </form>
+
                     </div>
 
                    <% }%>
