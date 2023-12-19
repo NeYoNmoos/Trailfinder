@@ -73,7 +73,7 @@
                 Favorite
             </a>
             <% } %>
-            <%if(canEdit){%>
+            <%if(canEdit != null){%>
             <% String editPageUrl = "/route-create?routeId=" + route.getRouteId(); %>
             <a href="${pageContext.request.contextPath}<%= editPageUrl %>"
                class="inline-flex items-center ml-2 text-white bg-blue-500 rounded-lg px-3 py-1 hover:bg-blue-700 transition duration-300" style="float:right">
@@ -541,13 +541,17 @@
                 }
 
                 <%
-                int i = 0;
-                while (i < huetten.size()) {
+                if(huetten != null){
+
+                    int i = 0;
+                    while (i < huetten.size()) {
                 %>
                 addHuetteMarker(<%=huetten.get(i).getCoordinateEntity().getLatitude()%>,<%=huetten.get(i).getCoordinateEntity().getLongitude()%>, "<%=huetten.get(i).getName()%>");
                 <%
-                    i++;
+                        i++;
+                    }
                 }
+
                 %>
 
                 // add Pois to map
@@ -560,13 +564,14 @@
                 }
 
                 <%
-                int j = 0;
-                while (j < pois.size()) {
-
+                if(pois != null){
+                    int j = 0;
+                    while (j < pois.size()) {
                 %>
                 addPoiMarker(<%=pois.get(j).getCoordinates().getLatitude()%>,<%=pois.get(j).getCoordinates().getLongitude()%>, "<%=pois.get(j).getName()%>");
                 <%
-                    j++;
+                        j++;
+                    }
                 }
                 %>
 
@@ -593,7 +598,7 @@
 
             <div class="px-4 py-5 sm:p-6">
 
-                <%if (huetten.size() > 0) {%>
+                <%if (huetten != null && huetten.size() > 0) {%>
                 <h2 class="text-xl font-bold text-gray-900">Huts</h2>
                 <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     <% for(LodgeEntity huette : huetten) { %>
@@ -613,7 +618,7 @@
                 </ul>
                 <%}%>
 
-                <%if (pois.size() > 0) {%>
+                <%if (pois != null && pois.size() > 0) {%>
                 <h2 class="text-xl font-bold text-gray-900">Points of Interest</h2>
                 <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     <% for(PointOfInterestEntity poi : pois) { %>
