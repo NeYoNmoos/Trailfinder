@@ -108,6 +108,7 @@
             <div class="px-4 py-5 sm:p-6 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-gray-900 mb-1 sm:mb-0">Route Details</h2>
 
+                <button type="button" onclick="printSummary()" class="w-48 btn-primary rounded-md px-4 py-2">Print</button>
                 <form action="https://www.google.com/maps/dir/" method="get" target="_blank">
                     <input type="hidden" name="api" value="1">
                     <% if (coordinates != null && !coordinates.isEmpty()) { %>
@@ -896,6 +897,27 @@
             else
                 document.getElementById('addCommentButton').textContent = 'Cancel';
         });
+    </script>
+
+    <script>
+        function printSummary() {
+            // Open a new window for the summary
+            var summaryWindow = window.open('', '_blank');
+
+            // Load the content of summary.jsp into the new window
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Write the fetched content to the new window
+                    summaryWindow.document.write(xhr.responseText);
+
+                    // Print the summary window
+                    summaryWindow.print();
+                }
+            };
+            xhr.open('GET', '${pageContext.request.contextPath}/route_detail/summary.jsp', true);
+            xhr.send();
+        }
     </script>
 </main>
 </body>
