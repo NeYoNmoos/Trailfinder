@@ -79,9 +79,12 @@
             %>
         </div>
     </div>
-    <div class="px-4 py-5 sm:p-6 text-center">
+    <div class="px-4 py-5 sm:p-1 text-center">
         <div class="mb-2">
-            <p><%= route.getDescription() %> </p>
+            <%String description=route.getDescription();
+                if(description.length()>500)
+                    description=description.substring(0, 500 - 3) + "...";%>
+            <p><%=description%> </p>
         </div>
         <div class="flex justify-center">
         <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2 text-center justify-center">
