@@ -83,7 +83,7 @@
         <div class="mb-2">
             <%String description=route.getDescription();
                 if(description.length()>500)
-                    description=description.substring(0, 500 - 3) + "...";%>
+                    description=description.substring(0,497) + "...";%>
             <p><%=description%> </p>
         </div>
         <div class="flex justify-center">
