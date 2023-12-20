@@ -28,10 +28,6 @@ public class AddFavoriteServlet extends HttpServlet {
         String userId = CookieController.getLogedInUserId(request.getCookies());
         String routeId = request.getParameter("routeId");
 
-        System.out.println("TRYING to Save to favorite");
-        System.out.println(userId);
-        System.out.println(routeId);
-
         ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
         UserController uc = new UserController(context);
@@ -40,7 +36,6 @@ public class AddFavoriteServlet extends HttpServlet {
         UserEntity user = uc.getUserById(userId);
 
 
-        System.out.println("route id that is saved in user");
 
         boolean isFavorite = uc.toggleFavoriteRoute(userId, routeId);
 
@@ -48,13 +43,6 @@ public class AddFavoriteServlet extends HttpServlet {
 
         request.setAttribute("route", route);
         request.setAttribute("isFavorite", isFavorite);
-
-        System.out.println("should be saved here!");
-
-        for(RouteEntity r: uc.getUserById(userId).getFavorite_routes()){
-            System.out.println(r.getRouteId());
-            System.out.println(r.getName());
-        }
 
         // Huetten
         List<LodgeEntity> huetten = new ArrayList<>();
