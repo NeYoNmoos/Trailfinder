@@ -53,9 +53,9 @@ public class RouteDetailServlet extends HttpServlet {
         request.setAttribute("pois", pois);
 
         String loggedInUserId= CookieController.getLogedInUserId(request.getCookies());
+        UserController uc = new UserController(context);
 
         if(loggedInUserId!=null){
-            UserController uc = new UserController(context);
             UserEntity loggedInUser = uc.getUserByIdSimple(loggedInUserId);
 
             Boolean isAdmin=loggedInUser.getUserType();
@@ -80,6 +80,7 @@ public class RouteDetailServlet extends HttpServlet {
         else
             request.setAttribute("canEdit", false);
 
+        request.setAttribute("isFavorite", uc.isFavoriteRoute(loggedInUserId, routeId));
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/route_detail/route_detail.jsp");
         dispatcher.forward(request, response);

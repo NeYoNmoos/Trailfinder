@@ -28,9 +28,10 @@
 
 <%
     RouteEntity route = (RouteEntity) request.getAttribute("route");
-    Boolean canEdit=(Boolean)request.getAttribute("canEdit");
+    Boolean canEdit = (Boolean) request.getAttribute("canEdit");
     AttributeEntity attributes = route != null ? route.getAttributeEntity() : null;
     List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;
+    Boolean isFavorite = (Boolean) request.getAttribute("isFavorite");
 
     Collections.sort(coordinates, Comparator.comparingInt(CoordinateEntity::getSequence));
 
@@ -64,14 +65,16 @@
             <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
             <div class="flex flex-row">
             <% if (sessionToken != null) { %>
-            <% String favoritePageUrl = "/add_favorite?routeId=" + route.getRouteId(); %>
-            <a href="${pageContext.request.contextPath}<%= favoritePageUrl %>"
-               class="inline-flex items-center ml-2 text-white bg-blue-500 rounded-lg px-3 py-1 hover:bg-blue-700 transition duration-300" style="float:right">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                    <path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z"/>
-                </svg>
-                Favorite
-            </a>
+                <form action="${pageContext.request.contextPath}/add_favorite" method="POST" class="m-0">
+                    <input type="hidden" name="routeId" value="<%= route.getRouteId() %>" />
+                    <button type="submit" class="inline-flex items-center text-white bg-blue-500 rounded-lg h-11 px-3 py-1 hover:bg-blue-700 transition duration-300">
+                        <% if(isFavorite) { %>
+                        <i class="fas fa-star text-white" title="Favorited"></i>
+                        <% } else { %>
+                        <i class="far fa-star text-white" title="Not Favorited"></i>
+                        <% } %>
+                    </button>
+                </form>
             <% } %>
             <%if(canEdit){%>
             <% String editPageUrl = "/route-create?routeId=" + route.getRouteId(); %>
