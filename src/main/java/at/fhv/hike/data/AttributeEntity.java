@@ -32,7 +32,7 @@ public class AttributeEntity {
         this.attributeId = attributeId;
     }
 
-    public Object getStrength() {
+    public Integer getStrength() {
         return strength;
     }
 
@@ -40,7 +40,7 @@ public class AttributeEntity {
         this.strength = strength;
     }
 
-    public Object getCondition() {
+    public Integer getCondition() {
         return condition;
     }
 
@@ -48,7 +48,7 @@ public class AttributeEntity {
         this.condition = condition;
     }
 
-    public Object getScenery() {
+    public Integer getScenery() {
         return scenery;
     }
 
@@ -56,7 +56,7 @@ public class AttributeEntity {
         this.scenery = scenery;
     }
 
-    public Object getExperience() {
+    public Integer getExperience() {
         return experience;
     }
 
