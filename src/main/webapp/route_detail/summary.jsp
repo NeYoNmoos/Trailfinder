@@ -23,6 +23,17 @@
     <script src="${pageContext.request.contextPath}/route_detail/fetch_hiking_route.js"></script>
     <title>Summary</title></head>
 <body>
+<script>
+    // Open printing dialog when the page is loaded
+    window.onload = function() {
+        window.print();
+
+        // Redirect to the previous page after printing
+        setTimeout(function() {
+            window.history.back();
+        }, 1000); // Adjust the delay as needed
+    };
+</script>
 <%
     RouteEntity route = (RouteEntity) request.getAttribute("route");
     AttributeEntity attributes = route != null ? route.getAttributeEntity() : null;
