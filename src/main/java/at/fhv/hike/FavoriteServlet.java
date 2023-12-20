@@ -25,20 +25,13 @@ public class FavoriteServlet extends HttpServlet {
         UserController uc = new UserController(request.getServletContext());
         if(userId != null) {
             UserEntity user = uc.getUserById(userId);
-            request.setAttribute("user", user.getUsername());
-            request.setAttribute("email", user.getEmail());
-            ServletContext context = request.getServletContext();
-            RouteController rc = new RouteController(context);
-
-            List<RouteEntity> myRoutes=user.getFavorite_routes();
-
-
+            List<RouteEntity> myRoutes = user.getFavorite_routes();
 
             System.out.println("HUETTE " + myRoutes.size());
             request.setAttribute("routes", myRoutes);
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/my_routes.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/favorite_routes.jsp");
         dispatcher.forward(request, response);
     }
 }
