@@ -32,7 +32,7 @@
             window.print();
 
             window.history.back();
-        }, 1000);
+        }, 500);
     };
 </script>
 <%
@@ -212,7 +212,7 @@
 <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
 
     <div class="flex justify-center items-center">
-        <div id="map" class="h-[400px]" style="max-width:800px; width: 100%;"></div>
+        <div id="map" class="h-[400px] max-w-[800px] w-full"></div>
     </div>
     <script>
         let firstLat = <%= coordinates.get(0).getLatitude() %>;
