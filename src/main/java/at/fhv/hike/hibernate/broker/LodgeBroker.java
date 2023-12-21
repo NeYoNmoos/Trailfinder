@@ -24,7 +24,7 @@ public class LodgeBroker extends BrokerBase<LodgeEntity> {
                     "WHERE ((LOWER(l.name)) LIKE '%' ||:huetteName|| '%')";
 
             Query<LodgeEntity> query = session.createQuery(hql, LodgeEntity.class)
-                    .setParameter("name", huetteName);
+                    .setParameter("huetteName", huetteName);
 
             List<LodgeEntity> huetten = query.getResultList();
 

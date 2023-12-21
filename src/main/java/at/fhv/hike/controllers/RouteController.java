@@ -26,10 +26,6 @@ public class RouteController {
         routename = routename.toLowerCase();
         List<RouteEntity> filteredRoutes = _facade.getFilteredRoutes(routename, lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition,selectedMonth);
 
-        // Get Routes through huettenname
-        List<RouteEntity> huettenRoutes = getAllRoutesForHuette(routename);
-
-
         return filteredRoutes;
     }
 

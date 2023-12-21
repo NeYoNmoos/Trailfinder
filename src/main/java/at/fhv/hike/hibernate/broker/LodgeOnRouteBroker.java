@@ -52,7 +52,7 @@ public class LodgeOnRouteBroker extends BrokerBase<LodgeOnRouteEntity> {
                         "WHERE (l.lodgeEntity.id = :huetteId)";
 
                 Query<LodgeOnRouteEntity> query = session.createQuery(hql, LodgeOnRouteEntity.class)
-                        .setParameter("lodge_id", huetteId);
+                        .setParameter("huetteId", huetteId);
 
                 List<LodgeOnRouteEntity> huettenOnRoutes = query.getResultList();
 

@@ -216,7 +216,7 @@ public class RouteEntity {
         RouteEntity that = (RouteEntity) o;
 
         if (routeId != null ? !routeId.equals(that.routeId) : that.routeId != null) return false;
-        if (author != null ? !author.equals(that.author) : that.author != null) return false;
+      //  if (author != null ? !author.equals(that.author) : that.author != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (length != null ? !length.equals(that.length) : that.length != null) return false;
         if (altitude != null ? !altitude.equals(that.altitude) : that.altitude != null) return false;
@@ -232,7 +232,7 @@ public class RouteEntity {
     @Override
     public int hashCode() {
         int result = routeId != null ? routeId.hashCode() : 0;
-        result = 31 * result + (author != null ? author.hashCode() : 0);
+        //result = 31 * result + (author != null ? author.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (length != null ? length.hashCode() : 0);
         result = 31 * result + (altitude != null ? altitude.hashCode() : 0);
