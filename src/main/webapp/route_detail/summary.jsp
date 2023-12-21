@@ -26,10 +26,11 @@
 <script>
     // Open printing dialog when the page is loaded
     window.onload = function() {
-        window.print();
 
         // Redirect to the previous page after printing
         setTimeout(function() {
+            window.print();
+
             window.history.back();
         }, 1000); // Adjust the delay as needed
     };
@@ -210,7 +211,9 @@
 <% if (coordinates != null && !coordinates.isEmpty()) { %>
 <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
 
-    <div id="map" class="w-full h-[400px]"></div>
+    <div class="flex justify-center items-center">
+        <div id="map" class="h-[400px]" style="max-width:800px; width: 100%;"></div>
+    </div>
     <script>
         let firstLat = <%= coordinates.get(0).getLatitude() %>;
         let firstLon = <%= coordinates.get(0).getLongitude() %>;
