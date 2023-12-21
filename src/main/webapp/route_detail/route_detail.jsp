@@ -57,57 +57,86 @@
     String sessionToken= CookieController.getLogedInUserId(request.getCookies());
 %>
 
-<main class="py-10">
-    <div class="max-w-7xl lg:w-[75vw] mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Route Title -->
-        <div class="mb-8 flex flex-row justify-between">
-            <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
-            <div class="flex flex-row">
-            <% if (sessionToken != null) { %>
-            <% String favoritePageUrl = "/add_favorite?routeId=" + route.getRouteId(); %>
-            <a href="${pageContext.request.contextPath}<%= favoritePageUrl %>"
-               class="inline-flex items-center ml-2 text-white bg-blue-500 rounded-lg px-3 py-1 hover:bg-blue-700 transition duration-300" style="float:right">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                    <path d="m480-120-58-52q-101-91-167-157T150-447.5Q111-500 95.5-544T80-634q0-94 63-157t157-63q52 0 99 22t81 62q34-40 81-62t99-22q94 0 157 63t63 157q0 46-15.5 90T810-447.5Q771-395 705-329T538-172l-58 52Zm0-108q96-86 158-147.5t98-107q36-45.5 50-81t14-70.5q0-60-40-100t-100-40q-47 0-87 26.5T518-680h-76q-15-41-55-67.5T300-774q-60 0-100 40t-40 100q0 35 14 70.5t50 81q36 45.5 98 107T480-228Zm0-273Z"/>
-                </svg>
-                Favorite
-            </a>
-            <% } %>
-            <%if(canEdit != null){%>
-            <% String editPageUrl = "/route-create?routeId=" + route.getRouteId(); %>
-            <a href="${pageContext.request.contextPath}<%= editPageUrl %>"
-               class="inline-flex items-center ml-2 text-white bg-blue-500 rounded-lg px-3 py-1 hover:bg-blue-700 transition duration-300" style="float:right">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                </svg>
-                Edit
-            </a>
-
-            <script>
-                function deleteFunction() {
-                    var confirmDelete = confirm("Are you sure you want to delete this route?");
-                    if (confirmDelete) {
-                        var deletePage=<%=route.getRouteId()%>;
-                        window.location.href = "${pageContext.request.contextPath}/delete?routeId="+deletePage;
-                    }
-                }
-            </script>
-            <button onclick="deleteFunction()" id="deleteButton" data-model-target="deleteModal" data-modal-toggle="deleteModal" class="inline-flex items-center ml-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md" style="float:right">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-                Delete
-            </button>
-            </div>
-            <%}%>
-        </div>
-    </div>
+<main class="py-10 max-w-[85vw]">
 
         <!-- Route Details -->
         <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+            <div class="p-6">
+                <!-- Route Title -->
+                <div class="flex flex-row justify-between">
+                    <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
+                    <div class="flex flex-row">
+                        <% if (sessionToken != null) { %>
+                        <% String favoritePageUrl = "/add_favorite?routeId=" + route.getRouteId(); %>
+                        <a href="${pageContext.request.contextPath}<%= favoritePageUrl %>"
+                           class="inline-flex items-center ml-2 text-white bg-blue-500 rounded-lg px-3 py-1 hover:bg-blue-700 transition duration-300" style="float:right">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" fill="currentColor" width="24" class="mr-2"><path d="m354-247 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-80l65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Zm247-350Z"/><script xmlns=""/></svg>
+                            Favorite
+                        </a>
+                        <% } %>
+                        <%if(canEdit){%>
+                        <% String editPageUrl = "/route-create?routeId=" + route.getRouteId(); %>
+                        <a href="${pageContext.request.contextPath}<%= editPageUrl %>"
+                           class="inline-flex items-center ml-2 text-white bg-blue-500 rounded-lg px-3 py-1 hover:bg-blue-700 transition duration-300" style="float:right">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil mr-2" viewBox="0 0 16 16">
+                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                            </svg>
+                            Edit
+                        </a>
+
+                        <script>
+                            function deleteFunction() {
+                                var confirmDelete = confirm("Are you sure you want to delete this route?");
+                                if (confirmDelete) {
+                                    var deletePage=<%=route.getRouteId()%>;
+                                    window.location.href = "${pageContext.request.contextPath}/delete?routeId="+deletePage;
+                                }
+                            }
+                        </script>
+                        <button onclick="deleteFunction()" id="deleteButton" data-model-target="deleteModal" data-modal-toggle="deleteModal" class="inline-flex items-center ml-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md" style="float:right">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            Delete
+                        </button>
+                    </div>
+                    <%}%>
+                </div>
+                <div class="flex space-x-4">
+                    <%
+                        LocalDateTime creationDate = route.getCreated_at();
+                        if(creationDate!=null)
+                        {
+                            // Define the desired date-time format without fractional seconds
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy' 'HH:mm");
+
+                            // Format the LocalDateTime object
+                            String formattedCreationDate = creationDate.format(formatter);
+                    %><p class="text-gray-400"><%= formattedCreationDate %></p>
+                    <%}else
+                    {%>
+                    <%}%>
+
+                    <%
+                        UserEntity authorName =route.getAuthor();
+                        if(authorName!=null)
+                        {
+                    %><p class="text-gray-400">Created by: <%= authorName.getUsername() %></p><%
+                }
+                else
+                {
+                %><p class="text-gray-400">Created by:</p><%
+                    }
+                %>
+                </div>
+            </div>
             <div class="px-4 py-5 sm:p-6 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-gray-900 mb-1 sm:mb-0">Route Details</h2>
 
+                <form action="${pageContext.request.contextPath}/summary" method="get">
+                    <input type="hidden" name="routeId" value="<%= route.getRouteId() %>">
+                    <button type="submit" class="w-48 btn-primary rounded-md px-4 py-2">Print</button>
+                </form>
                 <form action="https://www.google.com/maps/dir/" method="get" target="_blank">
                     <input type="hidden" name="api" value="1">
                     <% if (coordinates != null && !coordinates.isEmpty()) { %>
@@ -160,34 +189,7 @@
                         <dd id="calculatedDescent" class="mt-1 text-sm text-gray-900">Calculating...</dd>
                     </div>
                  </dl>
-                <div class="flex space-x-4">
-                <%// Assuming route.getCreated_at() returns a LocalDateTime object
-                    LocalDateTime creationDate = route.getCreated_at();
-                    if(creationDate!=null)
-                    {
-                    // Define the desired date-time format without fractional seconds
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy' 'HH:mm:ss");
 
-                    // Format the LocalDateTime object
-                    String formattedCreationDate = creationDate.format(formatter);
-                    %><p class="text-gray-400">Creation date: <%= formattedCreationDate %></p>
-                  <%}else
-                    {%>
-                    <p class="text-gray-400">Creation date:</p>
-                <%}%>
-
-                <%
-                    UserEntity authorName =route.getAuthor();
-                    if(authorName!=null)
-                    {
-                    %><p class="text-gray-400">Created by: <%= authorName.getUsername() %></p><%
-                    }
-                    else
-                    {
-                        %><p class="text-gray-400">Created by:</p><%
-                    }
-                %>
-                </div>
                 <!--Images slide show-->
                 <div class="container mx-auto p-4">
                     <%
@@ -251,51 +253,71 @@
                 </div>
             </div>
     </div>
-    <div class="flex mb-6">
+    <div class="grid grid-cols-1 gap-4 mb-6 md:grid-cols-2">
         <!-- Left side -->
-        <div class="w-1/2 mr-4">
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
             <!-- Attributes -->
             <% if (attributes != null) { %>
-            <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
+            <div class="">
                 <div class="px-4 py-5 sm:p-6 text-center">
                     <h2 class="text-xl font-bold text-gray-900">Attributes</h2>
                     <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+                        <!-- Power Attribute -->
                         <div class="sm:col-span-1">
                             <dt class="text-sm font-medium text-gray-500">Power</dt>
-                            <dd class="mt-1 text-sm text-gray-900"><%= attributes.getStrength() %></dd>
+                            <dd class="mt-1 text-sm text-gray-900 flex justify-center">
+                                <% for (int i = 1; i <= 5; i++) { %>
+                                <i class="<%= i <= attributes.getStrength() ? "fas fa-bolt text-yellow-500 px-1" : "fas fa-bolt text-gray-300 px-1" %>"></i>
+                                <% } %>
+                            </dd>
                         </div>
+
+                        <!-- Scenery Attribute -->
                         <div class="sm:col-span-1">
                             <dt class="text-sm font-medium text-gray-500">Scenery</dt>
-                            <dd class="mt-1 text-sm text-gray-900"><%= attributes.getScenery() %></dd>
+                            <dd class="mt-1 text-sm text-gray-900 flex justify-center">
+                                <% for (int i = 1; i <= 5; i++) { %>
+                                <i class="<%= i <= attributes.getScenery() ? "fas fa-tree text-green-500 px-1" : "fas fa-tree text-gray-300 px-1" %>"></i>
+                                <% } %>
+                            </dd>
                         </div>
+
+                        <!-- Experience Attribute -->
                         <div class="sm:col-span-1">
                             <dt class="text-sm font-medium text-gray-500">Experience</dt>
-                            <dd class="mt-1 text-sm text-gray-900"><%= attributes.getExperience() %></dd>
+                            <dd class="mt-1 text-sm text-gray-900 flex justify-center">
+                                <% for (int i = 1; i <= 5; i++) { %>
+                                <i class="<%= i <= attributes.getExperience() ? "fas fa-brain text-purple-500 px-1" : "fas fa-brain text-gray-300 px-1" %>"></i>
+                                <% } %>
+                            </dd>
                         </div>
+
+                        <!-- Condition Attribute -->
                         <div class="sm:col-span-1">
                             <dt class="text-sm font-medium text-gray-500">Condition</dt>
-                            <dd class="mt-1 text-sm text-gray-900"><%= attributes.getCondition() %></dd>
+                            <dd class="mt-1 text-sm text-gray-900 flex justify-center">
+                                <% for (int i = 1; i <= 5; i++) { %>
+                                <i class="<%= i <= attributes.getCondition() ? "fas fa-heartbeat text-red-500 px-1" : "fas fa-heartbeat text-gray-300 px-1" %>"></i>
+                                <% } %>
+                            </dd>
                         </div>
                     </dl>
                     <!-- Best Time to Visit -->
                     <% if (route.getMonths() > 0) { %>
                     <div class="px-4 py-5 sm:p-6 text-center">
                         <h2 class="text-xl font-bold text-gray-900">Best Time to Visit</h2>
-                        <p class="mt-1 text-sm text-gray-900">
-                            <% int bm = route.getMonths(); %>
-                            <%= (bm & Bitmask.Month_1_Jan) != 0 ? "January" : "" %>
-                            <%= (bm & Bitmask.Month_2_Feb) != 0 ? "February " : "" %>
-                            <%= (bm & Bitmask.Month_3_Mar) != 0 ? "March " : "" %>
-                            <%= (bm & Bitmask.Month_4_Apr) != 0 ? "April " : "" %>
-                            <%= (bm & Bitmask.Month_5_May) != 0 ? "May " : "" %>
-                            <%= (bm & Bitmask.Month_6_Jun) != 0 ? "June " : "" %>
-                            <%= (bm & Bitmask.Month_7_Jul) != 0 ? "July " : "" %>
-                            <%= (bm & Bitmask.Month_8_Aug) != 0 ? "August " : "" %>
-                            <%= (bm & Bitmask.Month_9_Sep) != 0 ? "September " : "" %>
-                            <%= (bm & Bitmask.Month_10_Oct) != 0 ? "October " : "" %>
-                            <%= (bm & Bitmask.Month_11_Nov) != 0 ? "November " : "" %>
-                            <%= (bm & Bitmask.Month_12_Dec) != 0 ? "December " : "" %>
-                        </p>
+                        <div class="mt-1 flex flex-wrap justify-center gap-2">
+                            <%
+                                String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+                                int bm = route.getMonths();
+                            %>
+                            <% for (int i = 0; i < months.length; i++) { %>
+                            <% int mask = (int) Math.pow(2, i); %>
+                            <span class="<%= (bm & mask) != 0 ? "bg-green-500 text-white" : "bg-gray-200 text-gray-500" %> rounded px-2 py-1">
+                    <%= months[i] %>
+                </span>
+                            <% } %>
+                        </div>
                     </div>
                     <% } %>
                 </div>
@@ -305,10 +327,10 @@
         <% if (coordinates != null && !coordinates.isEmpty()) { %>
 
         <!-- Right side -->
-        <div class="w-1/2">
+        <div class="bg-white shadow overflow-hidden sm:rounded-lg">
             <!-- Weather -->
 
-            <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div class="">
                 <div class="px-4 py-5 sm:p-6 flex flex-col items-center text-center">
                     <h2 class="text-xl font-bold text-gray-900">Weather</h2>
                     <div class="wrapper">
@@ -541,17 +563,13 @@
                 }
 
                 <%
-                if(huetten != null){
-
-                    int i = 0;
-                    while (i < huetten.size()) {
+                int i = 0;
+                while (i < huetten.size()) {
                 %>
                 addHuetteMarker(<%=huetten.get(i).getCoordinateEntity().getLatitude()%>,<%=huetten.get(i).getCoordinateEntity().getLongitude()%>, "<%=huetten.get(i).getName()%>");
                 <%
-                        i++;
-                    }
+                    i++;
                 }
-
                 %>
 
                 // add Pois to map
@@ -596,6 +614,7 @@
                 }, 100);
             </script>
 
+            <!--
             <div class="px-4 py-5 sm:p-6">
 
                 <%if (huetten != null && huetten.size() > 0) {%>
@@ -637,24 +656,8 @@
                     <% } %>
                 </ul>
                 <%}%>
-
-                <h2 class="text-xl font-bold text-gray-900">Coordinates</h2>
-                <ul class="mt-3 grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                    <% for(CoordinateEntity coord : coordinates) { %>
-                    <li class="col-span-1 bg-white rounded-lg shadow">
-                        <div class="w-full flex items-center justify-between p-6 space-x-6">
-                            <div class="flex-1 truncate">
-                                <div class="flex items-center space-x-3">
-                                    <h3 class="text-gray-900 text-sm leading-5 font-medium truncate">Point</h3>
-                                </div>
-                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Latitude: <%= coord.getLatitude() %></p>
-                                <p class="mt-1 text-gray-500 text-sm leading-5 truncate">Longitude: <%= coord.getLongitude() %></p>
-                            </div>
-                        </div>
-                    </li>
-                    <% } %>
-                </ul>
             </div>
+            -->
         <% } %>
         </div>
     <!--Comments-->
@@ -897,6 +900,7 @@
                 document.getElementById('addCommentButton').textContent = 'Cancel';
         });
     </script>
+
 </main>
 </body>
 </html>
