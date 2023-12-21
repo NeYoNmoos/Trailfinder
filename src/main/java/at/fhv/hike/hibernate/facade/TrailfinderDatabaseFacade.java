@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TrailfinderDatabaseFacade implements TrailfinderFacade{
@@ -206,5 +207,17 @@ public class TrailfinderDatabaseFacade implements TrailfinderFacade{
 
         return _userBroker.userAlreadyExists(email);
     }
+
+    public List<RouteEntity> getAllRoutesForHuette(String huette) {
+        List<RouteEntity> routes = new ArrayList<>();
+        List<Integer> i = _lodgeBroker.getHuetteIdByName(huette);
+        List<Integer> j = _lodgeOnRouteBroker.getRouteIdByHuetteId(i);
+        for(Integer k : j) {
+            routes.add(_routeBroker.getById(k.toString()));
+        }
+
+        return routes;
+    }
+
 }
 

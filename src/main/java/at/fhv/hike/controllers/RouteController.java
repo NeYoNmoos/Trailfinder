@@ -25,7 +25,16 @@ public class RouteController {
     public List<RouteEntity> getFilteredRoutes(String routename, Integer lengthMax, Integer lengthMin, Integer durationMax, Integer durationMin, Integer altitudeMax, Integer altitudeMin,Integer power,Integer scenery,Integer experience, Integer condition, Integer selectedMonth) {
         routename = routename.toLowerCase();
         List<RouteEntity> filteredRoutes = _facade.getFilteredRoutes(routename, lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition,selectedMonth);
+
         return filteredRoutes;
+    }
+
+    public List<RouteEntity> getAllRoutesForHuette(String huette) {
+        huette = huette.toLowerCase();
+        List<RouteEntity> routes = new ArrayList<>();
+        routes = _facade.getAllRoutesForHuette(huette);
+
+        return routes;
     }
 
     public List<RouteEntity> getALlRoutesWithCoordinates() {
