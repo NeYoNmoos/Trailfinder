@@ -133,18 +133,25 @@
             <div class="px-4 py-5 sm:p-6 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-gray-900 mb-1 sm:mb-0">Route Details</h2>
 
-                <form action="${pageContext.request.contextPath}/summary" method="get">
-                    <input type="hidden" name="routeId" value="<%= route.getRouteId() %>">
-                    <button type="submit" class="w-48 btn-primary rounded-md px-4 py-2">Print</button>
-                </form>
-                <form action="https://www.google.com/maps/dir/" method="get" target="_blank">
-                    <input type="hidden" name="api" value="1">
-                    <% if (coordinates != null && !coordinates.isEmpty()) { %>
-                    <button type="submit" name="destination" value="<%= coordinates.get(0).getLatitude() %>,<%= coordinates.get(0).getLongitude() %>" class="w-48 btn-primary rounded-md px-4 py-2">How to get there</button>
-                    <% } else { %>
-                    <p>No coordinates available</p>
-                    <% } %>
-                </form>
+
+                <div class="flex flex-row space-x-4">
+                    <form action="${pageContext.request.contextPath}/summary" method="get">
+                        <input type="hidden" name="routeId" value="<%= route.getRouteId() %>">
+                        <button type="submit" class="btn-primary w-12 h-12 rounded-full">
+                            <i class="fas fa-print text-black text-lg"></i>
+                        </button>
+                    </form>
+                    <form action="https://www.google.com/maps/dir/" method="get" target="_blank">
+                        <input type="hidden" name="api" value="1">
+                        <% if (coordinates != null && !coordinates.isEmpty()) { %>
+                        <button type="submit" name="destination" value="<%= coordinates.get(0).getLatitude() %>,<%= coordinates.get(0).getLongitude() %>"
+                                class="btn-primary w-48 h-12 rounded-md px-4 py-2">How to get there</button>
+                        <% } else { %>
+                        <p>No coordinates available</p>
+                        <% } %>
+                    </form>
+                </div>
+
             </div>
             <div class="px-4 py-5 sm:p-6">
                 <div class="mb-2">
