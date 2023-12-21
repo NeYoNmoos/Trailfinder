@@ -32,7 +32,7 @@
             window.print();
 
             window.history.back();
-        }, 1000); // Adjust the delay as needed
+        }, 1000);
     };
 </script>
 <%
