@@ -42,4 +42,25 @@ public class LodgeOnRouteBroker extends BrokerBase<LodgeOnRouteEntity> {
             return lodgeOnRouteEntities;
         }
     }
+
+    public List<Integer> getRouteIdByHuetteId(List<Integer> huettenIds) {
+        List<Integer> routeIds = new ArrayList<>();
+
+        try (Session session = sessionFactory.openSession()) {
+            for(Integer huetteId: huettenIds) {
+                String hql = "FROM LodgeOnRouteEntity AS l " +
+                        "WHERE (l.lodgeEntity.id = :huetteId)";
+
+                Query<LodgeOnRouteEntity> query = session.createQuery(hql, LodgeOnRouteEntity.class)
+                        .setParameter("lodge_id", huetteId);
+
+                List<LodgeOnRouteEntity> huettenOnRoutes = query.getResultList();
+
+                for(LodgeOnRouteEntity huetteOnRoute : huettenOnRoutes) {
+                    routeIds.add(huetteOnRoute.getRoute().getRouteId());
+                }
+            }
+        }
+        return routeIds;
+    }
 }
