@@ -76,6 +76,19 @@
                         <% } %>
                     </button>
                 </form>
+
+                // done button
+
+                <form action="${pageContext.request.contextPath}/add_Done" method="POST" class="m-0">
+                    <input type="hidden" name="routeId" value="<%= route.getRouteId() %>" />
+                    <button type="submit" class="inline-flex items-center text-white bg-blue-500 rounded-lg h-11 px-3 py-1 hover:bg-blue-700 transition duration-300">
+                        <% if(isDone) { %>
+                        <i class="fas fa-star text-white" title="Done"></i>
+                        <% } else { %>
+                        <i class="far fa-star text-white" title="Not Done"></i>
+                        <% } %>
+                    </button>
+                </form>
             <% } %>
             <%if(canEdit){%>
             <% String editPageUrl = "/route-create?routeId=" + route.getRouteId(); %>
