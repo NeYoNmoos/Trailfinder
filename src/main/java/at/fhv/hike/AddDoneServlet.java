@@ -36,7 +36,7 @@ public class AddDoneServlet extends HttpServlet {
 
 
 
-        boolean isDone = uc.toggleFavoriteRoute(userId, routeId);
+        boolean isDone = uc.toggleDoneRoute(userId, routeId);
 
         uc.saveUser(user);
 
