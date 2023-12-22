@@ -24,8 +24,6 @@ public class DoneServlet extends HttpServlet {
         UserController uc = new UserController(request.getServletContext());
         if(userId != null) {
             UserEntity user = uc.getUserById(userId);
-            request.setAttribute("user", user.getUsername());
-            request.setAttribute("email", user.getEmail());
             ServletContext context = request.getServletContext();
             RouteController rc = new RouteController(context);
 

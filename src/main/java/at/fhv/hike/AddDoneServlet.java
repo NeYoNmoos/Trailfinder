@@ -1,13 +1,13 @@
 package at.fhv.hike;
 
+
 import at.fhv.hike.controllers.CookieController;
 import at.fhv.hike.controllers.RouteController;
-import at.fhv.hike.data.*;
 import at.fhv.hike.controllers.UserController;
-import at.fhv.hike.data.GalleryEntity;
+import at.fhv.hike.data.LodgeEntity;
+import at.fhv.hike.data.PointOfInterestEntity;
 import at.fhv.hike.data.RouteEntity;
 import at.fhv.hike.data.UserEntity;
-import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -15,30 +15,33 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.Hibernate;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "RouteDetailServlet", urlPatterns = {"/route-detail"})
-public class RouteDetailServlet extends HttpServlet {
 
+@WebServlet(name = "AddDoneServlet", urlPatterns = {"/add_Done"})
+public class AddDoneServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String userId = CookieController.getLogedInUserId(request.getCookies());
         String routeId = request.getParameter("routeId");
 
-        //TrailfinderDatabaseFacade facade = new TrailfinderDatabaseFacade();
-        //RouteEntity route = facade.getRouteById(routeId);
         ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
+        UserController uc = new UserController(context);
+
         RouteEntity route = rc.getRouteById(routeId);
+        UserEntity user = uc.getUserById(userId);
 
-        List<GalleryEntity> gallery = route.getGallery();
 
-        request.setAttribute("gallery", gallery);
+
+        boolean isDone = uc.toggleFavoriteRoute(userId, routeId);
+
+        uc.saveUser(user);
 
         request.setAttribute("route", route);
+        request.setAttribute("isDone", isDone);
 
         // Huetten
         List<LodgeEntity> huetten = new ArrayList<>();
@@ -53,7 +56,6 @@ public class RouteDetailServlet extends HttpServlet {
         request.setAttribute("pois", pois);
 
         String loggedInUserId= CookieController.getLogedInUserId(request.getCookies());
-        UserController uc = new UserController(context);
 
         if(loggedInUserId!=null){
             UserEntity loggedInUser = uc.getUserByIdSimple(loggedInUserId);
@@ -64,23 +66,20 @@ public class RouteDetailServlet extends HttpServlet {
             UserEntity author=route.getAuthor();
             Boolean isRoutCreator;
             if(author==null)
-                 isRoutCreator=false;
+                isRoutCreator=false;
 
             else
                 isRoutCreator=(author.getUserId().toString().equals(loggedInUserId));
 
-
             if(isAdmin || isRoutCreator){
-                    request.setAttribute("canEdit", true);
-                }
-                else {
-                    request.setAttribute("canEdit", false);
-                }
+                request.setAttribute("canEdit", true);
+            }
+            else {
+                request.setAttribute("canEdit", false);
+            }
         }
         else
             request.setAttribute("canEdit", false);
-
-        request.setAttribute("isFavorite", uc.isFavoriteRoute(loggedInUserId, routeId));
 
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/route_detail/route_detail.jsp");

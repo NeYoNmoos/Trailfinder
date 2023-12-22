@@ -1,3 +1,4 @@
+status
 <%@ page import="at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade" %>
 <%@ page import="at.fhv.hike.controllers.RouteController" %>
 <%@ page import="at.fhv.hike.data.RouteEntity" %>

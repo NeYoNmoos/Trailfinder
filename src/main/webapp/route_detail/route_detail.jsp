@@ -32,6 +32,7 @@
     AttributeEntity attributes = route != null ? route.getAttributeEntity() : null;
     List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;
     Boolean isFavorite = (Boolean) request.getAttribute("isFavorite");
+    Boolean isDone = (Boolean) request.getAttribute("isDone");
 
     Collections.sort(coordinates, Comparator.comparingInt(CoordinateEntity::getSequence));
 
