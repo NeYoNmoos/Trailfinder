@@ -46,7 +46,7 @@ status
         <div class="w-full lg:w-3/4 px-4 mb-4">
 
             <%
-                if (allRoutes.size() == 0) {
+                if (allRoutes != null && allRoutes.size() == 0) {
             %>
             <h1 class="text-center">Could not find any routes!</h1>
             <%

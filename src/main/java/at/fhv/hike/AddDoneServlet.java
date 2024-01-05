@@ -23,7 +23,7 @@ import java.util.List;
 
 @WebServlet(name = "AddDoneServlet", urlPatterns = {"/add_Done"})
 public class AddDoneServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = CookieController.getLogedInUserId(request.getCookies());
         String routeId = request.getParameter("routeId");
 
@@ -36,7 +36,7 @@ public class AddDoneServlet extends HttpServlet {
 
 
 
-        boolean isDone = uc.toggleDoneRoute(userId, routeId);
+        boolean isDone = uc.addDoneRoute(userId, routeId);
 
         uc.saveUser(user);
 
@@ -81,8 +81,9 @@ public class AddDoneServlet extends HttpServlet {
         else
             request.setAttribute("canEdit", false);
 
-
+        request.setAttribute("isFavorite", uc.isFavoriteRoute(loggedInUserId, routeId));
         RequestDispatcher dispatcher = request.getRequestDispatcher("/route_detail/route_detail.jsp");
         dispatcher.forward(request, response);
+
     }
 }

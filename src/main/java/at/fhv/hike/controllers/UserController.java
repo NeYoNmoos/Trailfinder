@@ -88,19 +88,10 @@ public class UserController {
 
     //Done route toggle
 
-    public boolean toggleDoneRoute(String userId, String routeId) {
+    public boolean addDoneRoute(String userId, String routeId) {
         UserEntity user = getUserById(userId);
         RouteEntity route = new RouteController(_context).getRouteById(routeId);
         List<RouteEntity> done = user.getDone_routes();
-
-        for (RouteEntity _done : done) {
-            if (_done.getRouteId().equals(route.getRouteId())) {
-                done.remove(_done);
-                System.out.println("Route removed from Done");
-                saveUser(user);
-                return false;
-            }
-        }
 
         System.out.println("Route added to Done");
         done.add(route);
@@ -109,21 +100,8 @@ public class UserController {
     }
 
 
-    // Done route check
 
-    public boolean isDoneRoute(String userId, String routeId) {
-        UserEntity user = getUserById(userId);
-        RouteEntity route = new RouteController(_context).getRouteById(routeId);
-        if (user != null) {
-            List<RouteEntity> done = user.getDone_routes();
-            for (RouteEntity _done : done) {
-                if (_done.getRouteId().equals(route.getRouteId())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+
 
 
 }
