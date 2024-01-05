@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet(name = "HomeServlet", urlPatterns = {"/home"})
 public class HomeServlet extends HttpServlet {
@@ -77,7 +78,15 @@ public class HomeServlet extends HttpServlet {
         //if(lengthMin!=null || lengthMax!=null || altitudeMax!=null||altitudeMin!=null||durationMax!=null||durationMin!=null)
         //{
             allRoutes=rc.getFilteredRoutes(routename, lengthMax,lengthMin,durationMax,durationMin,altitudeMax,altitudeMin,power,scenery,experience,condition,month);
-       // }
+
+            // using param from filter to search for huts
+            List<RouteEntity> huettenRoutes = rc.getAllRoutesForHuette(routename);
+            //adding the results to filtered routes
+            allRoutes.addAll(huettenRoutes);
+            //turns the route collection to a stream and compares for duplicates through hashvalue
+            //thats why route entity has the author hash commented, or else it breaks
+            allRoutes = allRoutes.stream().distinct().collect(Collectors.toList());
+            // }
         //else
            // allRoutes = rc.getAllRoutes();
 
