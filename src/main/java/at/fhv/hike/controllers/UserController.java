@@ -5,13 +5,16 @@ import at.fhv.hike.data.UserEntity;
 import at.fhv.hike.hibernate.facade.TrailfinderDatabaseFacade;
 import jakarta.servlet.ServletContext;
 import org.mindrot.jbcrypt.BCrypt;
+import org.openqa.selenium.remote.http.Route;
 
 import java.util.List;
 
 public class UserController {
     private TrailfinderDatabaseFacade _facade;
+    private ServletContext _context;
 
     public UserController(ServletContext context) {
+        _context = context;
         _facade = new TrailfinderDatabaseFacade(context);
     }
 
@@ -44,8 +47,61 @@ public class UserController {
         _facade.save(user);
     }
 
-
     public void deleteUser(UserEntity user){
         _facade.delete(user);
     }
+
+    public boolean toggleFavoriteRoute(String userId, String routeId) {
+        UserEntity user = getUserById(userId);
+        RouteEntity route = new RouteController(_context).getRouteById(routeId);
+        List<RouteEntity> favorites = user.getFavorite_routes();
+
+        for (RouteEntity favorite : favorites) {
+            if (favorite.getRouteId().equals(route.getRouteId())) {
+                favorites.remove(favorite);
+                System.out.println("Route removed from favorites");
+                saveUser(user);
+                return false;
+            }
+        }
+
+        System.out.println("Route added to favorites");
+        favorites.add(route);
+        saveUser(user);
+        return true;
+    }
+
+    public boolean isFavoriteRoute(String userId, String routeId) {
+        UserEntity user = getUserById(userId);
+        RouteEntity route = new RouteController(_context).getRouteById(routeId);
+        if (user != null) {
+            List<RouteEntity> favorites = user.getFavorite_routes();
+            for (RouteEntity favorite : favorites) {
+                if (favorite.getRouteId().equals(route.getRouteId())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    //Done route toggle
+
+    public boolean addDoneRoute(String userId, String routeId) {
+        UserEntity user = getUserById(userId);
+        RouteEntity route = new RouteController(_context).getRouteById(routeId);
+        List<RouteEntity> done = user.getDone_routes();
+
+        System.out.println("Route added to Done");
+        done.add(route);
+        saveUser(user);
+        return true;
+    }
+
+
+
+
+
+
 }

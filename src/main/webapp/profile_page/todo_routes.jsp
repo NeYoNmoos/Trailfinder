@@ -1,3 +1,9 @@
+<%@ page import="at.fhv.hike.data.RouteEntity" %>
+<%@ page import="java.util.List" %>
+<%@ page import="at.fhv.hike.data.AttributeEntity" %>
+<%@ page import="at.fhv.hike.data.GalleryEntity" %>
+<%@ page import="java.util.Base64" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: metedastan
@@ -16,15 +22,9 @@
 <jsp:include page="/components/navigation/nav_bar.jsp"/>
 <div class="container">
   <jsp:include page="/components/profile_menu/profile_menu.jsp"/>
-  <div class="main">
-    <h2>Sidebar</h2>
-    <p>This sidebar is of full height (100%) and always shown.</p>
-    <p>Scroll down the page to see the result.</p>
-    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-    <p>Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.</p>
-  </div>
+  <jsp:include page="/components/display_routes/display_routes.jsp">
+    <jsp:param name="title" value="My routes" />
+  </jsp:include>
 </div>
 
 </body>

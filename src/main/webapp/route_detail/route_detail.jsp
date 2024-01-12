@@ -28,9 +28,11 @@
 
 <%
     RouteEntity route = (RouteEntity) request.getAttribute("route");
-    Boolean canEdit=(Boolean)request.getAttribute("canEdit");
+    Boolean canEdit = (Boolean) request.getAttribute("canEdit");
     AttributeEntity attributes = route != null ? route.getAttributeEntity() : null;
     List<CoordinateEntity> coordinates = route != null ? route.getCoordinates() : null;
+    Boolean isFavorite = (Boolean) request.getAttribute("isFavorite");
+
 
     Collections.sort(coordinates, Comparator.comparingInt(CoordinateEntity::getSequence));
 
@@ -57,32 +59,54 @@
     String sessionToken= CookieController.getLogedInUserId(request.getCookies());
 %>
 
-<main class="py-10 max-w-[85vw]">
 
-        <!-- Route Details -->
-        <div class="bg-white shadow overflow-hidden sm:rounded-lg mb-6">
-            <div class="p-6">
-                <!-- Route Title -->
-                <div class="flex flex-row justify-between">
-                    <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
-                    <div class="flex flex-row">
-                        <% if (sessionToken != null) { %>
-                        <% String favoritePageUrl = "/add_favorite?routeId=" + route.getRouteId(); %>
-                        <a href="${pageContext.request.contextPath}<%= favoritePageUrl %>"
-                           class="inline-flex items-center ml-2 text-white bg-blue-500 rounded-lg px-3 py-1 hover:bg-blue-700 transition duration-300" style="float:right">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" fill="currentColor" width="24" class="mr-2"><path d="m354-247 126-76 126 77-33-144 111-96-146-13-58-136-58 135-146 13 111 97-33 143ZM233-80l65-281L80-550l288-25 112-265 112 265 288 25-218 189 65 281-247-149L233-80Zm247-350Z"/><script xmlns=""/></svg>
-                            Favorite
-                        </a>
+
+<main class="py-10">
+    <div class="max-w-7xl lg:w-[75vw] mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Route Title -->
+        <div class="mb-8 flex flex-row justify-between">
+            <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
+            <div class="flex flex-row">
+            <% if (sessionToken != null) { %>
+                <form action="${pageContext.request.contextPath}/add_favorite" method="POST" class="m-0">
+                    <input type="hidden" name="routeId" value="<%= route.getRouteId() %>" />
+                    <button type="submit" class="inline-flex items-center text-white bg-blue-500 rounded-lg h-11 px-3 py-1 hover:bg-blue-700 transition duration-300">
+                        <% if(isFavorite) { %>
+                        <i class="fas fa-star text-white" title="Favorited"></i>
+                        <% } else { %>
+                        <i class="far fa-star text-white" title="Not Favorited"></i>
                         <% } %>
-                        <%if(canEdit){%>
-                        <% String editPageUrl = "/route-create?routeId=" + route.getRouteId(); %>
-                        <a href="${pageContext.request.contextPath}<%= editPageUrl %>"
-                           class="inline-flex items-center ml-2 text-white bg-blue-500 rounded-lg px-3 py-1 hover:bg-blue-700 transition duration-300" style="float:right">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil mr-2" viewBox="0 0 16 16">
-                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                            </svg>
-                            Edit
-                        </a>
+                    </button>
+                </form>
+
+                <!-- Add date to done button -->
+                <script>
+                    function addDate(){
+                        let date = prompt("Please enter the date the route was done.");
+                        const dateInput = document.createElement('input');
+                        dateInput.type = 'hidden';
+                        dateInput.name = "doneDate";
+                        dateInput.value = date;
+                        document.getElementById("doneForm").appendChild(dateInput);
+                    }
+                </script>
+
+                <form id="doneForm" action="${pageContext.request.contextPath}/add_Done" method="POST" class="m-0 ml-2">
+                    <input type="hidden" name="routeId" value="<%= route.getRouteId() %>" />
+                    <button type="submit" onClick="addDate()" class="inline-flex items-center text-white bg-blue-500 rounded-lg h-11 px-3 py-1 hover:bg-blue-700 transition duration-300">
+                        <i class="fas fa-check text-white" title="Done"></i>
+                    </button>
+                </form>
+            <% } %>
+            <%if(canEdit){%>
+            <% String editPageUrl = "/route-create?routeId=" + route.getRouteId(); %>
+            <a href="${pageContext.request.contextPath}<%= editPageUrl %>"
+               class="inline-flex items-center ml-2 text-white bg-blue-500 rounded-lg px-3 py-1 hover:bg-blue-700 transition duration-300" style="float:right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                </svg>
+                Edit
+            </a>
 
                         <script>
                             function deleteFunction() {
@@ -564,7 +588,7 @@
 
                 function addHuetteMarker(lat, lng, name) {
                     let marker = L.marker([lat, lng], {
-                        draggable: true,
+                        draggable: false,
                         icon: huetteIcon
                     }).addTo(map).bindPopup(name);
                 }
@@ -583,7 +607,7 @@
 
                 function addPoiMarker(lat, lng, name) {
                     let marker = L.marker([lat, lng], {
-                        draggable: true,
+                        draggable: false,
                         icon: poiIcon
                     }).addTo(map).bindPopup(name);;
                 }

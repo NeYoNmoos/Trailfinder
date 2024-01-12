@@ -69,13 +69,13 @@
                 <!-- Routes Grid -->
                 <div class="w-full lg:w-3/4 px-4 mb-4">
 
-                    <%
-                        if (allRoutes.size() == 0) {
-                    %>
-                    <h1 class="text-center">Could not find any routes!</h1>
-                    <%
-                        }
-                    %>
+            <%
+                if (allRoutes != null && allRoutes.size() == 0) {
+            %>
+            <h1 class="text-center">Could not find any routes!</h1>
+            <%
+                }
+            %>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <%
