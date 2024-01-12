@@ -29,6 +29,8 @@ public class DoneServlet extends HttpServlet {
 
             List<RouteEntity>myRoutes=user.getDone_routes();
             request.setAttribute("routes", myRoutes);
+
+            request.setAttribute("user", user.getUsername());
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/my_routes.jsp");

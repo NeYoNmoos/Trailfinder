@@ -29,6 +29,8 @@ public class FavoriteServlet extends HttpServlet {
 
             System.out.println("HUETTE " + myRoutes.size());
             request.setAttribute("routes", myRoutes);
+
+            request.setAttribute("user", user.getUsername());
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/favorite_routes.jsp");

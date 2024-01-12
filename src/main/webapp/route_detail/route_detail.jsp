@@ -79,11 +79,21 @@
                     </button>
                 </form>
 
+                <!-- Add date to done button -->
+                <script>
+                    function addDate(){
+                        let date = prompt("Please enter the date the route was done.");
+                        const dateInput = document.createElement('input');
+                        dateInput.type = 'hidden';
+                        dateInput.name = "doneDate";
+                        dateInput.value = date;
+                        document.getElementById("doneForm").appendChild(dateInput);
+                    }
+                </script>
 
-
-                <form action="${pageContext.request.contextPath}/add_Done" method="POST" class="m-0 ml-2">
+                <form id="doneForm" action="${pageContext.request.contextPath}/add_Done" method="POST" class="m-0 ml-2">
                     <input type="hidden" name="routeId" value="<%= route.getRouteId() %>" />
-                    <button type="submit" class="inline-flex items-center text-white bg-blue-500 rounded-lg h-11 px-3 py-1 hover:bg-blue-700 transition duration-300">
+                    <button type="submit" onClick="addDate()" class="inline-flex items-center text-white bg-blue-500 rounded-lg h-11 px-3 py-1 hover:bg-blue-700 transition duration-300">
                         <i class="fas fa-check text-white" title="Done"></i>
                     </button>
                 </form>
@@ -578,7 +588,7 @@
 
                 function addHuetteMarker(lat, lng, name) {
                     let marker = L.marker([lat, lng], {
-                        draggable: true,
+                        draggable: false,
                         icon: huetteIcon
                     }).addTo(map).bindPopup(name);
                 }
@@ -597,7 +607,7 @@
 
                 function addPoiMarker(lat, lng, name) {
                     let marker = L.marker([lat, lng], {
-                        draggable: true,
+                        draggable: false,
                         icon: poiIcon
                     }).addTo(map).bindPopup(name);;
                 }

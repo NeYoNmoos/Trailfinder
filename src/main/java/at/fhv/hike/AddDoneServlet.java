@@ -27,6 +27,8 @@ public class AddDoneServlet extends HttpServlet {
         String userId = CookieController.getLogedInUserId(request.getCookies());
         String routeId = request.getParameter("routeId");
 
+        String doneDate = request.getParameter("doneDate");
+
         ServletContext context = request.getServletContext();
         RouteController rc = new RouteController(context);
         UserController uc = new UserController(context);

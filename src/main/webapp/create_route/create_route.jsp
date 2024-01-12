@@ -265,24 +265,29 @@
                 map.on('contextmenu', function(e) {
                     if (e.originalEvent.ctrlKey && e.originalEvent.button === 2) {
                         let huetteName = prompt("Please enter the name of your hut:", "");
-                        let huetteDescription = prompt("Please enter a description for your hut:", "");
-                        if ((huetteName != null) && (huetteName != "") && (huetteDescription != null) && (huetteDescription != "")) {
-                            var huetteMarkerData = {
-                                name: huetteName,
-                                description: huetteDescription
+                        if((huetteName != null) && (huetteName != "")) {
+
+                            let huetteDescription = prompt("Please enter a description for your hut:", "");
+                            if ((huetteName != null) && (huetteName != "") && (huetteDescription != null) && (huetteDescription != "")) {
+                                var huetteMarkerData = {
+                                    name: huetteName,
+                                    description: huetteDescription
+                                }
+                                addHuetteMarker(e.latlng.lat, e.latlng.lng, huetteMarkerData);
                             }
-                            addHuetteMarker(e.latlng.lat, e.latlng.lng, huetteMarkerData);
                         }
                     }
                     else {
                         let poiName = prompt("Please enter the name of your point of interest:", "");
-                        let poiDescription = prompt("Please enter a description for your point of interest:", "");
-                        if ((poiName != null) && (poiName != "") && (poiDescription != null) && (poiDescription != "")) {
-                            var poiMarkerData = {
-                                name: poiName,
-                                description: poiDescription
+                        if((poiName != null) && (poiName != "")) {
+                            let poiDescription = prompt("Please enter a description for your point of interest:", "");
+                            if ((poiName != null) && (poiName != "") && (poiDescription != null) && (poiDescription != "")) {
+                                var poiMarkerData = {
+                                    name: poiName,
+                                    description: poiDescription
+                                }
+                                addPoiMarker(e.latlng.lat, e.latlng.lng, poiMarkerData);
                             }
-                            addPoiMarker(e.latlng.lat, e.latlng.lng, poiMarkerData);
                         }
                     }
                 });
