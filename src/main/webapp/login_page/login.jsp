@@ -23,17 +23,14 @@
 
     <h2 class="text-2xl font-semibold mb-6 text-center">Login</h2>
 
-    <!-- Login Form -->
     <form action="${pageContext.request.contextPath}/login" method="post">
 
-        <!-- Email Input -->
         <div class="mb-4">
             <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
             <input type="email" id="email" name="email" placeholder="Your email"
                    class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" required>
         </div>
 
-        <!-- Password Input -->
         <div class="mb-6">
             <label for="password" class="block text-sm font-medium text-gray-600">Password</label>
             <input type="password" id="password" name="password" placeholder="Your password"
@@ -47,7 +44,6 @@
         </div>
         <% } %>
 
-        <!-- Login Button -->
         <button type="submit"
                 class="btn-primary text-white p-2 rounded-md w-full focus:outline-none focus:ring">
             Login
