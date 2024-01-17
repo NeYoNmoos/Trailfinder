@@ -36,7 +36,7 @@
 
     <form action="${pageContext.request.contextPath}/" method="post">
         <div class="w-full h-auto max-w-[100vw] max-h-[80vh]">
-            <div class="swiper h-[80vh] w-full">
+            <div class="swiper h-[80vh] w-full">g
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <img src="${pageContext.request.contextPath}/assets/home_page_img/feet-trail.jpg" class="mb-4 w-full h-full object-cover object-center">

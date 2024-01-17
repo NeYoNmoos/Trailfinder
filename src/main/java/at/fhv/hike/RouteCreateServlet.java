@@ -109,7 +109,6 @@ public class RouteCreateServlet extends HttpServlet {
             newRoute.setAuthor(author);
         }
         else {
-            System.out.println("Greska WTF");
             newRoute.setRouteId(Integer.parseInt(routeId));
             RouteController rc =new RouteController(context);
             RouteEntity oldRoute=rc.getRouteById(routeId);
