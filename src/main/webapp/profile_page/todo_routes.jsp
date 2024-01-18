@@ -23,7 +23,7 @@
 <div class="container">
   <jsp:include page="/components/profile_menu/profile_menu.jsp"/>
   <jsp:include page="/components/display_routes/display_routes.jsp">
-    <jsp:param name="title" value="My routes" />
+    <jsp:param name="title" value="ToDo routes" />
   </jsp:include>
 </div>
 

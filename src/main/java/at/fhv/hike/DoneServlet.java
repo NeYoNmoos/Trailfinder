@@ -33,7 +33,7 @@ public class DoneServlet extends HttpServlet {
             request.setAttribute("user", user.getUsername());
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/my_routes.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/profile_page/done_routes.jsp");
         dispatcher.forward(request, response);
     }
 }
