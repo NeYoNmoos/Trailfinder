@@ -76,11 +76,13 @@ public class RouteDetailServlet extends HttpServlet {
                 else {
                     request.setAttribute("canEdit", false);
                 }
+            request.setAttribute("isFavorite", uc.isFavoriteRoute(loggedInUserId, routeId));
         }
-        else
+        else{
             request.setAttribute("canEdit", false);
+            request.setAttribute("isFavorite", false);
+        }
 
-        request.setAttribute("isFavorite", uc.isFavoriteRoute(loggedInUserId, routeId));
 
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("/route_detail/route_detail.jsp");

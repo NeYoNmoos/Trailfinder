@@ -61,10 +61,10 @@
 
 
 
-<main class="py-10">
-    <div class="max-w-7xl lg:w-[75vw] mx-auto px-4 sm:px-6 lg:px-8">
+<main class="py-10 max-w-7xl w-75vw lg:w-[75vw] mx-auto px-4 sm:px-6 lg:px-8 ">
+    <div class="bg-white rounded-lg pt-4 mb-4 shadow">
         <!-- Route Title -->
-        <div class="mb-8 flex flex-row justify-between">
+        <div class="mb-8 px-4 flex flex-row justify-between">
             <h1 class="text-3xl font-bold text-gray-900"><%= route.getName() %></h1>
             <div class="flex flex-row">
             <% if (sessionToken != null) { %>

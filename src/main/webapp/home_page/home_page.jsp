@@ -52,7 +52,7 @@
                 <div class="swiper-scrollbar"></div>
             </div>
             <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 flex justify-center">
-                <input type="text" name="routename" id="routename" class="mt-1 w-96 h-10 text-lg p-2 border-gray-300 rounded-md shadow-sm content-center my-10" placeholder="Search by Name" value="<%= request.getParameter("routename") == null?"":request.getParameter("routename") %>">
+                <input type="text" name="routename" id="routename" class="mt-1 w-96 h-10 text-lg p-2 border-gray-300 rounded-md shadow-sm content-center my-10" placeholder="Search by Name, Place, Hut" value="<%= request.getParameter("routename") == null?"":request.getParameter("routename") %>">
                 <button type="submit" class="w-25 h-10 btn-primary text-white rounded-md px-4 py-2 mt-1 mx-1">
                     <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"></path>
