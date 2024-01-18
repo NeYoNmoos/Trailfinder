@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Global.css">
 </head>
 <body>
-<div class="sidenav bg-gray-800 text-white h-screen p-4 flex flex-col">
+<div class="sidenav bg-gray-400 text-white h-screen p-4 flex flex-col">
 
 
     <div class="flex-1 flex flex-col justify-center items-center">
@@ -24,7 +24,7 @@
         <a href="${pageContext.request.contextPath}/my_routes" class="block py-2">My Routes</a>
     </div>
 
-    <div class="button-container mt-auto flex space-x-2">
+    <div class="button-container mt-auto flex">
         <button type="submit" name="changepw" value="changepw" class="flex-1 btn-primary rounded-md px-3 py-2">
             <a href="${pageContext.request.contextPath}/changepassword" class="text-white">Change Password</a>
         </button>
