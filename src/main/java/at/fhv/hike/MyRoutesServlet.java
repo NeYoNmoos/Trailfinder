@@ -32,9 +32,8 @@ public class MyRoutesServlet  extends HttpServlet {
             request.setAttribute("user", user.getUsername());
             request.setAttribute("email", user.getEmail());
             ServletContext context = request.getServletContext();
-            RouteController rc = new RouteController(context);
-
             List<RouteEntity>myRoutes=user.getRoutes();
+            myRoutes.removeIf(r -> !r.getActive());
             request.setAttribute("routes", myRoutes);
         }
 

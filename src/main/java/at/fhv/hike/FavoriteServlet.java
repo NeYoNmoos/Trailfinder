@@ -26,7 +26,7 @@ public class FavoriteServlet extends HttpServlet {
         if(userId != null) {
             UserEntity user = uc.getUserById(userId);
             List<RouteEntity> myRoutes = user.getFavorite_routes();
-
+            myRoutes.removeIf(r -> !r.getActive());
             System.out.println("HUETTE " + myRoutes.size());
             request.setAttribute("routes", myRoutes);
 
